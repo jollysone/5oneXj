@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
+        <link>https://jollysone.github.io/</link>
+        <description>专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Mon, 01 Oct 2018 17:55:28 &#43;0800</lastBuildDate>
+            <atom:link href="https://jollysone.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>智能合约中通过 tx.origin 授权引发的不安全问题</title>
+    <link>https://jollysone.github.io/first-post.html/</link>
+    <pubDate>Mon, 01 Oct 2018 17:55:28 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://jollysone.github.io/first-post.html/</guid>
+    <description><![CDATA[1 前言 在合约代码中，最常用的是使用 msg.sender 来检查授权，但有时由于有些程序员不熟悉 tx.origin 和 msg.sender 的区别，如果使用了 tx.origin 可能导致合约的安全问题。黑客最典型的攻击]]></description>
+</item>
+</channel>
+</rss>
