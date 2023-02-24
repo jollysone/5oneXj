@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>区块链 - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
+        <link>https://jollysone.github.io/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/</link>
+        <description>区块链 - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Wed, 26 Feb 2020 11:05:10 &#43;0800</lastBuildDate><atom:link href="https://jollysone.github.io/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="self" type="application/rss+xml" /><item>
+    <title>区块链“跨链”是什么？为什么要“跨链”？</title>
+    <link>https://jollysone.github.io/blog/what-is-the-cross-chain-of-blockchain.html/</link>
+    <pubDate>Wed, 26 Feb 2020 11:05:10 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://jollysone.github.io/blog/what-is-the-cross-chain-of-blockchain.html/</guid>
+    <description><![CDATA[1 跨链概念 跨链是通过连接相对独立的区块链系统，实现资产、数据等的跨链互操作，跨链的主要实现形式包括跨链资产互换和跨链资产转移。 跨链技术 201]]></description>
+</item>
+<item>
+    <title>什么是区块链(Blockchain)?</title>
+    <link>https://jollysone.github.io/blog/what-is-blockchain.html/</link>
+    <pubDate>Fri, 02 Mar 2018 15:25:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://jollysone.github.io/blog/what-is-blockchain.html/</guid>
+    <description><![CDATA[1 区块链的由来 区块链概念最早是从比特币衍生出来的。比特币（Bitcoin）诞生于2008年，是由一个名叫中本聪（Satoshi Nakamot]]></description>
+</item>
+</channel>
+</rss>
