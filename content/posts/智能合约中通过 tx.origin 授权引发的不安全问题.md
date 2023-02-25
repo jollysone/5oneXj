@@ -1,6 +1,7 @@
 ---
 weight: 5
 title: "智能合约中通过 tx.origin 授权引发的不安全问题"
+slug: unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts
 date: 2019-10-01T17:55:28+08:00
 draft: false
 author: "5oneXj"

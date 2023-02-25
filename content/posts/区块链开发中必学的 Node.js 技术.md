@@ -1,5 +1,6 @@
 ---
 title: "区块链开发中必学的 Node.js 技术"
+slug: node.js-technology-is-a-must-for-learning-blockchain
 date: 2018-03-31T14:06:11+08:00
 draft: false
 author: "5oneXj"

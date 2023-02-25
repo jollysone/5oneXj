@@ -1,5 +1,6 @@
 ---
 title: "什么是区块链(Blockchain)?"
+slug: what-is-blockchain
 date: 2018-03-02T15:25:14+08:00
 draft: false
 author: "5oneXj"

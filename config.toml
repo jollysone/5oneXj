@@ -254,7 +254,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
       # 是否保持使用文章前面的静态目录
       keepStatic = false
       # 是否使侧边目录自动折叠展开
-      auto = true
+      auto = false
 
     # 代码配置
     [params.page.code]
@@ -535,7 +535,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
   # 目录设置
   [markup.tableOfContents]
     startLevel = 1
-    endLevel = 6
+    endLevel = 3
 
 # 网站地图配置
 [sitemap]
@@ -545,7 +545,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
 
 # Permalinks 配置 (https://gohugo.io/content-management/urls/#permalinks)
 [Permalinks]
-  posts = ":filename.html"
+  posts = "/:year:month:day/:slug.html"
 
 # 隐私信息配置 (https://gohugo.io/about/hugo-and-gdpr/)
 [privacy]

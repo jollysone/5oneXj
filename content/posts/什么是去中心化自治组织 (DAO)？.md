@@ -1,5 +1,6 @@
 ---
 title: "什么是去中心化自治组织 (DAO)？"
+slug: what-is-decentralized-autonomous-organization-DAO
 date: 2020-05-20T11:12:14+08:00
 draft: false
 author: "5oneXj"
