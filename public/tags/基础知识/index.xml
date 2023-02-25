@@ -6,58 +6,58 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
             <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Tue, 20 Dec 2022 15:25:14 &#43;0800</lastBuildDate><atom:link href="https://jollysone.github.io/blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="self" type="application/rss+xml" /><item>
     <title>智能合约中通过 tx.origin 授权引发的不安全问题</title>
-    <link>https://jollysone.github.io/blog/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html/</link>
+    <link>https://jollysone.github.io/blog/20191001/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html/</link>
     <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://jollysone.github.io/blog/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html/</guid>
+    <guid>https://jollysone.github.io/blog/20191001/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html/</guid>
     <description><![CDATA[0x00 前言 在合约代码中，最常用的是使用 msg.sender 来检查授权，但有时由于有些程序员不熟悉 tx.origin 和 msg.sender 的区别，如果使用了 tx.origin 可能导致合约的安全问题。黑客最典型的攻击]]></description>
 </item>
 <item>
     <title>区块链技术面试题</title>
-    <link>https://jollysone.github.io/blog/blockchain-technology-interview-question-and-answer.html/</link>
+    <link>https://jollysone.github.io/blog/20221220/blockchain-technology-interview-question-and-answer.html/</link>
     <pubDate>Tue, 20 Dec 2022 15:25:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://jollysone.github.io/blog/blockchain-technology-interview-question-and-answer.html/</guid>
+    <guid>https://jollysone.github.io/blog/20221220/blockchain-technology-interview-question-and-answer.html/</guid>
     <description><![CDATA[1 以太坊常见问题 在以太坊中，Wei和Ether(以太币)有什么区别？ 答： Wei是以太币的最小面值，就好比说人民币的最小面值是分，英镑的最小面]]></description>
 </item>
 <item>
     <title>什么是去中心化自治组织 (DAO)？</title>
-    <link>https://jollysone.github.io/blog/dao.html/</link>
+    <link>https://jollysone.github.io/blog/20200520/what-is-decentralized-autonomous-organization-dao.html/</link>
     <pubDate>Wed, 20 May 2020 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://jollysone.github.io/blog/dao.html/</guid>
+    <guid>https://jollysone.github.io/blog/20200520/what-is-decentralized-autonomous-organization-dao.html/</guid>
     <description><![CDATA[引言 没有集中领导的、成员共同拥有的社区。 一种与互联网上的陌生人合作的安全方式。 一个为特定事业投入资金的安全场所。 1 什么是去中心化自治组织？ 去]]></description>
 </item>
 <item>
     <title>区块链“跨链”是什么？为什么要“跨链”？</title>
-    <link>https://jollysone.github.io/blog/what-is-the-cross-chain-of-blockchain.html/</link>
+    <link>https://jollysone.github.io/blog/20200226/what-is-the-cross-chain-of-blockchain.html/</link>
     <pubDate>Wed, 26 Feb 2020 11:05:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://jollysone.github.io/blog/what-is-the-cross-chain-of-blockchain.html/</guid>
+    <guid>https://jollysone.github.io/blog/20200226/what-is-the-cross-chain-of-blockchain.html/</guid>
     <description><![CDATA[1 跨链概念 跨链是通过连接相对独立的区块链系统，实现资产、数据等的跨链互操作，跨链的主要实现形式包括跨链资产互换和跨链资产转移。 跨链技术 201]]></description>
 </item>
 <item>
     <title>区块链开发中必学的 Node.js 技术</title>
-    <link>https://jollysone.github.io/blog/node.js-technology-is-a-must-for-learning-blockchain.html/</link>
+    <link>https://jollysone.github.io/blog/20180331/node.js-technology-is-a-must-for-learning-blockchain.html/</link>
     <pubDate>Sat, 31 Mar 2018 14:06:11 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://jollysone.github.io/blog/node.js-technology-is-a-must-for-learning-blockchain.html/</guid>
+    <guid>https://jollysone.github.io/blog/20180331/node.js-technology-is-a-must-for-learning-blockchain.html/</guid>
     <description><![CDATA[1 基础语法 1.1 定义变量 var 允许对同一个变量重新定义，覆盖原有值。 1 2 var a = 1; var a = 2; let 允许修改，但不允许重新定义 1 2 let b = 1; b = 2; const 初始化后不允]]></description>
 </item>
 <item>
     <title>比特币发行量由什么决定？比特币2100万发行量由来？</title>
-    <link>https://jollysone.github.io/blog/origin-of-bitcoins-21-million-circulation.html/</link>
+    <link>https://jollysone.github.io/blog/20180306/origin-of-bitcoins-21-million-circulation.html/</link>
     <pubDate>Tue, 06 Mar 2018 19:15:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://jollysone.github.io/blog/origin-of-bitcoins-21-million-circulation.html/</guid>
+    <guid>https://jollysone.github.io/blog/20180306/origin-of-bitcoins-21-million-circulation.html/</guid>
     <description><![CDATA[1 比特币发行量由什么决定？ 对于发行总量的粗略描述是这样的：每10分钟产生一定量的比特币，每四年减半，发行总量上限是2100万枚。 说说减半的规]]></description>
 </item>
 <item>
     <title>什么是区块链(Blockchain)?</title>
-    <link>https://jollysone.github.io/blog/what-is-blockchain.html/</link>
+    <link>https://jollysone.github.io/blog/20180302/what-is-blockchain.html/</link>
     <pubDate>Fri, 02 Mar 2018 15:25:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://jollysone.github.io/blog/what-is-blockchain.html/</guid>
+    <guid>https://jollysone.github.io/blog/20180302/what-is-blockchain.html/</guid>
     <description><![CDATA[1 区块链的由来 区块链概念最早是从比特币衍生出来的。比特币（Bitcoin）诞生于2008年，是由一个名叫中本聪（Satoshi Nakamot]]></description>
 </item>
 </channel>
