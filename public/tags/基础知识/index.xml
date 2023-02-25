@@ -4,13 +4,29 @@
         <link>https://jollysone.github.io/blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
         <description>基础知识 - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Wed, 26 Feb 2020 11:05:10 &#43;0800</lastBuildDate><atom:link href="https://jollysone.github.io/blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Tue, 20 Dec 2022 15:25:14 &#43;0800</lastBuildDate><atom:link href="https://jollysone.github.io/blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="self" type="application/rss+xml" /><item>
     <title>智能合约中通过 tx.origin 授权引发的不安全问题</title>
     <link>https://jollysone.github.io/blog/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html/</link>
     <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
     <author>5oneXj</author>
     <guid>https://jollysone.github.io/blog/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html/</guid>
     <description><![CDATA[0x00 前言 在合约代码中，最常用的是使用 msg.sender 来检查授权，但有时由于有些程序员不熟悉 tx.origin 和 msg.sender 的区别，如果使用了 tx.origin 可能导致合约的安全问题。黑客最典型的攻击]]></description>
+</item>
+<item>
+    <title>区块链技术面试题</title>
+    <link>https://jollysone.github.io/blog/blockchain-technology-interview-question-and-answer.html/</link>
+    <pubDate>Tue, 20 Dec 2022 15:25:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://jollysone.github.io/blog/blockchain-technology-interview-question-and-answer.html/</guid>
+    <description><![CDATA[1 以太坊常见问题 在以太坊中，Wei和Ether(以太币)有什么区别？ 答： Wei是以太币的最小面值，就好比说人民币的最小面值是分，英镑的最小面]]></description>
+</item>
+<item>
+    <title>什么是去中心化自治组织 (DAO)？</title>
+    <link>https://jollysone.github.io/blog/dao.html/</link>
+    <pubDate>Wed, 20 May 2020 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://jollysone.github.io/blog/dao.html/</guid>
+    <description><![CDATA[引言 没有集中领导的、成员共同拥有的社区。 一种与互联网上的陌生人合作的安全方式。 一个为特定事业投入资金的安全场所。 1 什么是去中心化自治组织？ 去]]></description>
 </item>
 <item>
     <title>区块链“跨链”是什么？为什么要“跨链”？</title>

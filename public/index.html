@@ -38,7 +38,7 @@
             <a href="/blog/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/blog/posts/" title="所有文章"> Posts </a><a class="menu-item" href="/blog/categories/"> Categories </a><a class="menu-item" href="/blog/tags/"> Tags </a><a class="menu-item" href="/blog/about/" title="关于"> About </a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/blog/posts/" title="所有文章"> Posts </a><a class="menu-item" href="/blog/tags/"> Tags </a><a class="menu-item" href="/blog/categories/"> Categories </a><a class="menu-item" href="/blog/about/" title="关于"> About </a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
                             <i class="fas fa-search fa-fw" aria-hidden="true"></i>
@@ -80,7 +80,7 @@
                     <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/blog/posts/" title="所有文章">Posts</a><a class="menu-item" href="/blog/categories/" title="">Categories</a><a class="menu-item" href="/blog/tags/" title="">Tags</a><a class="menu-item" href="/blog/about/" title="关于">About</a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                </div><a class="menu-item" href="/blog/posts/" title="所有文章">Posts</a><a class="menu-item" href="/blog/tags/" title="">Tags</a><a class="menu-item" href="/blog/categories/" title="">Categories</a><a class="menu-item" href="/blog/about/" title="关于">About</a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
             </a></div>
     </div>
@@ -100,9 +100,19 @@
         title="/blog/images/avatar.png" width="528" height="560" /></a></div><h1 class="home-title">5oneXj</h1><div class="home-subtitle">专注于区块链智能合约开发和审计</div><div class="links"><a href="https://github.com/jollysone" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/jollysone" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://discordapp.com/users/jollysone#7888" title="Discord" target="_blank" rel="noopener noreffer me"><i class="fab fa-discord fa-fw" aria-hidden="true"></i></a><a href="mailto:jollysone@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">______________</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/blog/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html/">智能合约中通过 tx.origin 授权引发的不安全问题</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/blog/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2019-10-01">2019-10-01</time></span>&nbsp;<span class="post-category">收录于 <a href="/blog/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a></span></div><div class="content">0x00 前言 在合约代码中，最常用的是使用 msg.sender 来检查授权，但有时由于有些程序员不熟悉 tx.origin 和 msg.sender 的区别，如果使用了 tx.origin 可能导致合约的安全问题。黑客最典型的攻击</div><div class="post-footer">
+    </h1><div class="post-meta"><span class="post-author"><a href="/blog/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2019-10-01">2019-10-01</time></span>&nbsp;<span class="post-category">收录于 <a href="/blog/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a>&nbsp;<a href="/blog/categories/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>合约安全</a></span></div><div class="content">0x00 前言 在合约代码中，最常用的是使用 msg.sender 来检查授权，但有时由于有些程序员不熟悉 tx.origin 和 msg.sender 的区别，如果使用了 tx.origin 可能导致合约的安全问题。黑客最典型的攻击</div><div class="post-footer">
         <a href="/blog/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>,&nbsp;<a href="/blog/tags/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8/">合约安全</a>,&nbsp;<a href="/blog/tags/exp/">EXP</a>,&nbsp;<a href="/blog/tags/poc/">POC</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/blog/blockchain-technology-interview-question-and-answer.html/">区块链技术面试题</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/blog/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-12-20">2022-12-20</time></span>&nbsp;<span class="post-category">收录于 <a href="/blog/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a></span></div><div class="content">1 以太坊常见问题 在以太坊中，Wei和Ether(以太币)有什么区别？ 答： Wei是以太币的最小面值，就好比说人民币的最小面值是分，英镑的最小面</div><div class="post-footer">
+        <a href="/blog/blockchain-technology-interview-question-and-answer.html/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>,&nbsp;<a href="/blog/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/blog/dao.html/">什么是去中心化自治组织 (DAO)？</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/blog/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-05-20">2020-05-20</time></span>&nbsp;<span class="post-category">收录于 <a href="/blog/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a></span></div><div class="content">引言 没有集中领导的、成员共同拥有的社区。 一种与互联网上的陌生人合作的安全方式。 一个为特定事业投入资金的安全场所。 1 什么是去中心化自治组织？ 去</div><div class="post-footer">
+        <a href="/blog/dao.html/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>,&nbsp;<a href="/blog/tags/dao/">DAO</a></div></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/blog/what-is-the-cross-chain-of-blockchain.html/">区块链“跨链”是什么？为什么要“跨链”？</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/blog/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-02-26">2020-02-26</time></span>&nbsp;<span class="post-category">收录于 <a href="/blog/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a></span></div><div class="content">1 跨链概念 跨链是通过连接相对独立的区块链系统，实现资产、数据等的跨链互操作，跨链的主要实现形式包括跨链资产互换和跨链资产转移。 跨链技术 201</div><div class="post-footer">
@@ -118,12 +128,15 @@
     </h1><div class="post-meta"><span class="post-author"><a href="/blog/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2018-03-06">2018-03-06</time></span>&nbsp;<span class="post-category">收录于 <a href="/blog/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a></span></div><div class="content">1 比特币发行量由什么决定？ 对于发行总量的粗略描述是这样的：每10分钟产生一定量的比特币，每四年减半，发行总量上限是2100万枚。 说说减半的规</div><div class="post-footer">
         <a href="/blog/origin-of-bitcoins-21-million-circulation.html/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>,&nbsp;<a href="/blog/tags/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a>,&nbsp;<a href="/blog/tags/btc/">BTC</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/blog/what-is-blockchain.html/">什么是区块链(Blockchain)?</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/blog/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2018-03-02">2018-03-02</time></span>&nbsp;<span class="post-category">收录于 <a href="/blog/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a></span></div><div class="content">1 区块链的由来 区块链概念最早是从比特币衍生出来的。比特币（Bitcoin）诞生于2008年，是由一个名叫中本聪（Satoshi Nakamot</div><div class="post-footer">
-        <a href="/blog/what-is-blockchain.html/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>,&nbsp;<a href="/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></div></div>
-</article></div></div>
+</article><ul class="pagination"><li class="page-item active">
+                    <span class="page-link">
+                        <a href="/blog/">1</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/blog/page/2/">2</a>
+                    </span>
+                </li></ul></div></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">商业转载请联系作者获得授权，非商业转载请注明出处。</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2018 - 2023</span></div>
         </div>

@@ -9,7 +9,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://jollysone.github.io/blog/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html/" /><meta property="og:image" content="https://jollysone.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-10-01T17:55:28+08:00" />
-<meta property="article:modified_time" content="2019-10-01T17:55:28+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
+<meta property="article:modified_time" content="2023-02-24T17:12:15+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://jollysone.github.io/logo.png"/>
 
@@ -18,7 +18,7 @@
 <meta name="application-name" content="5oneXj′s Blog">
 <meta name="apple-mobile-web-app-title" content="5oneXj′s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://jollysone.github.io/blog/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html/" /><link rel="prev" href="https://jollysone.github.io/blog/what-is-the-cross-chain-of-blockchain.html/" /><link rel="stylesheet" href="/blog/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://jollysone.github.io/blog/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html/" /><link rel="prev" href="https://jollysone.github.io/blog/blockchain-technology-interview-question-and-answer.html/" /><link rel="stylesheet" href="/blog/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -30,7 +30,7 @@
             "@type": "WebPage",
             "@id": "https:\/\/jollysone.github.io\/blog\/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html\/"
         },"image": ["https:\/\/jollysone.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "基础知识, 合约安全, EXP, POC","wordcount":  1910 ,
-        "url": "https:\/\/jollysone.github.io\/blog\/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html\/","datePublished": "2019-10-01T17:55:28+08:00","dateModified": "2019-10-01T17:55:28+08:00","publisher": {
+        "url": "https:\/\/jollysone.github.io\/blog\/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html\/","datePublished": "2019-10-01T17:55:28+08:00","dateModified": "2023-02-24T17:12:15+08:00","publisher": {
             "@type": "Organization",
             "name": "5oneXj","logo": {
                     "@type": "ImageObject",
@@ -51,7 +51,7 @@
             <a href="/blog/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/blog/posts/" title="所有文章"> Posts </a><a class="menu-item" href="/blog/categories/"> Categories </a><a class="menu-item" href="/blog/tags/"> Tags </a><a class="menu-item" href="/blog/about/" title="关于"> About </a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/blog/posts/" title="所有文章"> Posts </a><a class="menu-item" href="/blog/tags/"> Tags </a><a class="menu-item" href="/blog/categories/"> Categories </a><a class="menu-item" href="/blog/about/" title="关于"> About </a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
                             <i class="fas fa-search fa-fw" aria-hidden="true"></i>
@@ -93,7 +93,7 @@
                     <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/blog/posts/" title="所有文章">Posts</a><a class="menu-item" href="/blog/categories/" title="">Categories</a><a class="menu-item" href="/blog/tags/" title="">Tags</a><a class="menu-item" href="/blog/about/" title="关于">About</a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                </div><a class="menu-item" href="/blog/posts/" title="所有文章">Posts</a><a class="menu-item" href="/blog/tags/" title="">Tags</a><a class="menu-item" href="/blog/categories/" title="">Categories</a><a class="menu-item" href="/blog/about/" title="关于">About</a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
             </a></div>
     </div>
@@ -107,7 +107,7 @@
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">智能合约中通过 tx.origin 授权引发的不安全问题</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/blog/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-category">收录于 <a href="/blog/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a></span></div>
+            <div class="post-meta-line"><span class="post-author"><a href="/blog/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-category">收录于 <a href="/blog/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a>&nbsp;<a href="/blog/categories/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>合约安全</a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2019-10-01">2019-10-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1910 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/blog/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html/" class="leancloud_visitors" data-flag-title="智能合约中通过 tx.origin 授权引发的不安全问题">
                         <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
@@ -304,7 +304,7 @@ Attack 合约代码</p>
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2019-10-01</span>
+                <span>更新于 2023-02-24</span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
@@ -321,7 +321,7 @@ Attack 合约代码</p>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/blog/what-is-the-cross-chain-of-blockchain.html/" class="prev" rel="prev" title="区块链“跨链”是什么？为什么要“跨链”？"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>区块链“跨链”是什么？为什么要“跨链”？</a></div>
+    <div class="post-nav"><a href="/blog/blockchain-technology-interview-question-and-answer.html/" class="prev" rel="prev" title="区块链技术面试题"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>区块链技术面试题</a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.

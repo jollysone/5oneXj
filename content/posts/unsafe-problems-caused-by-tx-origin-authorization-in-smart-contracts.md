@@ -5,7 +5,7 @@ date: 2019-10-01T17:55:28+08:00
 draft: false
 author: "5oneXj"
 
-categories: ["基础知识"]
+categories: ["基础知识", "合约安全"]
 tags: ["基础知识", "合约安全", "EXP", "POC"]
 ---
 

@@ -35,19 +35,19 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     title = "所有文章"
   [[menu.main]]
     weight = 2
-    identifier = "categories"
-    pre = ""
-    post = ""
-    name = "Categories"
-    url = "/categories/"
-    title = ""
-  [[menu.main]]
-    weight = 3
     identifier = "tags"
     pre = ""
     post = ""
     name = "Tags"
     url = "/tags/"
+    title = ""
+  [[menu.main]]
+    weight = 3
+    identifier = "categories"
+    pre = ""
+    post = ""
+    name = "Categories"
+    url = "/categories/"
     title = ""
   [[menu.main]]
     weight = 4
