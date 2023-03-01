@@ -1,7 +1,7 @@
-baseURL = 'https://jollysone.github.io/blog/'
+baseURL = 'https://blog.webhooks.top/'
 title = '专注于区块链智能合约开发和审计 | 5oneXj′s Blog'
 theme = "LoveIt"
-
+uglyurls = true
 defaultContentLanguage = "zh-cn"
 languageCode = "zh-CN"
 languageName = "简体中文"
@@ -31,7 +31,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     pre = ""
     post = ""
     name = "Posts"
-    url = "/posts/"
+    url = "/posts.html"
     title = "所有文章"
   [[menu.main]]
     weight = 2
@@ -39,28 +39,28 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     pre = ""
     post = ""
     name = "Tags"
-    url = "/tags/"
-    title = ""
+    url = "/tags.html"
+    title = "所有标签"
   [[menu.main]]
     weight = 3
     identifier = "categories"
     pre = ""
     post = ""
     name = "Categories"
-    url = "/categories/"
-    title = ""
+    url = "/categories.html"
+    title = "所有分类"
   [[menu.main]]
     weight = 4
     identifier = "about"
     pre = ""
     post = ""
     name = "About"
-    url = "/about/"
+    url = "/about.html"
     title = "关于"
   [[menu.main]]
     weight = 5
     identifier = "github"
-    pre = "<i class='fab fa-github fa-fw' aria-hidden='true'></i>"
+    pre = ""
     post = ""
     name = ""
     url = "https://github.com/jollysone"
@@ -92,7 +92,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
   # 页面底部信息配置
   [params.footer]
     enable = true
-    custom = "商业转载请联系作者获得授权，非商业转载请注明出处。"
+    custom = "转载请注明出处"
     hugo = false
     copyright = true
     author = false
@@ -321,19 +321,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     # 评论系统设置
     [params.page.comment]
       enable = true
-      # Disqus 评论系统设置 (https://disqus.com/)
-      [params.page.comment.disqus]
-        enable = false
-        # Disqus shortname to use Disqus in posts
-        # Disqus 的 shortname，用来在文章中启用 Disqus 评论系统
-        shortname = ""
-      # Gitalk 评论系统设置 (https://github.com/gitalk/gitalk)
-      [params.page.comment.gitalk]
-        enable = false
-        owner = ""
-        repo = ""
-        clientId = ""
-        clientSecret = ""
+
       # Valine 评论系统设置 (https://github.com/xCss/Valine)
       [params.page.comment.valine]
         enable = true
@@ -361,37 +349,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         # 可以在你的项目下相同路径存放你自己的数据文件:
         # "assets/lib/valine/emoji/"
         emoji = ""
-      # Facebook 评论系统设置 (https://developers.facebook.com/docs/plugins/comments)
-      [params.page.comment.facebook]
-        enable = false
-        width = "100%"
-        numPosts = 10
-        appId = ""
-        # automatically adapt the current theme i18n configuration when empty
-        # 为空时自动适配当前主题 i18n 配置
-        languageCode = ""
-      # Telegram comments 评论系统设置 (https://comments.app/)
-      [params.page.comment.telegram]
-        enable = false
-        siteID = ""
-        limit = 5
-        height = ""
-        color = ""
-        colorful = true
-        dislikes = false
-        outlined = false
-      # Commento comment 评论系统设置 (https://commento.io/)
-      [params.page.comment.commento]
-        enable = false
-      # utterances comment 评论系统设置 (https://utteranc.es/)
-      [params.page.comment.utterances]
-        enable = false
-        # owner/repo
-        repo = ""
-        issueTerm = "pathname"
-        label = ""
-        lightTheme = "github-light"
-        darkTheme = "github-dark"
+      
       # giscus comment 评论系统设置 (https://giscus.app/zh-CN)
       [params.page.comment.giscus]
         # 你可以参考官方文档来使用下列配置
@@ -535,7 +493,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
   # 目录设置
   [markup.tableOfContents]
     startLevel = 1
-    endLevel = 3
+    endLevel = 4
 
 # 网站地图配置
 [sitemap]
@@ -545,7 +503,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
 
 # Permalinks 配置 (https://gohugo.io/content-management/urls/#permalinks)
 [Permalinks]
-  posts = "/:year:month:day/:slug.html"
+  posts = "/:section/:slug"
 
 # 隐私信息配置 (https://gohugo.io/about/hugo-and-gdpr/)
 [privacy]
@@ -571,7 +529,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
 # 用于 Hugo 输出文档的设置
 [outputs]
   home = ["HTML", "RSS", "JSON"]
-  page = ["HTML", "MarkDown"]
+  page = ["HTML"]
   section = ["HTML", "RSS"]
   taxonomy = ["HTML", "RSS"]
   taxonomyTerm = ["HTML"]

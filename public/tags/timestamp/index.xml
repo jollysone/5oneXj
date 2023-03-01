@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>timestamp - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
+        <link>https://blog.webhooks.top/tags/timestamp.html</link>
+        <description>timestamp - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Fri, 09 Dec 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/timestamp.html" rel="self" type="application/rss+xml" /><item>
+    <title>合约安全：操纵区块时间</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-timestamp-manipulation.html</link>
+    <pubDate>Fri, 09 Dec 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-timestamp-manipulation.html</guid>
+    <description><![CDATA[引言 智能合约的操纵区块时间攻击，并使用 Foundry 复现。在合并（The Merge）之前，以太坊矿工可以操纵区块时间，如果抽奖合约的伪随机数依赖于区块时]]></description>
+</item>
+</channel>
+</rss>

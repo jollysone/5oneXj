@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>erc721 - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
+        <link>https://blog.webhooks.top/tags/erc721.html</link>
+        <description>erc721 - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Tue, 22 Nov 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/erc721.html" rel="self" type="application/rss+xml" /><item>
+    <title>合约安全：抢先交易</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-front-running.html</link>
+    <pubDate>Tue, 22 Nov 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-front-running.html</guid>
+    <description><![CDATA[引言 智能合约的抢先交易（Front-running，抢跑）。据统计，以太坊上的套利者通过三明治攻击（sandwich attack）共获利$1]]></description>
+</item>
+<item>
+    <title>合约安全：NFT重入攻击</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-nft-re-entrancy.html</link>
+    <pubDate>Mon, 22 Aug 2022 10:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-nft-re-entrancy.html</guid>
+    <description><![CDATA[1 NFT重入风险 重入攻击是智能合约中最常见的一种攻击，攻击者通过合约漏洞（例如fallback函数）循环调用合约，将合约中资产转走或铸造大量]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Metamask项目方给Solidity程序员的16个安全建议 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title><meta name="Description" content="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><meta property="og:title" content="Metamask项目方给Solidity程序员的16个安全建议" />
+<meta property="og:description" content="Metamask项目方给Solidity程序员的16个安全建议 引言 原文：Solidity Best Practices for Smart Contract Security 原文作者：Consensys（metam" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.webhooks.top/posts/16-safety-recommendations.html" /><meta property="og:image" content="https://blog.webhooks.top/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-19T20:13:10+08:00" />
+<meta property="article:modified_time" content="2023-01-19T20:13:10+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.webhooks.top/logo.png"/>
+
+<meta name="twitter:title" content="Metamask项目方给Solidity程序员的16个安全建议"/>
+<meta name="twitter:description" content="Metamask项目方给Solidity程序员的16个安全建议 引言 原文：Solidity Best Practices for Smart Contract Security 原文作者：Consensys（metam"/>
+<meta name="application-name" content="5oneXj′s Blog">
+<meta name="apple-mobile-web-app-title" content="5oneXj′s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.webhooks.top/posts/16-safety-recommendations.html" /><link rel="prev" href="https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html" /><link rel="next" href="https://blog.webhooks.top/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Metamask项目方给Solidity程序员的16个安全建议",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.webhooks.top\/posts\/16-safety-recommendations.html"
+        },"image": ["https:\/\/blog.webhooks.top\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "solidity","wordcount":  5496 ,
+        "url": "https:\/\/blog.webhooks.top\/posts\/16-safety-recommendations.html","datePublished": "2023-01-19T20:13:10+08:00","dateModified": "2023-01-19T20:13:10+08:00","publisher": {
+            "@type": "Organization",
+            "name": "5oneXj","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.webhooks.top\/images\/avatar.png",
+                    "width":  528 ,
+                    "height":  560 
+                }},"author": {
+                "@type": "Person",
+                "name": "Consensys"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts.html" title="所有文章"> Posts </a><a class="menu-item" href="/tags.html" title="所有标签"> Tags </a><a class="menu-item" href="/categories.html" title="所有分类"> Categories </a><a class="menu-item" href="/about.html" title="关于"> About </a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts.html" title="所有文章">Posts</a><a class="menu-item" href="/tags.html" title="所有标签">Tags</a><a class="menu-item" href="/categories.html" title="所有分类">Categories</a><a class="menu-item" href="/about.html" title="关于">About</a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Metamask项目方给Solidity程序员的16个安全建议</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Consensys</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-19">2023-01-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 5496 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 11 分钟&nbsp;<span id="/posts/16-safety-recommendations.html" class="leancloud_visitors" data-flag-title="Metamask项目方给Solidity程序员的16个安全建议">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#metamask项目方给solidity程序员的16个安全建议">Metamask项目方给Solidity程序员的16个安全建议</a></li>
+        <li><a href="#1-正确使用-assert-require-revert">1. 正确使用 <code>assert(), require(), revert()</code></a></li>
+        <li><a href="#2-modifier仅用于检查">2. <code>modifier</code>仅用于检查</a></li>
+        <li><a href="#3-注意整数除法的舍入">3. 注意整数除法的舍入</a></li>
+        <li><a href="#4-注意抽象合约abstract和接口interface之间的权衡">4. 注意抽象合约<code>abstract</code>和接口<code>interface</code>之间的权衡</a></li>
+        <li><a href="#5-fallback-function-后备函数">5. Fallback function 后备函数</a>
+          <ul>
+            <li><a href="#保持fallback-function简单">保持fallback function简单</a></li>
+            <li><a href="#检查回退函数中的数据长度">检查回退函数中的数据长度</a></li>
+          </ul>
+        </li>
+        <li><a href="#6-显式标记应付函数和状态变量">6. 显式标记应付函数和状态变量</a></li>
+        <li><a href="#7-显式标记函数和状态变量的可见性">7. 显式标记函数和状态变量的可见性</a></li>
+        <li><a href="#8-将编译指示锁定到特定的编译器版本">8. 将编译指示锁定到特定的编译器版本</a></li>
+        <li><a href="#9-使用事件来监控合约活动">9. 使用事件来监控合约活动</a></li>
+        <li><a href="#10-请注意内置函数可能会被隐藏">10. 请注意，“内置”函数可能会被隐藏</a></li>
+        <li><a href="#11-避免使用-txorigin">11. 避免使用 tx.origin</a></li>
+        <li><a href="#12-时间戳依赖">12. 时间戳依赖</a>
+          <ul>
+            <li><a href="#时间戳操作">时间戳操作</a></li>
+          </ul>
+        </li>
+        <li><a href="#13-15秒规则">13. 15秒规则</a>
+          <ul>
+            <li><a href="#避免-blocknumber-用作时间戳">避免 block.number 用作时间戳</a></li>
+          </ul>
+        </li>
+        <li><a href="#14-多重继承注意事项">14. 多重继承注意事项</a></li>
+        <li><a href="#15-使用接口类型而不是地址来保证类型安全">15. 使用接口类型而不是地址来保证类型安全</a></li>
+        <li><a href="#16-避免-extcodesize-用于检查外部拥有的帐户">16. 避免 <code>extcodesize</code> 用于检查外部拥有的帐户</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="metamask项目方给solidity程序员的16个安全建议">Metamask项目方给Solidity程序员的16个安全建议</h2>
+<div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw" aria-hidden="true"></i>引言<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p><strong>原文</strong>：<a href="https://consensys.net/blog/developers/solidity-best-practices-for-smart-contract-security/" target="_blank" rel="noopener noreffer ">Solidity Best Practices for Smart Contract Security</a></p>
+<p><strong>原文作者</strong>：Consensys（metamask项目方）</p>
+<p>这是Metamask项目方（Consensys）在2020年8月写的一篇博客，关于智能合约安全，其中给了Solidity程序员16条安全建议，并包含代码样例。</p>
+<p>这篇文章写于一年半前，那时候solidity版本才到0.5,现在已经是0.8了，很多函数都不同。但很多建议至今仍然适用，读完对我帮助很大。我在网上没找到中文翻译，就简单翻译了一下，并标明了版本差异可能导致的问题，供中文开发者学习。</p>
+</div>
+        </div>
+    </div>
+<p>如果您已经牢记智能合约的安全理念并且正在处理<code>EVM</code>的特性，那么是时候考虑一​​些特定于<code>Solidity</code>编程语言的安全模式了。在本综述中，我们将重点关注<code>Solidity</code>的安全开发建议，这些建议也可能对用其他语言开发智能合约具有指导意义。</p>
+<p>好了，让我们开始吧。</p>
+<h2 id="1-正确使用-assert-require-revert">1. 正确使用 <code>assert(), require(), revert()</code></h2>
+<p>便利函数 <code>assert</code> 和 <code>require</code> 可用于检查条件，如果条件不满足则抛出异常。</p>
+<p><code>assert</code> 函数只能用于测试内部错误和检查不变量。</p>
+<p>应该使用 <code>require</code> 函数来确保满足有效条件，例如输入或合约状态变量，或者验证来自外部合约调用的返回值。 （<code>0xAA注: solidity在0.8.4版本引入自定义error功能，所以这个版本之前用require，之后用revert-error来确保满足有效条件</code>）</p>
+<p>遵循这种范式可以让形式化分析工具来验证无效操作码永远不会被运行：这意味着代码中没有不变量被违反并且被形式化验证。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="k">pragma solidity</span> <span class="o">^</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Sharer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">sendHalf</span><span class="p">(</span><span class="kt">address</span> <span class="k">payable</span> <span class="n">addr</span><span class="p">)</span> <span class="k">public</span> <span class="k">payable</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint</span> <span class="nb">balance</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#34;偶数required.&#34;</span><span class="p">);</span> <span class="c1">//Require() 可以加一个自定义消息
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">uint</span> <span class="n">balanceBeforeTransfer</span> <span class="o">=</span> <span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">).</span><span class="nb">balance</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="kt">bool</span> <span class="n">success</span><span class="p">,</span> <span class="p">)</span> <span class="o">=</span> <span class="n">addr</span><span class="p">.</span><span class="nb">call</span><span class="p">.</span><span class="nb">value</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)(</span><span class="s">&#34;&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="n">success</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 如果success为false，就revert。下面的总是成立。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">assert</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">).</span><span class="nb">balance</span> <span class="o">==</span> <span class="n">balanceBeforeTransfer</span> <span class="o">-</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">value</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// used for internal error checking
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">).</span><span class="nb">balance</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2-modifier仅用于检查">2. <code>modifier</code>仅用于检查</h2>
+<p>修饰符（<code>modifier</code>）内的代码通常在函数体之前执行，因此任何状态更改或外部调用都会违反 <code>Checks-Effects-Interactions</code>模式。此外，开发人员也可能不会注意到这些语句，因为修饰符的代码可能远离函数声明。例如，修饰符的外部调用可能导致重入攻击：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Registry</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="n">owner</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">isVoter</span><span class="p">(</span><span class="kt">address</span> <span class="n">_addr</span><span class="p">)</span> <span class="k">external</span> <span class="k">returns</span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Code
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Election</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Registry</span> <span class="n">registry</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">modifier</span> <span class="nf">isEligible</span><span class="p">(</span><span class="kt">address</span> <span class="n">_addr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="n">registry</span><span class="p">.</span><span class="n">isVoter</span><span class="p">(</span><span class="n">_addr</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="k">_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">vote</span><span class="p">()</span> <span class="n">isEligible</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Code
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这种情况下，<code>Registry</code>合约可以通过调用<code>isVoter()</code>中的<code>Election.vote()</code> 进行重入攻击。</p>
+<p>注意：使用<code>modifier</code>替换多个函数中的重复条件检查，例如 <code>isOwner()</code>，否则在函数内部使用<code>require</code>或<code>revert</code>。这使您的智能合约代码更具可读性和更易于审计。</p>
+<h2 id="3-注意整数除法的舍入">3. 注意整数除法的舍入</h2>
+<p>所有整数除法都向下舍入到最接近的整数。如果您需要更高的精度，请考虑使用乘数，或同时存储分子和分母。</p>
+<p>（将来，<code>Solidity</code> 会有浮点类型，这会让这更容易。）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// bad
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">uint</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// Result is 2, all integer divison rounds DOWN to the nearest integer
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用乘数可以防止四舍五入，在将来使用 x 时需要考虑这个乘数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// good
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">uint</span> <span class="n">multiplier</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">uint</span> <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">multiplier</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>存储分子和分母意味着你可以计算 numerator/denominator 链下的结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// good
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">uint</span> <span class="n">numerator</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">uint</span> <span class="n">denominator</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4-注意抽象合约abstract和接口interface之间的权衡">4. 注意抽象合约<code>abstract</code>和接口<code>interface</code>之间的权衡</h2>
+<p>接口和抽象合约都为智能合约提供了一种可定制和可重用的方法。<code>Solidity 0.4.11</code>中引入的接口类似于抽象合约，但不能实现任何功能。接口也有限制，例如不能访问存储或从其他接口继承，这通常使抽象合约更实用。虽然，接口对于在实现之前设计合约肯定有用。此外，重要的是要记住，如果合约继承自抽象合约，它必须通过覆盖实现所有未实现的功能，否则它也将是抽象的。</p>
+<h2 id="5-fallback-function-后备函数">5. Fallback function 后备函数</h2>
+<blockquote>
+<p>0xAA注：<code>Solidity 0.5.0</code>时还没有<code>receive</code>函数且<code>fallback</code>函数当时也直接声明为<code>function()</code>。关于最新版本的<code>fallback</code>函数教程，请看<a href="https://mirror.xyz/ninjak.eth/EroVZqHW1lfJFai3umiu4tb9r1ZbDVPOYC-puaZklAw" target="_blank" rel="noopener noreffer ">链接</a></p>
+</blockquote>
+<h3 id="保持fallback-function简单">保持fallback function简单</h3>
+<p>当合约被发送一个没有参数的消息（或者没有函数匹配）或，<code>fallback function</code>会被调用。当被<code>.send()</code>或<code>.transfer</code>触发时，<code>fallback function</code>只能访问<code>2300 gas</code>。如果您希望能够从<code>send()</code>或<code>.transfer()</code>接收<code>ETH</code>，那么您在后备函数中最多可以做的就是记录一个事件。如果需要计算更多<code>gas</code>，请使用适当的函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// bad
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span><span class="p">()</span> <span class="k">payable</span> <span class="p">{</span> <span class="n">balances</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// good
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span> <span class="nf">deposit</span><span class="p">()</span> <span class="k">payable</span> <span class="k">external</span> <span class="p">{</span> <span class="n">balances</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span><span class="p">()</span> <span class="k">payable</span> <span class="p">{</span> <span class="nb">require</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">data</span><span class="p">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span> <span class="n">emit</span> <span class="n">LogDepositReceived</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">);</span> <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="检查回退函数中的数据长度">检查回退函数中的数据长度</h3>
+<p>由于 <code>fallback function</code> 不仅在普通以太传输（没有<code>msg.data</code>）时调用，并且也在没有其他函数匹配时调用，如果后备函数仅用于记录接收到的<code>ETH</code>，则应检查数据是否为空。否则，如果你的合约使用不正确，调用了不存在的函数，调用者将不会注意到。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// bad
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span><span class="p">()</span> <span class="k">payable</span> <span class="p">{</span> <span class="n">emit</span> <span class="n">LogDepositReceived</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">);</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// good
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span><span class="p">()</span> <span class="k">payable</span> <span class="p">{</span> <span class="nb">require</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">data</span><span class="p">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span> <span class="n">emit</span> <span class="n">LogDepositReceived</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">);</span> <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="6-显式标记应付函数和状态变量">6. 显式标记应付函数和状态变量</h2>
+<p>从 <code>Solidity 0.4.0</code>开始，每个接收以太币的函数都必须使用 <code>payable</code>修饰符，否则如果交易有<code>msg.value &gt; 0</code> 将被<code>revert</code>。</p>
+<p><strong>注意</strong>：可能不明显的事情： <code>payable</code> 修饰符仅适用于来自 <code>external</code> 合约的调用。如果我在同一个合约的<code>payable</code>函数中调用了一个非<code>payable</code>函数，这个非<code>payable</code>函数不会失败，尽管 <code>msg.value</code>不为零。</p>
+<h2 id="7-显式标记函数和状态变量的可见性">7. 显式标记函数和状态变量的可见性</h2>
+<p>明确标记函数和状态变量的可见性。函数可以指定为 <code>external</code>， <code>public</code>，<code>internal</code>或<code>private</code>。请理解它们之间的差异，例如，<code>external</code>可能足以代替 <code>public</code>。而对于状态变量，<code>external</code>是不用的。明确标记可见性将更容易捕捉关于谁可以调用函数或访问变量的错误。</p>
+<ol>
+<li>
+<p><code>External</code>函数是合约接口的一部分。<code>external</code>函数<code>f</code>不能在内部调用（即<code>f()</code> 不工作，但 <code>this.f()</code> 工作）。外部函数在接收大量数据时效率更高。</p>
+</li>
+<li>
+<p><code>Public</code>函数是合约接口的一部分，既可以在内部调用，也可以通过消息调用。对于公共状态变量，会生成一个自动 <code>getter</code> 函数。</p>
+</li>
+<li>
+<p><code>Internal</code> 函数和状态变量只能在内部访问，不使用<code>this</code>.</p>
+</li>
+<li>
+<p><code>Private</code> 函数和状态变量仅对定义它们的合约可见，而在派生合约中不可见。 <strong>注意</strong>：合约内的所有内容对区块链外部的所有观察者都是可见的，甚至是 <code>Private</code> 变量。</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// bad
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">uint</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// the default is internal for state variables, but it should be made explicit
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span> <span class="nf">buy</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// the default is public
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// public code
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// good
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">uint</span> <span class="k">private</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nf">buy</span><span class="p">()</span> <span class="k">external</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// only callable externally or using this.buy()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nf">utility</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// callable externally, as well as internally: changing this code requires thinking about both cases.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nf">internalAction</span><span class="p">()</span> <span class="k">internal</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// internal code
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="8-将编译指示锁定到特定的编译器版本">8. 将编译指示锁定到特定的编译器版本</h2>
+<p>合约应该使用与它们经过最多测试的相同编译器版本和标志来部署。锁定 pragma 有助于确保合约不会被意外部署，例如使用可能具有更高风险未发现错误的最新编译器。合约也可能由其他人部署，并且 <code>pragma</code> 指示原作者预期的编译器版本。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// bad
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">pragma solidity</span> <span class="o">^</span><span class="mi">0</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// good
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">pragma solidity</span> <span class="mi">0</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="mi">4</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>注意</strong>：浮动 <code>pragma</code> 版本（即 <code>^0.4.25</code>）可以用<code>0.4.26-nightly.2018.9.25</code>编译，但不应使用<code>nightly</code>版本来编译生产代码。</p>
+<p><strong>警告</strong>：当合约打算供其他开发人员使用时，可以允许 <code>Pragma</code> 语句浮动，例如库或 <code>EthPM</code> 包中的合约。否则，开发人员需要手动更新编译指示才能在本地编译。</p>
+<h2 id="9-使用事件来监控合约活动">9. 使用事件来监控合约活动</h2>
+<p>有一种方法可以在部署后监控合约的活动是很有用的。实现这一点的一种方法是查看合约的所有交易，但这可能还不够，因为合约之间的消息调用不会记录在区块链中。此外，它只显示输入参数，而不是对状态进行的实际更改。事件也可用于触发用户界面中的功能。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Charity</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint</span><span class="p">)</span> <span class="n">balances</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">donate</span><span class="p">()</span> <span class="k">payable</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">balances</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Game</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">buyCoins</span><span class="p">()</span> <span class="k">payable</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 5% goes to charity
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">charity</span><span class="p">.</span><span class="n">donate</span><span class="p">.</span><span class="nb">value</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span> <span class="o">/</span> <span class="mi">20</span><span class="p">)();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这里， <code>Game</code> 合约将内部调用 <code>Charity.donate()</code>. 该交易不会出现在<code>Charity</code> 的外部交易列表中，而只在内部交易中可见。</p>
+<p>事件是记录合约中发生的事情的便捷方式。发出的事件与其他合约数据一起留在区块链中，可供将来审计。这是对上述示例的改进，使用事件来提供慈善机构的捐赠历史。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Charity</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// define event
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">event</span> <span class="nc">LogDonate</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint</span><span class="p">)</span> <span class="n">balances</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">donate</span><span class="p">()</span> <span class="k">payable</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">balances</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// emit event
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">emit</span> <span class="n">LogDonate</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Game</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">buyCoins</span><span class="p">()</span> <span class="k">payable</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 5% goes to charity
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">charity</span><span class="p">.</span><span class="n">donate</span><span class="p">.</span><span class="nb">value</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span> <span class="o">/</span> <span class="mi">20</span><span class="p">)();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这里，无论是否直接通过合约的所有交易都 <code>Charity</code> 将与捐赠的金额一起显示在该合约的事件列表中。</p>
+<p><strong>注意</strong>：优先使用更新的 Solidity 结构。首选结构/别名，例如 <code>selfdestruct</code> (而不是  <code>suicide</code>) 和 <code>keccak256</code> (而不是  <code>sha3</code>)。类似的模式 <code>require(msg.sender.send(1 ether))</code> 也可以简化为使用 <code>transfer()</code>，如 <code>msg.sender.transfer(1 ether)</code>. 查看 <code>Solidity</code> 更改日志 以了解更多类似更改。</p>
+<h2 id="10-请注意内置函数可能会被隐藏">10. 请注意，“内置”函数可能会被隐藏</h2>
+<p>目前可以 在 <code>Solidity</code> 中隐藏内置的全局变量。这允许合约覆盖内置插件的功能，例如 <code>msg</code> 和 <code>revert()</code>。尽管这是有意为之，但它可能会误导合约用户对合约的真实行为。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">PretendingToRevert</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">revert</span><span class="p">()</span> <span class="k">internal</span> <span class="k">constant</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">ExampleContract</span> <span class="k">is</span> <span class="n">PretendingToRevert</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">somethingBad</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">revert</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>合约用户（和审计员）应该了解他们打算使用的任何应用程序的完整智能合约源代码。</p>
+<h2 id="11-避免使用-txorigin">11. 避免使用 tx.origin</h2>
+<p>永远不要 tx.origin 用于授权，另一个合约可以有一个方法来调用你的合约（例如，用户有一些资金）并且你的合约将授权该交易，因为你的地址位于<code>tx.origin</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">MyContract</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="n">owner</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">MyContract</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">owner</span> <span class="o">=</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">sendTo</span><span class="p">(</span><span class="kt">address</span> <span class="n">receiver</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">amount</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="nb">tx</span><span class="p">.</span><span class="nb">origin</span> <span class="o">==</span> <span class="n">owner</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="kt">bool</span> <span class="n">success</span><span class="p">,</span> <span class="p">)</span> <span class="o">=</span> <span class="n">receiver</span><span class="p">.</span><span class="nb">call</span><span class="p">.</span><span class="nb">value</span><span class="p">(</span><span class="n">amount</span><span class="p">)(</span><span class="s">&#34;&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="n">success</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">AttackingContract</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">MyContract</span> <span class="n">myContract</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="n">attacker</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">AttackingContract</span><span class="p">(</span><span class="kt">address</span> <span class="n">myContractAddress</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">myContract</span> <span class="o">=</span> <span class="n">MyContract</span><span class="p">(</span><span class="n">myContractAddress</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">attacker</span> <span class="o">=</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">myContract</span><span class="p">.</span><span class="n">sendTo</span><span class="p">(</span><span class="n">attacker</span><span class="p">,</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">.</span><span class="nb">balance</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>您应该使用 <code>msg.sender</code> 授权（如果另一个合约调用您的合约 <code>msg.sender</code> 将是该合约的地址，而不是调用该合约的用户的地址）。</p>
+<p><strong>警告</strong>：除了授权问题外， <code>tx.origin</code> 将来有可能从以太坊协议中删除，因此使用的代码 <code>tx.origin</code> 将与未来版本不兼容. Vitalik：&lsquo;不要假设 <code>tx.origin</code> 将继续存在。</p>
+<p>还值得一提的是，通过使用 <code>tx.origin</code> 您会限制合约之间的互操作性，因为使用 <code>tx.origin</code> 的合约不能被另一个合约使用，因为合约不能是 <code>tx.origin.</code></p>
+<h2 id="12-时间戳依赖">12. 时间戳依赖</h2>
+<p>使用时间戳执行合约中的关键功能时，有三个主要考虑因素，尤其是当操作涉及资金转移时。</p>
+<h3 id="时间戳操作">时间戳操作</h3>
+<p>请注意，区块的时间戳可以由矿工操纵。考虑这个合约：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kt">uint256</span> <span class="k">constant</span> <span class="k">private</span> <span class="n">salt</span> <span class="o">=</span>  <span class="nb">block</span><span class="p">.</span><span class="nb">timestamp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nf">random</span><span class="p">(</span><span class="kt">uint</span> <span class="n">Max</span><span class="p">)</span> <span class="k">constant</span> <span class="k">private</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span> <span class="n">result</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//get the best seed for randomness
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint256</span> <span class="n">x</span> <span class="o">=</span> <span class="n">salt</span> <span class="o">*</span> <span class="mi">100</span><span class="o">/</span><span class="n">Max</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">uint256</span> <span class="n">y</span> <span class="o">=</span> <span class="n">salt</span> <span class="o">*</span> <span class="nb">block</span><span class="p">.</span><span class="nb">number</span><span class="o">/</span><span class="p">(</span><span class="n">salt</span> <span class="o">%</span> <span class="mi">5</span><span class="p">)</span> <span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">uint256</span> <span class="n">seed</span> <span class="o">=</span> <span class="nb">block</span><span class="p">.</span><span class="nb">number</span><span class="o">/</span><span class="mi">3</span> <span class="o">+</span> <span class="p">(</span><span class="n">salt</span> <span class="o">%</span> <span class="mi">300</span><span class="p">)</span> <span class="o">+</span> <span class="n">Last_Payout</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">uint256</span> <span class="n">h</span> <span class="o">=</span> <span class="kt">uint256</span><span class="p">(</span><span class="nb">block</span><span class="p">.</span><span class="nb">blockhash</span><span class="p">(</span><span class="n">seed</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kt">uint256</span><span class="p">((</span><span class="n">h</span> <span class="o">/</span> <span class="n">x</span><span class="p">))</span> <span class="o">%</span> <span class="n">Max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">//random number between 1 and Max
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当合约使用时间戳播种一个随机数时，矿工实际上可以在区块被验证后的 15 秒内发布一个时间戳，从而有效地允许矿工预先计算一个更有利于他们中奖机会的选项。时间戳不是随机的，不应在该上下文中使用。</p>
+<h2 id="13-15秒规则">13. 15秒规则</h2>
+<p>黄皮书 （Ethereum 的参考规范）没有规定多少块可以在时间上漂移的限制，但它确实规定每个时间戳应该大于其父时间戳。流行的以太坊协议实现 <code>Geth</code>和<code>Parity</code>都拒绝未来时间戳超过 15 秒的块。因此，评估时间戳使用的一个好的经验法则是：如果您的时间相关事件的规模可以变化 15 秒并保持完整性，那么可以使用<code>block.timestamp</code>.</p>
+<h3 id="避免-blocknumber-用作时间戳">避免 block.number 用作时间戳</h3>
+<p>可以使用 <code>block.number</code> 属性和 平均块时间来估计时间增量，但这不是未来的证据，因为出块时间可能会改变（例如 分叉重组 和 难度炸弹）。但在只持续几天的销售中，15秒规则允许人们获得更可靠的时间估计。</p>
+<h2 id="14-多重继承注意事项">14. 多重继承注意事项</h2>
+<p>在 Solidity 中使用多重继承时，了解编译器如何构成继承图非常重要。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Final</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">uint</span> <span class="k">public</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">Final</span><span class="p">(</span><span class="kt">uint</span> <span class="n">f</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">a</span> <span class="o">=</span> <span class="n">f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">B</span> <span class="k">is</span> <span class="n">Final</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="k">public</span> <span class="n">fee</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">B</span><span class="p">(</span><span class="kt">uint</span> <span class="n">f</span><span class="p">)</span> <span class="n">Final</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">setFee</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">fee</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">C</span> <span class="k">is</span> <span class="n">Final</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="k">public</span> <span class="n">fee</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">C</span><span class="p">(</span><span class="kt">uint</span> <span class="n">f</span><span class="p">)</span> <span class="n">Final</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">setFee</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">fee</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">A</span> <span class="k">is</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">function</span> <span class="nf">A</span><span class="p">()</span> <span class="k">public</span> <span class="n">B</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="n">C</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">setFee</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>部署合约时，编译器将从右到左线性化继承（在关键字<code>is</code>之后 ，父项从最基类到最派生列出）。这是合约 <code>A</code> 的线性化：</p>
+<p><code>Final &lt;- B &lt;- C &lt;- A</code></p>
+<p>线性化的结果将产生 <code>fee = 5</code> 的值，因为 <code>C</code> 是最接近衍生的合约。这似乎很明显，但想象一下 <code>C</code> 能够隐藏关键函数、重新排序布尔子句并导致开发人员编写可利用的合约的场景。静态分析目前不会引发被遮盖的函数的问题，因此必须手动检查。</p>
+<p>为了帮助做出贡献，<code>Solidity</code> 的 <code>Github</code> 有一个包含所有继承相关问题的<a href="https://github.com/ethereum/solidity/projects/9#card-8027020" target="_blank" rel="noopener noreffer ">项目</a>。</p>
+<h2 id="15-使用接口类型而不是地址来保证类型安全">15. 使用接口类型而不是地址来保证类型安全</h2>
+<p>当函数将合约地址作为参数时，最好传递接口或合约类型而不是  纯<code>address</code>。因为如果函数在源代码的其他地方被调用，编译器将提供额外的类型安全保证。</p>
+<p>在这里，我们看到了两种选择：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Validator</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">validate</span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span> <span class="k">external</span> <span class="k">returns</span><span class="p">(</span><span class="kt">bool</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">TypeSafeAuction</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// good
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">validateBet</span><span class="p">(</span><span class="n">Validator</span> <span class="n">_validator</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">_value</span><span class="p">)</span> <span class="k">internal</span> <span class="k">returns</span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">bool</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">_validator</span><span class="p">.</span><span class="n">validate</span><span class="p">(</span><span class="n">_value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">valid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">TypeUnsafeAuction</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// bad
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">validateBet</span><span class="p">(</span><span class="kt">address</span> <span class="n">_addr</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">_value</span><span class="p">)</span> <span class="k">internal</span> <span class="k">returns</span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Validator</span> <span class="n">validator</span> <span class="o">=</span> <span class="n">Validator</span><span class="p">(</span><span class="n">_addr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">bool</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">validator</span><span class="p">.</span><span class="n">validate</span><span class="p">(</span><span class="n">_value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">valid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以从下面示例中看出使用<code>TypeSafeAuction</code>合约的好处 。如果 <code>validateBet()</code> 使用 <code>address</code> 参数或合约类型而不是<code>Validator</code>合约类型，编译器将抛出此错误：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">NonValidator</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Auction</span> <span class="k">is</span> <span class="n">TypeSafeAuction</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NonValidator</span> <span class="n">nonValidator</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">bet</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_value</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">bool</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">validateBet</span><span class="p">(</span><span class="n">nonValidator</span><span class="p">,</span> <span class="n">_value</span><span class="p">);</span> <span class="c1">// TypeError: Invalid type for argument in function call.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                                                        <span class="c1">// Invalid implicit conversion from contract NonValidator
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                                                        <span class="c1">// to contract Validator requested.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="16-避免-extcodesize-用于检查外部拥有的帐户">16. 避免 <code>extcodesize</code> 用于检查外部拥有的帐户</h2>
+<p>以下修饰符（或类似的检查）通常用于验证调用是来自外部拥有的账户（<code>EOA</code>）还是合约账户：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// bad
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">modifier</span> <span class="nf">isNotContract</span><span class="p">(</span><span class="kt">address</span> <span class="n">_a</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">uint</span> <span class="n">size</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">assembly</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">size</span> <span class="o">:=</span> <span class="nf">extcodesize</span><span class="p">(</span><span class="n">_a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">require</span><span class="p">(</span><span class="n">size</span> <span class="err">==</span> <span class="mi">0</span><span class="p">)</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">     <span class="n">_</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个想法很简单：如果一个地址包含代码，它就不是一个 <code>EOA</code>，而是一个合约账户。但是，合约在构建期间没有可用的源代码。这意味着在构造函数运行时，它可以调用其他合约，但 <code>extcodesize</code> 在它的地址返回零。下面是一个最小的例子，展示了如何绕过这个检查：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">OnlyForEOA</span> <span class="p">{</span>    
+</span></span><span class="line"><span class="cl">    <span class="kt">uint</span> <span class="k">public</span> <span class="n">flag</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// bad
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">modifier</span> <span class="nf">isNotContract</span><span class="p">(</span><span class="kt">address</span> <span class="n">_a</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">uint</span> <span class="n">len</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">assembly</span> <span class="p">{</span> <span class="n">len</span> <span class="o">:=</span> <span class="nf">extcodesize</span><span class="p">(</span><span class="n">_a</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">require</span><span class="p">(</span><span class="n">len</span> <span class="err">==</span> <span class="mi">0</span><span class="p">)</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">_</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">setFlag</span><span class="p">(</span><span class="kt">uint</span> <span class="n">i</span><span class="p">)</span> <span class="k">public</span> <span class="n">isNotContract</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">flag</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">FakeEOA</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">constructor</span><span class="p">(</span><span class="kt">address</span> <span class="n">_a</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">OnlyForEOA</span> <span class="n">c</span> <span class="o">=</span> <span class="n">OnlyForEOA</span><span class="p">(</span><span class="n">_a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">c</span><span class="p">.</span><span class="n">setFlag</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为可以预先计算合约地址，所以如果它检查一个在 <code>block n</code> 处为空，但在<code>block n</code>之后被部署的合约，依然会失败。</p>
+<p><strong>警告</strong>：这个问题很微妙。如果您的目标是阻止其他合约调用您的合约，那么 <code>extcodesize</code> 检查可能就足够了。另一种方法是检查 的值 (<code>tx.origin == msg.sender</code>)`，尽管这也有缺点。</p>
+<p>在其他情况下， <code>extcodesize</code> 可能会为您服务。在这里描述所有这些超出了范围。了解 <code>EVM</code> 的基本行为并使用您的判断。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-01-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.webhooks.top/posts/16-safety-recommendations.html" data-title="Metamask项目方给Solidity程序员的16个安全建议" data-via="jollysone" data-hashtags="solidity"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.webhooks.top/posts/16-safety-recommendations.html" data-hashtag="solidity"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.webhooks.top/posts/16-safety-recommendations.html"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.webhooks.top/posts/16-safety-recommendations.html" data-title="Metamask项目方给Solidity程序员的16个安全建议" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.webhooks.top/posts/16-safety-recommendations.html" data-title="Metamask项目方给Solidity程序员的16个安全建议"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.webhooks.top/posts/16-safety-recommendations.html" data-title="Metamask项目方给Solidity程序员的16个安全建议"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.webhooks.top/posts/16-safety-recommendations.html" data-title="Metamask项目方给Solidity程序员的16个安全建议"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://blog.webhooks.top/posts/16-safety-recommendations.html" data-title="Metamask项目方给Solidity程序员的16个安全建议"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Skype" data-sharer="skype" data-url="https://blog.webhooks.top/posts/16-safety-recommendations.html" data-title="Metamask项目方给Solidity程序员的16个安全建议"><i class="fab fa-skype fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/solidity-smart-contract-security-oracle-manipulation.html" class="prev" rel="prev" title="合约安全：操纵预言机"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>合约安全：操纵预言机</a>
+            <a href="/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html" class="next" rel="next" title="智能合约中通过 tx.origin 授权引发的不安全问题">智能合约中通过 tx.origin 授权引发的不安全问题<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">转载请注明出处</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2018 - 2023</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"data":{"id-1":"5oneXj′s","id-2":"5oneXj′s"},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":88}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

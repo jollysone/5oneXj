@@ -1,7 +1,7 @@
 ---
 title: "区块链开发中必学的 Node.js 技术"
 slug: node.js-technology-is-a-must-for-learning-blockchain
-date: 2018-03-31T14:06:11+08:00
+date: 2019-03-31T14:06:11+08:00
 draft: false
 author: "5oneXj"
 
@@ -9,8 +9,8 @@ categories: ["基础知识"]
 tags: ["基础知识", "Node.js"]
 ---
 
-# 1 基础语法
-## 1.1 定义变量
+## 1 基础语法
+### 1.1 定义变量
 1. var 允许对同一个变量重新定义，覆盖原有值。
     ```javascript
     var a = 1;
@@ -28,8 +28,8 @@ tags: ["基础知识", "Node.js"]
     const c = 100;
     ```
 
-## 1.2 解构赋值
-### 1.2.1 数组的解构赋值
+### 1.2 解构赋值
+#### 1.2.1 数组的解构赋值
 ```javascript
 let arr = [0,1,2,3,4,5,6]
 let [a, b, c, d] = arr
@@ -37,7 +37,7 @@ let [a, b, c, d] = arr
 console.log(a, b, c)  // 0 1 2
 ```
 
-### 1.2.2 对象的解构赋值
+#### 1.2.2 对象的解构赋值
 ```javascript
 const person = {
   name: '5oneXj', age: 18
@@ -50,7 +50,7 @@ let {name:name1, age:age1} = person
 console.log(name1, age1)  // 5oneXj 18
 ```
 
-### 1.2.3 函数参数的解构赋值
+#### 1.2.3 函数参数的解构赋值
 ```javascript
 const person = {
   name: '5oneXj’, age: 18
@@ -62,7 +62,7 @@ function printPerson({name, age}){
 
 printPerson(person) // 姓名：5oneXj，年龄：18
 ```
-## 1.3 箭头函数
+### 1.3 箭头函数
 ```javascript
 // 只适合用于普通函数
 // 不要用在构造函数、不要用在成员函数、不要用在原型函数
@@ -77,7 +77,7 @@ let add = (a, b) => a + b
 console.log(add(1, 2)) // 3
 ```
 
-## 1.4 Class
+### 1.4 Class
 ```javascript
 // `函数式语言，所以一切皆函数，所有对象都是从函数原型继承而来`。
 class Person {
@@ -111,15 +111,15 @@ let m = new Man('sxj', 27)
 m.method() // Override Person method
 ```
 
-# 2 进阶用法
-## 2.1 同步调用（阻塞）
+## 2 进阶用法
+### 2.1 同步调用（阻塞）
 ```javascript
 var fs = require("fs")
 var data = fs.readFileSync("test.text", 'utf-8')
 console.log( data.toString() )
 ```
 
-## 2.2 异步调用（非阻塞）
+### 2.2 异步调用（非阻塞）
 ```javascript
 var fs = require("fs")
 fs.readFile("test.text", 'utf-8', function (err, data){
@@ -128,7 +128,7 @@ fs.readFile("test.text", 'utf-8', function (err, data){
 })
 ```
 
-## 2.3 模块导入导出
+### 2.3 模块导入导出
 ```javascript
 // exports.js
 functoin say(){
@@ -157,7 +157,7 @@ test.say()
 test.hear()
 ```
 
-## 2.4 path模块
+### 2.4 path模块
 
 ```javascript
 let path = require('path')
@@ -174,7 +174,7 @@ path.normalize('/Users//jollysone//Downloads//tracks.csv')
 path.resolve('tracks.csv') //  /home/tracks.csv
 ```
 
-## 2.5 文件操作模块(同步异步)
+### 2.5 文件操作模块(同步异步)
 
 ```javascript
 var fs = require('fs')
@@ -207,7 +207,7 @@ console.log(stat.isDirectory); // 是否目录
 fs.unlinkSync("output.txt")
 ```
 
-## 2.6 Promise
+### 2.6 Promise
 
 ```javascript
 // 解决大量缩进的回调函数不易阅读的 callback hell 问题。
@@ -235,7 +235,7 @@ filePromise.then(res => {
 })
 ```
 
-## 2.7 async/await
+### 2.7 async/await
 
 ```javascript
 // 接上面 Promise
@@ -254,7 +254,7 @@ demo();
 console.log('我是同步代码');
 ```
 
-## 2.8 Promise实际应用
+### 2.8 Promise实际应用
 
 ```javascript
 // 将每个回调函数都封装成一个 Promise，然后用 async/await 将异步代码变为同步写法。
@@ -309,7 +309,7 @@ let demo = async () => {
 }
 ```
 
-# 3 NPM使用
+## 3 NPM使用
 
 ```shell
 # 装淘宝镜像使用 cnpm 命令

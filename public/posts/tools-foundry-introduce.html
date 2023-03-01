@@ -1,0 +1,2076 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Foundry，以Solidity为中心的开发工具包 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title><meta name="Description" content="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><meta property="og:title" content="Foundry，以Solidity为中心的开发工具包" />
+<meta property="og:description" content="什么是 Foundry? 来自 Foundry 官网 (getfoundry.sh) 对该工具的介绍： Foundry是 一个用 Rust编写的用于以太坊应用程序开发的极快、可移植和模块化的工具包 ( Foundry is a blazing fast, portable and" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.webhooks.top/posts/tools-foundry-introduce.html" /><meta property="og:image" content="https://blog.webhooks.top/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-19T20:13:10+08:00" />
+<meta property="article:modified_time" content="2022-06-19T20:13:10+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.webhooks.top/logo.png"/>
+
+<meta name="twitter:title" content="Foundry，以Solidity为中心的开发工具包"/>
+<meta name="twitter:description" content="什么是 Foundry? 来自 Foundry 官网 (getfoundry.sh) 对该工具的介绍： Foundry是 一个用 Rust编写的用于以太坊应用程序开发的极快、可移植和模块化的工具包 ( Foundry is a blazing fast, portable and"/>
+<meta name="application-name" content="5oneXj′s Blog">
+<meta name="apple-mobile-web-app-title" content="5oneXj′s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.webhooks.top/posts/tools-foundry-introduce.html" /><link rel="prev" href="https://blog.webhooks.top/posts/tools-hardhat-introduce.html" /><link rel="next" href="https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Foundry，以Solidity为中心的开发工具包",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.webhooks.top\/posts\/tools-foundry-introduce.html"
+        },"image": ["https:\/\/blog.webhooks.top\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "tools","wordcount":  6450 ,
+        "url": "https:\/\/blog.webhooks.top\/posts\/tools-foundry-introduce.html","datePublished": "2022-06-19T20:13:10+08:00","dateModified": "2022-06-19T20:13:10+08:00","publisher": {
+            "@type": "Organization",
+            "name": "5oneXj","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.webhooks.top\/images\/avatar.png",
+                    "width":  528 ,
+                    "height":  560 
+                }},"author": {
+                "@type": "Person",
+                "name": "5oneXj"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts.html" title="所有文章"> Posts </a><a class="menu-item" href="/tags.html" title="所有标签"> Tags </a><a class="menu-item" href="/categories.html" title="所有分类"> Categories </a><a class="menu-item" href="/about.html" title="关于"> About </a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts.html" title="所有文章">Posts</a><a class="menu-item" href="/tags.html" title="所有标签">Tags</a><a class="menu-item" href="/categories.html" title="所有分类">Categories</a><a class="menu-item" href="/about.html" title="关于">About</a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Foundry，以Solidity为中心的开发工具包</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%B7%A5%E5%85%B7.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>工具</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-06-19">2022-06-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 6450 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 13 分钟&nbsp;<span id="/posts/tools-foundry-introduce.html" class="leancloud_visitors" data-flag-title="Foundry，以Solidity为中心的开发工具包">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#什么是-foundry">什么是 Foundry?</a></li>
+        <li><a href="#为什么选择-foundry">为什么选择 Foundry？</a></li>
+        <li><a href="#foundry-的主要功能">Foundry 的主要功能</a></li>
+        <li><a href="#foundry-的组成">Foundry 的组成</a></li>
+        <li><a href="#快速创建一个-foundry-项目">快速创建一个 Foundry 项目</a>
+          <ul>
+            <li><a href="#安装-foundry">安装 Foundry</a>
+              <ul>
+                <li><a href="#通过脚本httpsrawgithubusercontentcomfoundry-rsfoundrymasterfoundryupinstall快速安装">通过<a href="https://raw.githubusercontent.com/foundry-rs/foundry/master/foundryup/install">脚本</a>快速安装</a></li>
+              </ul>
+            </li>
+            <li><a href="#初始化一个-foundry-项目">初始化一个 Foundry 项目</a></li>
+            <li><a href="#理解初始化过程中添加的智能合约测试用例">理解初始化过程中添加的智能合约、测试用例</a>
+              <ul>
+                <li><a href="#src-目录">src 目录</a></li>
+                <li><a href="#script-目录">script 目录</a></li>
+                <li><a href="#test-目录">test 目录</a></li>
+              </ul>
+            </li>
+            <li><a href="#执行构建测试">执行构建&amp;测试</a></li>
+          </ul>
+        </li>
+        <li><a href="#foundry-cast的进阶使用">Foundry Cast的进阶使用</a></li>
+        <li><a href="#区块相关">区块相关</a>
+          <ul>
+            <li><a href="#查询区块">查询区块</a></li>
+            <li><a href="#查询区块信息">查询区块信息</a></li>
+          </ul>
+        </li>
+        <li><a href="#交易相关">交易相关</a>
+          <ul>
+            <li><a href="#查询交易">查询交易</a></li>
+            <li><a href="#交易解析">交易解析</a></li>
+            <li><a href="#交易签名">交易签名</a></li>
+            <li><a href="#交易解码">交易解码</a></li>
+            <li><a href="#模拟运行">模拟运行</a></li>
+          </ul>
+        </li>
+        <li><a href="#账户管理">账户管理</a>
+          <ul>
+            <li><a href="#新建账户">新建账户</a></li>
+            <li><a href="#账户签名">账户签名</a></li>
+            <li><a href="#账户验证">账户验证</a></li>
+          </ul>
+        </li>
+        <li><a href="#合约交互">合约交互</a>
+          <ul>
+            <li><a href="#获取合约">获取合约</a></li>
+            <li><a href="#下载合约">下载合约</a></li>
+            <li><a href="#调用合约">调用合约</a></li>
+            <li><a href="#解析abi">解析ABI</a></li>
+          </ul>
+        </li>
+        <li><a href="#编码解码">编码解码</a></li>
+        <li><a href="#tips">Tips</a>
+          <ul>
+            <li><a href="#设置eth_prc_url">设置ETH_PRC_URL</a></li>
+            <li><a href="#设置etherscan_api_key">设置ETHERSCAN_API_KEY</a></li>
+            <li><a href="#json格式化">JSON格式化</a></li>
+          </ul>
+        </li>
+        <li><a href="#anvil本地节点的使用">Anvil本地节点的使用</a>
+          <ul>
+            <li><a href="#基本命令行">基本命令行</a></li>
+            <li><a href="#prc的使用">PRC的使用</a></li>
+          </ul>
+        </li>
+        <li><a href="#forge命令行进阶的使用">Forge命令行进阶的使用</a>
+          <ul>
+            <li><a href="#初始化项目">初始化项目</a></li>
+          </ul>
+        </li>
+        <li><a href="#热更新">热更新</a>
+          <ul>
+            <li><a href="#测试">测试</a></li>
+          </ul>
+        </li>
+        <li><a href="#安装插件">安装插件</a>
+          <ul>
+            <li><a href="#使用forge安装插件">使用forge安装插件</a></li>
+            <li><a href="#使用npm安装插件">使用npm安装插件</a></li>
+          </ul>
+        </li>
+        <li><a href="#测试一">测试一</a>
+          <ul>
+            <li><a href="#代码中fork网络">代码中fork网络</a></li>
+            <li><a href="#从代码中读取环境变量">从代码中读取环境变量</a></li>
+            <li><a href="#完整代码">完整代码</a></li>
+            <li><a href="#vmsol">vm.sol</a></li>
+          </ul>
+        </li>
+        <li><a href="#运行脚本">运行脚本</a></li>
+        <li><a href="#脚本部署合约">脚本部署合约</a>
+          <ul>
+            <li><a href="#部署多个网络">部署多个网络</a></li>
+          </ul>
+        </li>
+        <li><a href="#tips-1">Tips：</a></li>
+        <li><a href="#总结">总结</a></li>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="什么是-foundry">什么是 Foundry?</h2>
+<p>来自 Foundry <a href="https://getfoundry.sh" target="_blank" rel="noopener noreffer ">官网 (getfoundry.sh) </a> 对该工具的介绍：</p>
+<blockquote>
+<p>Foundry是 一个用 Rust编写的用于以太坊应用程序开发的极快、可移植和模块化的工具包 ( Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.)</p>
+</blockquote>
+<p>项目设施：</p>
+<ul>
+<li>官网：<a href="https://getfoundry.sh" target="_blank" rel="noopener noreffer ">https://getfoundry.sh</a></li>
+<li>Github 仓库：<a href="https://github.com/foundry-rs/foundry" target="_blank" rel="noopener noreffer ">https://github.com/foundry-rs/foundry</a></li>
+<li>文档：<a href="https://book.getfoundry.sh" target="_blank" rel="noopener noreffer ">https://book.getfoundry.sh</a></li>
+</ul>
+<p>介绍的解释：</p>
+<ul>
+<li><strong>用 Rust 语言编写</strong>： Foundry 完全采用 Rust 语言开发， <a href="https://github.com/foundry-rs/foundry" target="_blank" rel="noopener noreffer ">Github 上的源代码仓库</a> 是一个 Rust 语言工程。我们可以通过获取 <a href="https://github.com/foundry-rs/foundry/releases" target="_blank" rel="noopener noreffer ">Release 的二进制文件</a>，也可以通过 Rust 语言的 cargo 包管理<a href="https://github.com/foundry-rs/foundry#installing-from-source" target="_blank" rel="noopener noreffer ">工具编译&amp;构建安装</a>;</li>
+<li><strong>用于以太坊应用程序开发</strong>： Foundry 作为 以太坊（Solidity语言）项目/应用程序开发的 “工程化” 工具，提供专业 Solidity 开发环境与“工具链”。<strong>通过它你可以快速、方便的完成依赖项管理、编译、运行测试、部署，并可以通过命令行和 Solidity 脚本与链进行交互</strong>;</li>
+<li><strong>极快</strong>： Foundry 利用 <a href="https://github.com/gakonst/ethers-rs/tree/master/ethers-solc/" target="_blank" rel="noopener noreffer ">ethers-solc</a> 比较于传统通过 Node.js 辅助完成的测试用例/工程，Foundry 构建、测试的执行速度很快（创建一个工程，写一些测试用例跑一下会感受到震撼）;</li>
+<li><strong>可移植</strong>: Foundry 工程支持与其他类型的工程集成（如：<a href="https://book.getfoundry.sh/config/hardhat" target="_blank" rel="noopener noreffer ">与 Hardhat 集成</a>）;</li>
+<li><strong>模块化</strong>：通过 git submodule &amp; 构建目录映射，快速方便的引入依赖;</li>
+</ul>
+<!--👆TODO: some 🔗 LINKS can be added when our Hardhat tutorial is complete -->
+<h2 id="为什么选择-foundry">为什么选择 Foundry？</h2>
+<p>如果你满足以下条件或有过类似体验，你一定要试试 Foundry：</p>
+<ul>
+<li><del>如果你有 Rust “语言信仰”</del>，如果你是个专业的 以太坊（Solidity语言）应用开发者；</li>
+<li>你曾经用过类似 Hardhat.js 这样的工具；</li>
+<li>你厌倦了大量测试用例的等待，需要有工具<strong>更加快速</strong>的跑完你的测试用例；</li>
+<li>你觉得处理 BigNumber 稍微有一点点🤏麻烦;</li>
+<li>有过<strong>通过 Solidity 语言本身完成测试用例</strong>（或测试合约的合约）的需求；</li>
+<li>你觉得通过 git submodule 的方式管理依赖更加方便（而不是 npm）；</li>
+<li>···</li>
+</ul>
+<p>如果有以下情况 Foundry 可能不适合你：</p>
+<ul>
+<li>Solidity 初学者；</li>
+<li>你的项目不需要写测试用例、不需要过多在 Solidity 工程方面的自动化操作；</li>
+</ul>
+<h2 id="foundry-的主要功能">Foundry 的主要功能</h2>
+<blockquote>
+<p>该部分源于 Foundry book (<a href="https://book.getfoundry.sh" target="_blank" rel="noopener noreffer ">https://book.getfoundry.sh</a>)，让章节的理解更容易。</p>
+</blockquote>
+<ul>
+<li><a href="https://book.getfoundry.sh/projects/creating-a-new-project" target="_blank" rel="noopener noreffer ">创建以太坊（Solidity）智能合约应用开发项目</a>，<a href="https://book.getfoundry.sh/projects/working-on-an-existing-project" target="_blank" rel="noopener noreffer ">开发已有的项目</a>;</li>
+<li><a href="https://book.getfoundry.sh/projects/dependencies" target="_blank" rel="noopener noreffer ">管理以太坊(Solidity)智能合约的依赖项目</a>;</li>
+<li><a href="https://book.getfoundry.sh/forge/writing-tests" target="_blank" rel="noopener noreffer ">创建由 Solidity 语言编写的测试用例（并且能很快速的执行测试用例）</a>: 并且支持<a href="https://book.getfoundry.sh/forge/fuzz-testing" target="_blank" rel="noopener noreffer ">模糊测试</a>与<a href="https://book.getfoundry.sh/forge/differential-ffi-testing" target="_blank" rel="noopener noreffer ">差异测试</a>等方便、专业的测试方式;</li>
+<li>通过 <a href="https://book.getfoundry.sh/forge/cheatcodes" target="_blank" rel="noopener noreffer ">Cheatcodes（作弊码）</a> 在 Solidity语言 编写的测试用例中<strong>进行 “EVM环境之外” 的 vm 功能进行交互与断言</strong>：更换测试用例语句执行者的钱包地址（更换 <code>msg.sender</code>）、对 EVM 外的 Event 事件进行断言；</li>
+<li>执行过程与错误追踪：<a href="https://book.getfoundry.sh/forge/traces" target="_blank" rel="noopener noreffer ">“函数堆栈”级的错误追踪（Traces）</a>；</li>
+<li><a href="https://book.getfoundry.sh/forge/deploying" target="_blank" rel="noopener noreffer ">部署合约和自动化的完成scan上合约的开源验证</a>；</li>
+<li>在项目中支持<a href="https://book.getfoundry.sh/forge/gas-tracking" target="_blank" rel="noopener noreffer ">完整的gas使用情况追踪</a>：包括合约测试细节的gas用量和gas报告；</li>
+<li>交互式<a href="https://book.getfoundry.sh/forge/debugger" target="_blank" rel="noopener noreffer ">调试器</a>；</li>
+</ul>
+<h2 id="foundry-的组成">Foundry 的组成</h2>
+<p>Foundry 项目由 <code>Forge</code>, <code>Cast</code>, <code>Anvil</code> 几个部分（命令行工具）组成</p>
+<ul>
+<li>Forge: Foundry 项目中<strong>执行初始化项目、管理依赖、测试、构建、部署智能合约</strong>的命令行工具;</li>
+<li>Cast: Foundry 项目中<strong>与 RPC 节点交互</strong>的命令行工具。可以进行智能合约的调用、发送交易数据或检索任何类型的链上数据;</li>
+<li>Anvil:  Foundry 项目中<strong>启动的本地测试网/节点</strong>的命令行工具。可以使用它配合测试前端应用与部署在该测试网的合约或通过 RPC 进行交互;</li>
+</ul>
+<h2 id="快速创建一个-foundry-项目">快速创建一个 Foundry 项目</h2>
+<blockquote>
+<p>内容出自 Foundry book 的 Getting Start 部分</p>
+</blockquote>
+<p>即将完成的过程：</p>
+<ol>
+<li>安装 Foundry;</li>
+<li>初始化一个 Foundry 项目;</li>
+<li>理解初始化过程中添加的智能合约、测试用例；</li>
+<li>执行构建&amp;测试;</li>
+</ol>
+<h3 id="安装-foundry">安装 Foundry</h3>
+<p>对于不同的环境：</p>
+<ul>
+<li>MacOS / Linux （等 Unix like 系统）：
+<ul>
+<li>通过 <code>foundryup</code> 安装（👈Foundry 项目首页推荐的方式）;</li>
+<li>通过 源代码构建 安装;</li>
+</ul>
+</li>
+<li>Windows
+<ul>
+<li>通过 源代码构建 安装;</li>
+</ul>
+</li>
+<li>Docker 环境
+<ul>
+<li>参考 Foundry Package: <a href="https://github.com/gakonst/foundry/pkgs/container/foundry" target="_blank" rel="noopener noreffer "> https://github.com/gakonst/foundry/pkgs/container/foundry</a></li>
+</ul>
+</li>
+<li>Github Action： 用于构建完整的 Action 流程
+<ul>
+<li>参考 <a href="https://github.com/foundry-rs/foundry-toolchain" target="_blank" rel="noopener noreffer ">https://github.com/foundry-rs/foundry-toolchain</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="通过脚本httpsrawgithubusercontentcomfoundry-rsfoundrymasterfoundryupinstall快速安装">通过<a href="https://raw.githubusercontent.com/foundry-rs/foundry/master/foundryup/install" target="_blank" rel="noopener noreffer ">脚本</a>快速安装</h4>
+<p>通过有<code>bash</code>的（或者类Unix环境）快速安装</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ curl -L https://foundry.paradigm.xyz <span class="p">|</span> bash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行后将会安装 <code>foundryup</code>，在此后执行它</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ foundryup
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果一切顺利，您现在可以使用三个二进制文件：<code>forge</code>、<code>cast</code> 和 <code>anvil</code>。</p>
+<!--
+
+---
+
+#### [通过源代码构建安装（需要你了解一点 Rust 环境）](https://book.getfoundry.sh/getting-started/installation#building-from-source)
+
+要从源代码构建，您需要获取 `Rust` 和 `Cargo`。获得两者的最简单方法是使用 `rustup`。
+
+```shell
+# clone 项目目录至本地
+git clone https://github.com/foundry-rs/foundry
+
+# 进入项目目录
+cd foundry
+
+# 安装 cast + forge
+cargo install --path ./cli --profile local --bins --locked --force
+
+# 安装 anvil
+cargo install --path ./anvil --profile local --locked --force
+```
+-->
+<h3 id="初始化一个-foundry-项目">初始化一个 Foundry 项目</h3>
+<p>通过 <code>forge</code> 的 <code>forge init</code> 初始化项目 &ldquo;hello_wtf&rdquo;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ forge init hello_wtf
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Initializing /Users/username/hello_wtf...
+</span></span><span class="line"><span class="cl">Installing forge-std in <span class="s2">&#34;/Users/username/hello_wtf/lib/forge-std&#34;</span> <span class="o">(</span>url: Some<span class="o">(</span><span class="s2">&#34;https://github.com/foundry-rs/forge-std&#34;</span><span class="o">)</span>, tag: None<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Installed forge-std
+</span></span><span class="line"><span class="cl">    Initialized forge project.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>该过程通过安装依赖<code>forge-std</code>初始化了一个 Foundry 项目</p>
+<p>在项目目录中看到</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ tree -L <span class="m">2</span> 
+</span></span><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── foundry.toml        <span class="c1"># Foundry 的 package 配置文件</span>
+</span></span><span class="line"><span class="cl">├── lib                 <span class="c1"># Foundry 的依赖库</span>
+</span></span><span class="line"><span class="cl">│   └── forge-std       <span class="c1"># 工具 forge 的基础依赖</span>
+</span></span><span class="line"><span class="cl">├── script              <span class="c1"># Foundry 的脚本</span>
+</span></span><span class="line"><span class="cl">│   └── Counter.s.sol   <span class="c1"># 示例合约 Counter 的脚本</span>
+</span></span><span class="line"><span class="cl">├── src                 <span class="c1"># 智能合约的业务逻辑、源代码将会放在这里</span>
+</span></span><span class="line"><span class="cl">│   └── Counter.sol     <span class="c1"># 示例合约</span>
+</span></span><span class="line"><span class="cl">└── <span class="nb">test</span>                <span class="c1"># 测试用例目录</span>
+</span></span><span class="line"><span class="cl">    └── Counter.t.sol   <span class="c1"># 示例合约的测试用例</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>提示：</p>
+<ul>
+<li>依赖项作为 git submodule 在 <code>./lib</code> 目录中</li>
+<li>关于 Foundry 的 package 配置文件请详细参考: <a href="https://github.com/foundry-rs/foundry/blob/master/config/README.md#all-options" target="_blank" rel="noopener noreffer ">https://github.com/foundry-rs/foundry/blob/master/config/README.md#all-options</a></li>
+</ul>
+<h3 id="理解初始化过程中添加的智能合约测试用例">理解初始化过程中添加的智能合约、测试用例</h3>
+<h4 id="src-目录">src 目录</h4>
+<p>主要由业务逻辑构成
+<code>src</code> 目录中的 <code>./src/Counter.sol</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// SPDX-License-Identifier: UNLICENSED
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">pragma solidity</span> <span class="o">^</span><span class="mi">0</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="mi">13</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Counter</span> <span class="p">{</span>          <span class="c1">// 一个很简单的 Counter 合约
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint256</span> <span class="k">public</span> <span class="nb">number</span><span class="p">;</span>  <span class="c1">// 维护一个 public 的 uint256 数字
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 设置 number 变量的内容
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">setNumber</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">newNumber</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">        <span class="nb">number</span> <span class="o">=</span> <span class="n">newNumber</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 让 number 变量的内容自增
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">increment</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">number</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="script-目录">script 目录</h4>
+<p>参考 Foundry 项目文档中的 <a href="https://book.getfoundry.sh/tutorials/solidity-scripting" target="_blank" rel="noopener noreffer ">Solidity-scripting</a> 该目录主要由“部署”脚本构成（也可通过该脚本调用 Foundry 提供的 <code>vm</code> 功能实现应用业务逻辑之外的高级功能，等同于 Hardhat.js 中的 scripts）。</p>
+<p>详见script 目录中的 <code>./script/Counter.s.sol</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// SPDX-License-Identifier: UNLICENSED
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">pragma solidity</span> <span class="o">^</span><span class="mi">0</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="mi">13</span><span class="p">;</span> <span class="c1">// 许可 和 Solidity版本标识
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;forge-std/Script.sol&#34;</span><span class="p">;</span> <span class="c1">// 引入foundry forge中的Script库
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kn">import</span> <span class="s">&#34;../src/Counter.sol&#34;</span><span class="p">;</span> <span class="c1">// 引入要部署的Counter合约
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 部署脚本继承了Script合约
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">contract</span> <span class="nc">CounterScript</span> <span class="k">is</span> <span class="n">Script</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 可选函数，在每个函数运行之前被调用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">setUp</span><span class="p">()</span> <span class="k">public</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 部署合约时会调用run()函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">run</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vm</span><span class="p">.</span><span class="n">startBroadcast</span><span class="p">();</span> <span class="c1">// 开始部署
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">new</span> <span class="n">Counter</span><span class="p">();</span> <span class="c1">// 创建合约
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">vm</span><span class="p">.</span><span class="n">stopBroadcast</span><span class="p">();</span> <span class="c1">// 结束部署
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Foundry的部署脚本是一个用Solidity写的智能合约，虽然它不会被部署，但符合Solidity的规范。你可以用<code>forge script</code>运行脚本并部署合约。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">forge script script/Counter.s.sol:CounterScript
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="test-目录">test 目录</h4>
+<p>主要由合约的测试用例构成</p>
+<p>test 目录中的 <code>./test/Counter.t.sol</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// SPDX-License-Identifier: UNLICENSED
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">pragma solidity</span> <span class="o">^</span><span class="mi">0</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="mi">13</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;forge-std/Test.sol&#34;</span><span class="p">;</span>        <span class="c1">// 引入 forge-std 中用于测试的依赖
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kn">import</span> <span class="s">&#34;../src/Counter.sol&#34;</span><span class="p">;</span>        <span class="c1">// 引入用于测试的业务合约
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 基于 forge-std 的 test 合约依赖实现测试用例
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">contract</span> <span class="nc">CounterTest</span> <span class="k">is</span> <span class="n">Test</span> <span class="p">{</span>      
+</span></span><span class="line"><span class="cl">    <span class="n">Counter</span> <span class="k">public</span> <span class="n">counter</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 初始化测试用例
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">setUp</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">       <span class="n">counter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Counter</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">       <span class="n">counter</span><span class="p">.</span><span class="n">setNumber</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 基于初始化测试用例
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 断言测试自增后的 counter 的 number 返回值 同等于 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">testIncrement</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">counter</span><span class="p">.</span><span class="n">increment</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">assertEq</span><span class="p">(</span><span class="n">counter</span><span class="p">.</span><span class="nb">number</span><span class="p">(),</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 基于初始化测试用例
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 执行差异测试测试
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// forge 测试的过程中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 为 testSetNumber 函数参数传递不同的 unit256 类型的 x
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 达到测试 counter 的 setNumber 函数 为不同的 x 设置不同的数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 断言 number() 的返回值等同于差异测试的 x 参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">testSetNumber</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">x</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">counter</span><span class="p">.</span><span class="n">setNumber</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">assertEq</span><span class="p">(</span><span class="n">counter</span><span class="p">.</span><span class="nb">number</span><span class="p">(),</span> <span class="n">x</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 差异测试：参考 https://book.getfoundry.sh/forge/differential-ffi-testing
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="执行构建测试">执行构建&amp;测试</h3>
+<p>在项目目录中通过执行 <code>forge build</code> 完成构建</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ forge build
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>⠒<span class="o">]</span> Compiling...
+</span></span><span class="line"><span class="cl"><span class="o">[</span>⠢<span class="o">]</span> Compiling <span class="m">10</span> files with 0.8.17
+</span></span><span class="line"><span class="cl"><span class="o">[</span>⠰<span class="o">]</span> Solc 0.8.17 finished in 1.06s
+</span></span><span class="line"><span class="cl">Compiler run successful
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>完成构建后 通过 <code>forge test</code> 完成测试</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ forge <span class="nb">test</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>⠢<span class="o">]</span> Compiling...
+</span></span><span class="line"><span class="cl">No files changed, compilation skipped
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Running <span class="m">2</span> tests <span class="k">for</span> test/Counter.t.sol:CounterTest
+</span></span><span class="line"><span class="cl"><span class="o">[</span>PASS<span class="o">]</span> testIncrement<span class="o">()</span> <span class="o">(</span>gas: 28312<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>PASS<span class="o">]</span> testSetNumber<span class="o">(</span>uint256<span class="o">)</span> <span class="o">(</span>runs: 256, μ: 27609, ~: 28387<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Test result: ok. <span class="m">2</span> passed<span class="p">;</span> <span class="m">0</span> failed<span class="p">;</span> finished in 9.98ms
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>至此，您已完成上手使用 Foundry 并且初始化一个项目。</p>
+<!--
+
+  TODO: For foundry advanced useage ...
+
+  We need cover: 
+  
+  - cli forge `test` : reference https://book.getfoundry.sh/forge/writing-tests
+  - cheatcode.
+  - Logs and traces levels.
+
+... etc.
+
+-->
+<h2 id="foundry-cast的进阶使用">Foundry Cast的进阶使用</h2>
+<p>主要介绍Foundry Cast的使用，使用Cast在命令行下达到<a href="https://etherscan.io/" target="_blank" rel="noopener noreffer ">Ethereum (ETH) Blockchain Explorer</a> 的效果。</p>
+<p>练习如下目标</p>
+<ul>
+<li>查询区块</li>
+<li>查询交易</li>
+<li>交易解析</li>
+<li>账户管理</li>
+<li>合约查询</li>
+<li>合约交互</li>
+<li>编码解析</li>
+<li>本地模拟链上交易</li>
+</ul>
+<h2 id="区块相关">区块相关</h2>
+<h3 id="查询区块">查询区块</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># $PRC_MAIN 替换成需要的RPC地址</span>
+</span></span><span class="line"><span class="cl">cast block-number --rpc-url<span class="o">=</span><span class="nv">$RPC_MAIN</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">15769241
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>将环境变量的<code>ETH_PRC_URL</code>设置为 <code>--rpc-url</code> 你就不需要在每个命令行后面增加  <code>--rpc-url=$RPC_MAIN</code>  我这里直接设置为主网</p>
+</blockquote>
+<h3 id="查询区块信息">查询区块信息</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># cast block &lt;BLOCK&gt; --rpc-url=$RPC_MAIN</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast block <span class="m">15769241</span> --rpc-url<span class="o">=</span><span class="nv">$RPC_MAIN</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 格式化</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast block <span class="m">15769241</span> --json --rpc-url<span class="o">=</span><span class="nv">$RPC_MAIN</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">baseFeePerGas        <span class="m">22188748210</span>
+</span></span><span class="line"><span class="cl">difficulty           <span class="m">0</span>
+</span></span><span class="line"><span class="cl">extraData            0x
+</span></span><span class="line"><span class="cl">gasLimit             <span class="m">30000000</span>
+</span></span><span class="line"><span class="cl">gasUsed              <span class="m">10595142</span>
+</span></span><span class="line"><span class="cl"><span class="nb">hash</span>                 0x016e71f4130bac96a20761acbc0ba82a77c26f85513f1661adfd406d1c809543
+</span></span><span class="line"><span class="cl">logsBloom            0x1c6150404140580410990400a61d01e30030b00100c2a6310b11b9405d012980125671129881101011501d399081855523a106443aef3ab07148626315f721550290981058030b2af90b213961204c6103d2002a076c9e12d0800475b8231f0d06a20100da57c60aa0c008280128284418503340087c8650104c34500c18aa1c2070878008c21c64207d1424000244811415afc507640448122060644c181204ba412f0af11365020880508105551226004c0801c1840183003a42062a5a2444c13266020c00081440008038492740a8204a0c6c050a29d52405b92e4b20f028a97a604c6b0849ca81c4d06009258b4206217803a168824484deb8513242f082
+</span></span><span class="line"><span class="cl">miner                0x4675C7e5BaAFBFFbca748158bEcBA61ef3b0a263
+</span></span><span class="line"><span class="cl">mixHash              0x09b7a94ef1d6c93caaff49ca8bf387652e0e33e116076b61f4d5ee79f0b91f92
+</span></span><span class="line"><span class="cl">nonce                0x0000000000000000
+</span></span><span class="line"><span class="cl">number               <span class="m">15769241</span>
+</span></span><span class="line"><span class="cl">parentHash           0x95c60d89f2275a6a7b1a9545cf1fb6d8c614402cd7311c82bc7972c177f7812d
+</span></span><span class="line"><span class="cl">receiptsRoot         0xe0240d60c448387123e412114cd0165b2af7b926d34bb824f8c544b022aa76f9
+</span></span><span class="line"><span class="cl">sealFields           <span class="o">[]</span>
+</span></span><span class="line"><span class="cl">sha3Uncles           0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347
+</span></span><span class="line"><span class="cl">size                 <span class="m">149912</span>
+</span></span><span class="line"><span class="cl">stateRoot            0xaa3e9d839e99c4791827c81df9c9129028a320432920205f191e3fb261d0951c
+</span></span><span class="line"><span class="cl">timestamp            <span class="m">1666026803</span>
+</span></span><span class="line"><span class="cl">totalDifficulty      <span class="m">58750003716598352816469</span>
+</span></span><span class="line"><span class="cl">transactions:        <span class="o">[</span>
+</span></span><span class="line"><span class="cl">	0xc4f5c10e4419698edaf7431df464340b389e4b79db959d58f42e82e8d1ed18ae
+</span></span><span class="line"><span class="cl">	0xb90edeacf833ac6cb91a326c775ed86d8047a467404bd8c69782d2260983eaad
+</span></span><span class="line"><span class="cl">	0x6f280650e35238ab930c9a0f3163443fffe2efedc5b553f408174d4bcd89cd8d
+</span></span><span class="line"><span class="cl">	0x2e0eafea64aaf2f53240a16b11a4f250ba74ab9ca5a1a90e6f2a6e92185877d2
+</span></span><span class="line"><span class="cl">	0x34f41d22ed8209da379691640cec5bfb8bf9404ad0f7264709b7959d61532343
+</span></span><span class="line"><span class="cl">	0x7569ab5ce2d1ca13a0c65ad52cc901dfc186e8ff8800793550b97760cbe34db2
+</span></span><span class="line"><span class="cl">	0xcdeef0ffe859fcf96fb52e22a9789295c6f1a94280df9faf0ebb9d52abefb3e7
+</span></span><span class="line"><span class="cl">	0x00d6793f3dbdd616351441b9e3da9a0de51370174e0d9383b4aae5c3c9806c2a
+</span></span><span class="line"><span class="cl">	0xff3daf63a431af021351d3da5f2f39a894352328d7f3df96afab1888f5a7093f
+</span></span><span class="line"><span class="cl">	0x7938399bee5293c384831c8e5aa698cdb491d568f9ebfb6d5c946f4ef7bf7e51
+</span></span><span class="line"><span class="cl">	0x20e7dda515f04ea6a787f68689e27bcadbba914184da5336204f3f36771f59f0
+</span></span><span class="line"><span class="cl">	0x0435d78a1b62484fbe3a7680d68ba4bdf0d692f087f4a6b70eb377421c58a5dd
+</span></span><span class="line"><span class="cl">	0xe16d1fa4d60cca7447850337c63cdf7b888318cc1bbb893b115f262dc01132d7
+</span></span><span class="line"><span class="cl">	0x44af4f696dcfedee682d7e511ad2469780443052565eea731b86b652a175c05e
+</span></span><span class="line"><span class="cl">	0xe88732f92ac376efb6e7517e66fc586447e0d065b8686556f2c1a7c3b7a519ce
+</span></span><span class="line"><span class="cl">	0x7ee890b096e97fc0c7e3cf74e0f0402532e0f3b8fa0e0c494d3d691d031f57e7
+</span></span><span class="line"><span class="cl">	...<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="交易相关">交易相关</h2>
+<h3 id="查询交易">查询交易</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 跟ethersjs中的 provider.getTransaction 类似</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># cast tx &lt;HASH&gt; [FIELD] --rpc-url=$RPC</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 跟ethersjs中的 provider.getTransactionReceipt类似</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># cast receipt &lt;HASH&gt; [FIELD] --rpc-url=$RPC </span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast tx 0x20e7dda515f04ea6a787f68689e27bcadbba914184da5336204f3f36771f59f0 --rpc-url<span class="o">=</span><span class="nv">$RPC</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast receipt 0x20e7dda515f04ea6a787f68689e27bcadbba914184da5336204f3f36771f59f0 --rpc-url<span class="o">=</span><span class="nv">$RPC</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 只获取logs</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast receipt 0x20e7dda515f04ea6a787f68689e27bcadbba914184da5336204f3f36771f59f0 logs --rpc-url<span class="o">=</span><span class="nv">$RPC</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第一条命令行结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">blockHash            0x016e71f4130bac96a20761acbc0ba82a77c26f85513f1661adfd406d1c809543
+</span></span><span class="line"><span class="cl">blockNumber          <span class="m">15769241</span>
+</span></span><span class="line"><span class="cl">from                 0x9C0649d7325990D98375F7864eA167B5EAdCD46a
+</span></span><span class="line"><span class="cl">gas                  <span class="m">313863</span>
+</span></span><span class="line"><span class="cl">gasPrice             <span class="m">35000000000</span>
+</span></span><span class="line"><span class="cl"><span class="nb">hash</span>                 0x20e7dda515f04ea6a787f68689e27bcadbba914184da5336204f3f36771f59f0
+</span></span><span class="line"><span class="cl">input                0x38ed173900000000000000000000000000000000000000000000000332ca1b67940c000000000000000000000000000000000000000000000000000416b4849e6ba1475000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000009c0649d7325990d98375f7864ea167b5eadcd46a00000000000000000000000000000000000000000000000000000000634d91c1000000000000000000000000000000000000000000000000000000000000000200000000000000000000000097be09f2523b39b835da9ea3857cfa1d3c660cbb0000000000000000000000001bbf25e71ec48b84d773809b4ba55b6f4be946fb
+</span></span><span class="line"><span class="cl">nonce                <span class="m">14</span>
+</span></span><span class="line"><span class="cl">r                    0x288aef25af73a4d1916f8d37107ef5f24729a423f23acc38920829c4180fe794
+</span></span><span class="line"><span class="cl">s                    0x7644d26a91da02ff1e774cc821febf6387b8ee9f3e3085140b781819d0d8ede0
+</span></span><span class="line"><span class="cl">to                   0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+</span></span><span class="line"><span class="cl">transactionIndex     <span class="m">10</span>
+</span></span><span class="line"><span class="cl">v                    <span class="m">38</span>
+</span></span><span class="line"><span class="cl">value                <span class="m">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第二行命令行结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">blockHash               0x016e71f4130bac96a20761acbc0ba82a77c26f85513f1661adfd406d1c809543
+</span></span><span class="line"><span class="cl">blockNumber             <span class="m">15769241</span>
+</span></span><span class="line"><span class="cl">contractAddress
+</span></span><span class="line"><span class="cl">cumulativeGasUsed       <span class="m">805082</span>
+</span></span><span class="line"><span class="cl">effectiveGasPrice       <span class="m">35000000000</span>
+</span></span><span class="line"><span class="cl">gasUsed                 <span class="m">114938</span>
+</span></span><span class="line"><span class="cl">logs                    <span class="o">[{</span><span class="s2">&#34;address&#34;</span>:<span class="s2">&#34;0x97be09f2523b39b835da9ea3857cfa1d3c660cbb&#34;</span>,<span class="s2">&#34;topics&#34;</span>:<span class="o">[</span><span class="s2">&#34;0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef&#34;</span>,<span class="s2">&#34;0x0000000000000000000000009c0649d7325990d98375f7864ea167b5eadcd46a&#34;</span>,<span class="s2">&#34;0x000000000000000000000000f848e97469538830b0b147152524184a255b9106&#34;</span><span class="o">]</span>,<span class="s2">&#34;data&#34;</span>:<span class="s2">&#34;0x00000000000000000000000000000000000000000000000332ca1b67940c0000&#34;</span>,<span class="s2">&#34;blockHash&#34;</span>:<span class="s2">&#34;0x016e71f4130bac96a20761acbc0ba82a77c26f85513f1661adfd406d1c809543&#34;</span>,<span class="s2">&#34;blockNumber&#34;</span>:<span class="s2">&#34;0xf09e99&#34;</span>,<span class="s2">&#34;transactionHash&#34;</span>:<span class="s2">&#34;0x20e7dda515f04ea6a787f68689e27bcadbba914184da5336204f3f36771f59f0&#34;</span>,<span class="s2">&#34;transactionIndex&#34;</span>:<span class="s2">&#34;0xa&#34;</span>,<span class="s2">&#34;logIndex&#34;</span>:<span class="s2">&#34;0x2&#34;</span>,<span class="s2">&#34;removed&#34;</span>:false<span class="o">}</span>,<span class="o">{</span><span class="s2">&#34;address&#34;</span>:<span class="s2">&#34;0x1bbf25e71ec48b84d773809b4ba55b6f4be946fb&#34;</span>,<span class="s2">&#34;topics&#34;</span>:<span class="o">[</span><span class="s2">&#34;0x06b541ddaa720db2b10a4d0cdac39b8d360425fc073085fac19bc82614677987&#34;</span>,<span class="s2">&#34;0x000000000000000000000000f848e97469538830b0b147152524184a255b9106&#34;</span>,<span class="s2">&#34;0x000000000000000000000000f848e97469538830b0b147152524184a255b9106&#34;</span>,<span class="s2">&#34;0x0000000000000000000000009c0649d7325990d98375f7864ea167b5eadcd46a&#34;</span><span class="o">]</span>,<span class="s2">&#34;data&#34;</span>:<span class="s2">&#34;0x0000000000000000000000000000000000000000000000044b0a580cbdcfc0d90000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&#34;</span>,<span class="s2">&#34;blockHash&#34;</span>:<span class="s2">&#34;0x016e71f4130bac96a20761acbc0ba82a77c26f85513f1661adfd406d1c809543&#34;</span>,<span class="s2">&#34;blockNumber&#34;</span>:<span class="s2">&#34;0xf09e99&#34;</span>,<span class="s2">&#34;transactionHash&#34;</span>:<span class="s2">&#34;0x20e7dda515f04ea6a787f68689e27bcadbba914184da5336204f3f36771f59f0&#34;</span>,<span class="s2">&#34;transactionIndex&#34;</span>:<span class="s2">&#34;0xa&#34;</span>,<span class="s2">&#34;logIndex&#34;</span>:<span class="s2">&#34;0x3&#34;</span>,<span class="s2">&#34;removed&#34;</span>:false<span class="o">}</span>,<span class="o">{</span><span class="s2">&#34;address&#34;</span>:<span class="s2">&#34;0x1bbf25e71ec48b84d773809b4ba55b6f4be946fb&#34;</span>,<span class="s2">&#34;topics&#34;</span>:<span class="o">[</span><span class="s2">&#34;0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef&#34;</span>,<span class="s2">&#34;0x000000000000000000000000f848e97469538830b0b147152524184a255b9106&#34;</span>,<span class="s2">&#34;0x0000000000000000000000009c0649d7325990d98375f7864ea167b5eadcd46a&#34;</span><span class="o">]</span>,<span class="s2">&#34;data&#34;</span>:<span class="s2">&#34;0x0000000000000000000000000000000000000000000000044b0a580cbdcfc0d9&#34;</span>,<span class="s2">&#34;blockHash&#34;</span>:<span class="s2">&#34;0x016e71f4130bac96a20761acbc0ba82a77c26f85513f1661adfd406d1c809543&#34;</span>,<span class="s2">&#34;blockNumber&#34;</span>:<span class="s2">&#34;0xf09e99&#34;</span>,<span class="s2">&#34;transactionHash&#34;</span>:<span class="s2">&#34;0x20e7dda515f04ea6a787f68689e27bcadbba914184da5336204f3f36771f59f0&#34;</span>,<span class="s2">&#34;transactionIndex&#34;</span>:<span class="s2">&#34;0xa&#34;</span>,<span class="s2">&#34;logIndex&#34;</span>:<span class="s2">&#34;0x4&#34;</span>,<span class="s2">&#34;removed&#34;</span>:false<span class="o">}</span>,<span class="o">{</span><span class="s2">&#34;address&#34;</span>:<span class="s2">&#34;0xf848e97469538830b0b147152524184a255b9106&#34;</span>,<span class="s2">&#34;topics&#34;</span>:<span class="o">[</span><span class="s2">&#34;0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1&#34;</span><span class="o">]</span>,<span class="s2">&#34;data&#34;</span>:<span class="s2">&#34;0x00000000000000000000000000000000000000000000213ebfba613ffdcdd6ad0000000000000000000000000000000000000000000018b4b7f855bdcaac3b14&#34;</span>,<span class="s2">&#34;blockHash&#34;</span>:<span class="s2">&#34;0x016e71f4130bac96a20761acbc0ba82a77c26f85513f1661adfd406d1c809543&#34;</span>,<span class="s2">&#34;blockNumber&#34;</span>:<span class="s2">&#34;0xf09e99&#34;</span>,<span class="s2">&#34;transactionHash&#34;</span>:<span class="s2">&#34;0x20e7dda515f04ea6a787f68689e27bcadbba914184da5336204f3f36771f59f0&#34;</span>,<span class="s2">&#34;transactionIndex&#34;</span>:<span class="s2">&#34;0xa&#34;</span>,<span class="s2">&#34;logIndex&#34;</span>:<span class="s2">&#34;0x5&#34;</span>,<span class="s2">&#34;removed&#34;</span>:false<span class="o">}</span>,<span class="o">{</span><span class="s2">&#34;address&#34;</span>:<span class="s2">&#34;0xf848e97469538830b0b147152524184a255b9106&#34;</span>,<span class="s2">&#34;topics&#34;</span>:<span class="o">[</span><span class="s2">&#34;0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822&#34;</span>,<span class="s2">&#34;0x0000000000000000000000007a250d5630b4cf539739df2c5dacb4c659f2488d&#34;</span>,<span class="s2">&#34;0x0000000000000000000000009c0649d7325990d98375f7864ea167b5eadcd46a&#34;</span><span class="o">]</span>,<span class="s2">&#34;data&#34;</span>:<span class="s2">&#34;0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000332ca1b67940c00000000000000000000000000000000000000000000000000044b0a580cbdcfc0d90000000000000000000000000000000000000000000000000000000000000000&#34;</span>,<span class="s2">&#34;blockHash&#34;</span>:<span class="s2">&#34;0x016e71f4130bac96a20761acbc0ba82a77c26f85513f1661adfd406d1c809543&#34;</span>,<span class="s2">&#34;blockNumber&#34;</span>:<span class="s2">&#34;0xf09e99&#34;</span>,<span class="s2">&#34;transactionHash&#34;</span>:<span class="s2">&#34;0x20e7dda515f04ea6a787f68689e27bcadbba914184da5336204f3f36771f59f0&#34;</span>,<span class="s2">&#34;transactionIndex&#34;</span>:<span class="s2">&#34;0xa&#34;</span>,<span class="s2">&#34;logIndex&#34;</span>:<span class="s2">&#34;0x6&#34;</span>,<span class="s2">&#34;removed&#34;</span>:false<span class="o">}]</span>
+</span></span><span class="line"><span class="cl">logsBloom               0x00200000000000000000000080000000000000000000000000010000000008000000000000800000000000000000000000000000002000000000000000000000000000000000000000000008000000200000000000000000000000400000100000000000800000002000000000000000000000400000000000000010000000000000000000000000005000000000040000000000000000080000004004000000000000084100000000000000000000000000000040000000000000000000040000000002000000000000000000000000000000000000001000002000000020000000000000000000000000000000000000004000000000000000000000000000
+</span></span><span class="line"><span class="cl">root
+</span></span><span class="line"><span class="cl">status                  <span class="m">1</span>
+</span></span><span class="line"><span class="cl">transactionHash         0x20e7dda515f04ea6a787f68689e27bcadbba914184da5336204f3f36771f59f0
+</span></span><span class="line"><span class="cl">transactionIndex        <span class="m">10</span>
+</span></span><span class="line"><span class="cl"><span class="nb">type</span>                    <span class="m">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="交易解析">交易解析</h3>
+<p>Cast 会从 <a href="https://sig.eth.samczsun.com." target="_blank" rel="noopener noreffer ">Ethereum Signature Database</a> 解析对应的方法名称</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># cast 4byte &lt;SELECTOR&gt; 解析交易的名称</span>
+</span></span><span class="line"><span class="cl">cast 4byte 0x38ed1739
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">swapExactTokensForTokens<span class="o">(</span>uint256,uint256,address<span class="o">[]</span>,address,uint256<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="交易签名">交易签名</h3>
+<blockquote>
+<p>使用 Keccak-256 能够计算出方法名
+函数名为被调函数原型[1]的Keccak-256哈希值的前4个字节。这允许EVM准确无误地识别被调函数。</p>
+</blockquote>
+<p>交易签名：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># cast sig &lt;SIG&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast sig <span class="s2">&#34;swapExactTokensForTokens(uint256,uint256,address[],address,uint256)&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">0x38ed1739
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以你可以看到最终都是 <code>0x38ed1739</code></p>
+<p>有些方法名称可能没有，你可以通过<code>cast upload-signature &lt;SIG&gt; </code>上传给 <a href="https://sig.eth.samczsun.com" target="_blank" rel="noopener noreffer ">Ethereum Signature Database</a></p>
+<h3 id="交易解码">交易解码</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 获得calldata</span>
+</span></span><span class="line"><span class="cl">cast tx 0x20e7dda515f04ea6a787f68689e27bcadbba914184da5336204f3f36771f59f0 input --rpc-url<span class="o">=</span><span class="nv">$RPC</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 可以通过该方法decode交易的数据，类似etherscan中的decode方法</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># cast pretty-calldata &lt;CALLDATA&gt;</span>
+</span></span><span class="line"><span class="cl">cast pretty-calldata 0x38ed173900000000000000000000000000000000000000000000000332ca1b67940c000000000000000000000000000000000000000000000000000416b4849e6ba1475000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000009c0649d7325990d98375f7864ea167b5eadcd46a00000000000000000000000000000000000000000000000000000000634d91c1000000000000000000000000000000000000000000000000000000000000000200000000000000000000000097be09f2523b39b835da9ea3857cfa1d3c660cbb0000000000000000000000001bbf25e71ec48b84d773809b4ba55b6f4be946fb
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> Possible methods:
+</span></span><span class="line"><span class="cl"> - swapExactTokensForTokens<span class="o">(</span>uint256,uint256,address<span class="o">[]</span>,address,uint256<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> ------------
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>0<span class="o">]</span>:  00000000000000000000000000000000000000000000000332ca1b67940c0000
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>1<span class="o">]</span>:  00000000000000000000000000000000000000000000000416b4849e6ba14750
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>2<span class="o">]</span>:  00000000000000000000000000000000000000000000000000000000000000a0
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>3<span class="o">]</span>:  0000000000000000000000009c0649d7325990d98375f7864ea167b5eadcd46a
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>4<span class="o">]</span>:  00000000000000000000000000000000000000000000000000000000634d91c1
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>5<span class="o">]</span>:  <span class="m">0000000000000000000000000000000000000000000000000000000000000002</span>
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>6<span class="o">]</span>:  00000000000000000000000097be09f2523b39b835da9ea3857cfa1d3c660cbb
+</span></span><span class="line"><span class="cl"> <span class="o">[</span>7<span class="o">]</span>:  0000000000000000000000001bbf25e71ec48b84d773809b4ba55b6f4be946fb
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="模拟运行">模拟运行</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Usage: cast run --rpc-url &lt;URL&gt; &lt;TXHASH&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast run 0x20e7dda515f04ea6a787f68689e27bcadbba914184da5336204f3f36771f59f0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>运行结果：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202302260022195.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202302260022195.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202302260022195.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202302260022195.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202302260022195.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202302260022195.png" /></p>
+<p>可以在结果中看到运行消耗的gas，以及方法顺序调用的过程，以及释放的emit的事件。通过这个可以了解一个hash的内在过程。类似 <a href="https://blocksec.com/" target="_blank" rel="noopener noreffer ">BlockSec Building BlockChain Security Infrastructure</a> 和 <a href="https://tenderly.co/" target="_blank" rel="noopener noreffer ">Tenderly | Ethereum Developer Platform</a> 可以结合使用。</p>
+<h2 id="账户管理">账户管理</h2>
+<h3 id="新建账户">新建账户</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 新建一个账号</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># cast wallet new [OUT_DIR] </span>
+</span></span><span class="line"><span class="cl">cast wallet new
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 新建一个keystore的账号，带有密码</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># cast wallet new &lt;PATH&gt;</span>
+</span></span><span class="line"><span class="cl">cast wallet new  ~/Downloads
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第一条命令行结果输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">Successfully created new keypair.
+</span></span><span class="line"><span class="cl">Address: 0xDD20b18E001A80d8b27B8Caa94EeAC884D1c****
+</span></span><span class="line"><span class="cl">Private Key: edb4444199bddea91879c0214af27c0c7f99****bf18e46ba4078a39ccdbe0bc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第二条命令行结果输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">Enter secret:
+</span></span><span class="line"><span class="cl">Created new encrypted keystore file: <span class="sb">`</span>/Users/EasyPlux/Downloads/b5832df5-21e9-4959-8c85-969eec9c0***<span class="sb">`</span><span class="se">\n</span>Public Address of the key: 0x58c1C8f6A7D92A9b20A5343949cd624570Ab****
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="账户签名">账户签名</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 两种方法都可以使用签名，第一种载入刚才生成的keystore私钥，第二种直接输入自己的私钥。</span>
+</span></span><span class="line"><span class="cl">cast wallet sign &lt;MESSAGE&gt; --keystore<span class="o">=</span>&lt;PATH&gt; 
+</span></span><span class="line"><span class="cl">cast wallet sign &lt;MESSAGE&gt; -i
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="账户验证">账户验证</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cast wallet verify --address &lt;ADDRESS&gt; &lt;MESSAGE&gt; &lt;SIGNATURE&gt; 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="合约交互">合约交互</h2>
+<h3 id="获取合约">获取合约</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cast etherscan-source &lt;contract address&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast etherscan-source 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2 --etherscan-api-key<span class="o">=</span><span class="s1">&#39;key&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="下载合约">下载合约</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1">#cast etherscan-source -d &lt;path&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 我这里已经将$WETH的地址写入环境变量，如果没写入的，可以写成合约地址</span>
+</span></span><span class="line"><span class="cl">cast etherscan-source <span class="nv">$WETH</span> -d ~/Downloads
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="调用合约">调用合约</h3>
+<p>调用 WETH合约的<code>balanceOf</code>方法,查看<code>0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2</code>账号的余额</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1">#cast call [OPTIONS] [TO] [SIG] [ARGS]... [COMMAND] --rpc-url=$RPC</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast call <span class="nv">$WETH</span> <span class="s2">&#34;balanceOf(address)&#34;</span> 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2 --rpc-url<span class="o">=</span><span class="nv">$RPC</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 输出</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 0x0000000000000000000000000000000000000000000000230d12770f2845219c</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 格式化输出 在参数后面加一个返回值的格式</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast call <span class="nv">$WETH</span> <span class="s2">&#34;balanceOf(address)(uint256)&#34;</span> 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2 --rpc-url<span class="o">=</span><span class="nv">$RPC</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 输出</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 646577988758891995548</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="解析abi">解析ABI</h3>
+<p>可以根据ABI反向解析出solidity代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># cast interface [OPTIONS] &lt;PATH_OR_ADDRESS&gt;</span>
+</span></span><span class="line"><span class="cl">cast interface ./weth.abi
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="编码解码">编码解码</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cast --to-hex 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast --to-dec 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast --to-unit 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast --to-wei 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast --to-rlp 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cast --from-rlp
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="tips">Tips</h2>
+<h3 id="设置eth_prc_url">设置ETH_PRC_URL</h3>
+<p>将环境变量的<code>ETH_PRC_URL</code>设置为 <code>--rpc-url</code> 你就不需要在每个命令行后面增加  <code>--rpc-url=$RPC_MAIN</code>  我这里直接设置为主网</p>
+<h3 id="设置etherscan_api_key">设置ETHERSCAN_API_KEY</h3>
+<p>设置<code>ETHERSCAN_API_KEY</code>环境变量可以直接代替 <code>--etherscan-api-key</code></p>
+<h3 id="json格式化">JSON格式化</h3>
+<p>加上 <code>--json</code>  可以格式化输出</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cast block <span class="m">15769241</span> --json --rpc-url<span class="o">=</span><span class="nv">$RPC_MAIN</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="anvil本地节点的使用">Anvil本地节点的使用</h2>
+<h3 id="基本命令行">基本命令行</h3>
+<p>anvil 跟 hardhat 还有 truffle中的ganache都是一样的，是一个本地的eth节点，同样拥有各种fork的功能。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">anvil 
+</span></span><span class="line"><span class="cl">anvil --accounts<span class="o">=</span>&lt;NUM&gt; --balance<span class="o">=</span>&lt;NUM&gt; 
+</span></span><span class="line"><span class="cl">anvil --mnemonic<span class="o">=</span>&lt;MNEMONIC&gt; 
+</span></span><span class="line"><span class="cl">anvil --fork-url<span class="o">=</span><span class="nv">$RPC</span> --fork-block-number<span class="o">=</span>&lt;BLOCK&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="prc的使用">PRC的使用</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">anvil_* -&gt; hardhat_* 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">anvil_impersonateAccount 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">anvil_setStorageAt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="forge命令行进阶的使用">Forge命令行进阶的使用</h2>
+<p>代码存放在<code>WTFSolidity/Topics/Tools/TOOL07_Foundry/hello_wtf</code></p>
+<p>代码目录树如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── broadcast
+</span></span><span class="line"><span class="cl">│   └── Counter.s.sol 
+</span></span><span class="line"><span class="cl">├── foundry.toml        <span class="c1"># foundry配置文件</span>
+</span></span><span class="line"><span class="cl">├── lib
+</span></span><span class="line"><span class="cl">│   └── forge-std
+</span></span><span class="line"><span class="cl">├── node_modules        <span class="c1"># 使用npm依赖包目录，你也可以直接使用forge install</span>
+</span></span><span class="line"><span class="cl">│   └── @openzeppelin
+</span></span><span class="line"><span class="cl">├── package-lock.json
+</span></span><span class="line"><span class="cl">├── package.json
+</span></span><span class="line"><span class="cl">├── script
+</span></span><span class="line"><span class="cl">│   └── Counter.s.sol   <span class="c1"># 脚本合约</span>
+</span></span><span class="line"><span class="cl">├── src
+</span></span><span class="line"><span class="cl">│   └── Counter.sol
+</span></span><span class="line"><span class="cl">└── <span class="nb">test</span>
+</span></span><span class="line"><span class="cl">    ├── Counter.t.sol
+</span></span><span class="line"><span class="cl">    └── Test.t.sol      <span class="c1"># 测试合约</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="初始化项目">初始化项目</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">forge init &lt;dir_name&gt; 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">forge init --template &lt;template_path&gt; &lt;dir_name&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="热更新">热更新</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">forge build -w
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="测试">测试</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 三个v会现实详细的log信息</span>
+</span></span><span class="line"><span class="cl">forge <span class="nb">test</span> -vvv
+</span></span><span class="line"><span class="cl"><span class="c1"># 热更新模式</span>
+</span></span><span class="line"><span class="cl">forge <span class="nb">test</span> -vvv -w
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># log打印 需要 - vv 2个v以上才可以</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 console2.log(&ldquo;test&rdquo;) 来打印</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">testSetNumber</span><span class="p">(</span><span class="nx">uint256</span> <span class="nx">x</span><span class="p">)</span> <span class="kr">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;testNumber: %s==============&#34;</span><span class="p">,</span> <span class="nx">x</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">counter</span><span class="p">.</span><span class="nx">setNumber</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">assertEq</span><span class="p">(</span><span class="nx">counter</span><span class="p">.</span><span class="nx">number</span><span class="p">(),</span> <span class="nx">x</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 emit log 来打印</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">testNumberIs42</span><span class="p">()</span> <span class="kr">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">emit</span> <span class="nx">log</span><span class="p">(</span><span class="s2">&#34;test&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">assertEq</span><span class="p">(</span><span class="nx">testNumber</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>改变状态</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">testCheatCode</span><span class="p">()</span><span class="kr">public</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console2</span><span class="p">.</span><span class="nx">Log</span><span class="p">(</span><span class="s2">&#34;before:&#34;</span><span class="nx">block</span><span class="p">.</span><span class="nx">timestamp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">vm</span><span class="p">.</span><span class="nx">warp</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;after:&#34;</span><span class="nx">block</span><span class="p">.</span><span class="nx">timestamp</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>改变msg.sender 【可以模拟管理员账户】</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 只有第一次有影响
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">vm</span><span class="p">.</span><span class="nx">prank</span><span class="p">(</span><span class="nx">address</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 多次影响
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">vm</span><span class="p">.</span><span class="nx">startPrank</span><span class="p">(</span><span class="nx">address</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">...</span><span class="nx">code</span>
+</span></span><span class="line"><span class="cl"><span class="nx">vm</span><span class="p">.</span><span class="nx">stopPrank</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>改变存储状态</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">testCheatCode</span><span class="p">()</span><span class="kr">public</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">console2</span><span class="p">.</span><span class="nx">Log</span><span class="p">(</span><span class="s2">&#34;before:&#34;</span><span class="nx">alice</span><span class="p">.</span><span class="nx">balance</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">vm</span><span class="p">.</span><span class="nx">deal</span><span class="p">(</span><span class="nx">alice</span><span class="p">,</span><span class="mi">1</span> <span class="nx">ether</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">console2</span><span class="p">.</span><span class="nx">Log</span><span class="p">(</span><span class="s2">&#34;after:&#34;</span><span class="nx">alice</span><span class="p">.</span><span class="nx">balance</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="安装插件">安装插件</h2>
+<h3 id="使用forge安装插件">使用forge安装插件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">forge install <span class="o">[</span>OPTIONS<span class="o">]</span> &lt;github username&gt;/&lt;github project&gt;@&lt;tag&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用npm安装插件">使用npm安装插件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">npm init -y
+</span></span><span class="line"><span class="cl">npm i @openzeppelin/contracts 
+</span></span><span class="line"><span class="cl">// yarn add @openzeppelin/contracts
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装完成之后需要配置<code>foundry.toml</code>方法，在libs中添加 <code>node_modules</code>文件夹。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[</span><span class="nx">profile</span><span class="p">.</span><span class="nx">default</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nx">src</span> <span class="p">=</span> <span class="s1">&#39;src&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">out</span> <span class="p">=</span> <span class="s1">&#39;out&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">libs</span> <span class="p">=</span> <span class="p">[</span><span class="s1">&#39;lib&#39;</span><span class="p">,</span><span class="s1">&#39;node_modules&#39;</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="测试一">测试一</h2>
+<p>新建<code>test/Test.t.sol</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// SPDX-License-Identifier: SEE LICENSE IN LICENSE
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.8</span><span class="p">.</span><span class="mi">13</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="s2">&#34;forge-std/Test.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="s2">&#34;../src/Counter.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 导入IERC20的接口，通过该接口可以调用对应的方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span><span class="nx">IERC20</span><span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@openzeppelin/contracts/token/ERC20/IERC20.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">contract</span> <span class="nx">IERC20Test</span> <span class="nx">is</span> <span class="nx">Test</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 声明Counter合约对象变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">Counter</span> <span class="kr">public</span> <span class="nx">counter</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 声明一个地址变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">address</span> <span class="kr">public</span> <span class="nx">alice</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 声明一个msgSender
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">address</span> <span class="kr">public</span> <span class="nx">msgSender</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 声明帮助合约函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">Helper</span> <span class="kr">public</span> <span class="nx">h</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">//定义一个IERC20 合约对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">IERC20</span> <span class="kr">public</span> <span class="nx">dai</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kd">function</span> <span class="nx">setUp</span><span class="p">()</span> <span class="kr">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// new测试合约对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">counter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Counter</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 调用对象方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">counter</span><span class="p">.</span><span class="nx">setNumber</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// new helper对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">h</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Helper</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">alice</span> <span class="o">=</span> <span class="nx">address</span><span class="p">(</span><span class="mi">10086</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">alice</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">dai</span> <span class="o">=</span> <span class="nx">IERC20</span><span class="p">(</span><span class="mh">0x6B175474E89094C44Da98b954EedeAC495271d0F</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 测试给合约地址转账
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kd">function</span> <span class="nx">testCheatCode</span><span class="p">()</span> <span class="kr">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;before:&#34;</span><span class="p">,</span> <span class="nx">dai</span><span class="p">.</span><span class="nx">balanceOf</span><span class="p">(</span><span class="nx">alice</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">deal</span><span class="p">(</span><span class="nx">address</span><span class="p">(</span><span class="nx">dai</span><span class="p">),</span> <span class="nx">alice</span><span class="p">,</span><span class="mi">1</span> <span class="nx">ether</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;after:&#34;</span><span class="p">,</span> <span class="nx">dai</span><span class="p">.</span><span class="nx">balanceOf</span><span class="p">(</span><span class="nx">alice</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 测试改变合约msg.sender
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kd">function</span> <span class="nx">testCheatAddress</span><span class="p">()</span> <span class="kr">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;before:&#34;</span><span class="p">,</span> <span class="nx">h</span><span class="p">.</span><span class="nx">whoCalled</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">vm</span><span class="p">.</span><span class="nx">prank</span><span class="p">(</span><span class="nx">address</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;after:&#34;</span><span class="p">,</span> <span class="nx">h</span><span class="p">.</span><span class="nx">whoCalled</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">contract</span> <span class="nx">Helper</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">function</span> <span class="nx">whoCalled</span><span class="p">()</span> <span class="kr">public</span> <span class="nx">view</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">address</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>运行测试：</p>
+<p>因为本地没有dai的部署合约，所以我们直接fork主网， -vvv可以现实console2.log，-w表示watch模式。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">forge <span class="nb">test</span> -vvv --fork-url<span class="o">=</span><span class="nv">$ETH_RPC_URL</span> -w
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">Running <span class="m">2</span> tests <span class="k">for</span> test/Test.t.sol:IERC20Test
+</span></span><span class="line"><span class="cl"><span class="o">[</span>PASS<span class="o">]</span> testCheatAddress<span class="o">()</span> <span class="o">(</span>gas: 12873<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Logs:
+</span></span><span class="line"><span class="cl">  0x0000000000000000000000000000000000002766
+</span></span><span class="line"><span class="cl">  before: 0xb4c79daB8f259C7Aee6E5b2Aa729821864227e84
+</span></span><span class="line"><span class="cl">  after: 0x0000000000000000000000000000000000000001
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>PASS<span class="o">]</span> testCheatCode<span class="o">()</span> <span class="o">(</span>gas: 153596<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Logs:
+</span></span><span class="line"><span class="cl">  0x0000000000000000000000000000000000002766
+</span></span><span class="line"><span class="cl">  before: <span class="m">0</span>
+</span></span><span class="line"><span class="cl">  after: <span class="m">1000000000000000000</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Test result: ok. <span class="m">2</span> passed<span class="p">;</span> <span class="m">0</span> failed<span class="p">;</span> finished in 5.61s
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="代码中fork网络">代码中fork网络</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">testCodeFork</span><span class="p">()</span> <span class="kr">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">address</span><span class="p">(</span><span class="nx">dai</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">string</span> <span class="nx">memory</span> <span class="nx">rpc</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">envString</span><span class="p">(</span><span class="s2">&#34;ETH_RPC_URL&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">uint256</span> <span class="nx">mainnet</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">createFork</span><span class="p">(</span><span class="nx">rpc</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">vm</span><span class="p">.</span><span class="nx">selectFork</span><span class="p">(</span><span class="nx">mainnet</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 这边下面开始就是直接fork网络了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;before:&#34;</span><span class="p">,</span><span class="nx">dai</span><span class="p">.</span><span class="nx">balanceOf</span><span class="p">(</span><span class="nx">alice</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">deal</span><span class="p">(</span><span class="nx">address</span><span class="p">(</span><span class="nx">dai</span><span class="p">),</span><span class="nx">alice</span><span class="p">,</span><span class="mi">1</span> <span class="nx">ether</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;after:&#34;</span><span class="p">,</span><span class="nx">dai</span><span class="p">.</span><span class="nx">balanceOf</span><span class="p">(</span><span class="nx">alice</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="从代码中读取环境变量">从代码中读取环境变量</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 通过 vm.envAddress 获取环境变量中的地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">dai</span> <span class="o">=</span> <span class="nx">IERC20</span><span class="p">(</span><span class="nx">vm</span><span class="p">.</span><span class="nx">envAddress</span><span class="p">(</span><span class="s2">&#34;DAI&#34;</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="完整代码">完整代码</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// SPDX-License-Identifier: SEE LICENSE IN LICENSE
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.8</span><span class="p">.</span><span class="mi">13</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="s2">&#34;forge-std/Test.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="s2">&#34;../src/Counter.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 导入IERC20的接口，通过该接口可以调用对应的方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span><span class="nx">IERC20</span><span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;@openzeppelin/contracts/token/ERC20/IERC20.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">contract</span> <span class="nx">IERC20Test</span> <span class="nx">is</span> <span class="nx">Test</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 声明Counter合约对象变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">Counter</span> <span class="kr">public</span> <span class="nx">counter</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 声明一个地址变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">address</span> <span class="kr">public</span> <span class="nx">alice</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 声明一个msgSender
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">address</span> <span class="kr">public</span> <span class="nx">msgSender</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 声明帮助合约函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">Helper</span> <span class="kr">public</span> <span class="nx">h</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">//定义一个IERC20 合约对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">IERC20</span> <span class="kr">public</span> <span class="nx">dai</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kd">function</span> <span class="nx">setUp</span><span class="p">()</span> <span class="kr">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// new测试合约对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">counter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Counter</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 调用对象方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">counter</span><span class="p">.</span><span class="nx">setNumber</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// new helper对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">h</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Helper</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">alice</span> <span class="o">=</span> <span class="nx">address</span><span class="p">(</span><span class="mi">10086</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">alice</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 通过 vm.envAddress 获取环境变量中的地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">dai</span> <span class="o">=</span> <span class="nx">IERC20</span><span class="p">(</span><span class="nx">vm</span><span class="p">.</span><span class="nx">envAddress</span><span class="p">(</span><span class="s2">&#34;DAI&#34;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 测试给合约地址转账
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kd">function</span> <span class="nx">testCheatCode</span><span class="p">()</span> <span class="kr">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;before:&#34;</span><span class="p">,</span> <span class="nx">dai</span><span class="p">.</span><span class="nx">balanceOf</span><span class="p">(</span><span class="nx">alice</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">deal</span><span class="p">(</span><span class="nx">address</span><span class="p">(</span><span class="nx">dai</span><span class="p">),</span> <span class="nx">alice</span><span class="p">,</span><span class="mi">1</span> <span class="nx">ether</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;after:&#34;</span><span class="p">,</span> <span class="nx">dai</span><span class="p">.</span><span class="nx">balanceOf</span><span class="p">(</span><span class="nx">alice</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 测试改变合约msg.sender
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kd">function</span> <span class="nx">testCheatAddress</span><span class="p">()</span> <span class="kr">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;before:&#34;</span><span class="p">,</span> <span class="nx">h</span><span class="p">.</span><span class="nx">whoCalled</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">vm</span><span class="p">.</span><span class="nx">prank</span><span class="p">(</span><span class="nx">address</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;after:&#34;</span><span class="p">,</span> <span class="nx">h</span><span class="p">.</span><span class="nx">whoCalled</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kd">function</span> <span class="nx">testCodeFork</span><span class="p">()</span> <span class="kr">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">address</span><span class="p">(</span><span class="nx">dai</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">string</span> <span class="nx">memory</span> <span class="nx">rpc</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">envString</span><span class="p">(</span><span class="s2">&#34;ETH_RPC_URL&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">uint256</span> <span class="nx">mainnet</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">createFork</span><span class="p">(</span><span class="nx">rpc</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">vm</span><span class="p">.</span><span class="nx">selectFork</span><span class="p">(</span><span class="nx">mainnet</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 这边下面开始就是直接fork网络了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;before:&#34;</span><span class="p">,</span><span class="nx">dai</span><span class="p">.</span><span class="nx">balanceOf</span><span class="p">(</span><span class="nx">alice</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">deal</span><span class="p">(</span><span class="nx">address</span><span class="p">(</span><span class="nx">dai</span><span class="p">),</span><span class="nx">alice</span><span class="p">,</span><span class="mi">1</span> <span class="nx">ether</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;after:&#34;</span><span class="p">,</span><span class="nx">dai</span><span class="p">.</span><span class="nx">balanceOf</span><span class="p">(</span><span class="nx">alice</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">contract</span> <span class="nx">Helper</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">function</span> <span class="nx">whoCalled</span><span class="p">()</span> <span class="kr">public</span> <span class="nx">view</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">address</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="vmsol">vm.sol</h3>
+<p><code>vm.sol</code> 中还有很多封装好的方法可以直接使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// Sets the *next* call&#39;s msg.sender to be the input address
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nx">prank</span><span class="p">(</span><span class="nx">address</span><span class="p">)</span> <span class="nx">external</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Sets all subsequent calls&#39; msg.sender to be the input address until `stopPrank` is called
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nx">startPrank</span><span class="p">(</span><span class="nx">address</span><span class="p">)</span> <span class="nx">external</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Sets the *next* call&#39;s msg.sender to be the input address, and the tx.origin to be the second input
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nx">prank</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span><span class="nx">address</span><span class="p">)</span> <span class="nx">external</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Sets all subsequent calls&#39; msg.sender to be the input address until `stopPrank` is called, and the tx.origin to be the second input
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nx">startPrank</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span><span class="nx">address</span><span class="p">)</span> <span class="nx">external</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Resets subsequent calls&#39; msg.sender to be `address(this)`
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nx">stopPrank</span><span class="p">()</span> <span class="nx">external</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Sets an address&#39; balance, (who, newBalance)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nx">deal</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="nx">uint256</span><span class="p">)</span> <span class="nx">external</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Sets an address&#39; code, (who, newCode)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nx">etch</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">calldata</span><span class="p">)</span> <span class="nx">external</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Expects an error on next call
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nx">expectRevert</span><span class="p">(</span><span class="nx">bytes</span> <span class="nx">calldata</span><span class="p">)</span> <span class="nx">external</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nx">expectRevert</span><span class="p">(</span><span class="nx">bytes4</span><span class="p">)</span> <span class="nx">external</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nx">expectRevert</span><span class="p">()</span> <span class="nx">external</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Records all storage reads and writes
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nx">record</span><span class="p">()</span> <span class="nx">external</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Gets all accessed reads and write slot from a recording session, for a given address
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nx">accesses</span><span class="p">(</span><span class="nx">address</span><span class="p">)</span> <span class="nx">external</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bytes32</span><span class="p">[]</span> <span class="nx">memory</span> <span class="nx">reads</span><span class="p">,</span> <span class="nx">bytes32</span><span class="p">[]</span> <span class="nx">memory</span> <span class="nx">writes</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="运行脚本">运行脚本</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">forge script <span class="o">[</span>OPTIONS<span class="o">]</span> &lt;PATH&gt; <span class="o">[</span>ARGS<span class="o">]</span>...
+</span></span><span class="line"><span class="cl">forge script script/Counter.s.sol:CounterScript
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>script/Counter.s.sol</code> 脚本代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// SPDX-License-Identifier: UNLICENSED
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.8</span><span class="p">.</span><span class="mi">13</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="s2">&#34;forge-std/Script.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">contract</span> <span class="nx">CounterScript</span> <span class="nx">is</span> <span class="nx">Script</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 每次初始化会运行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nx">setUp</span><span class="p">()</span> <span class="kr">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;setup &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nx">run</span><span class="p">()</span> <span class="kr">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">vm</span><span class="p">.</span><span class="nx">broadcast</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;run&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nx">someFunction</span><span class="p">(</span><span class="nx">uint256</span> <span class="nx">x</span><span class="p">)</span> <span class="kr">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;some other func&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console2</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>指定方法，带参数的测试运行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">forge script script/Counter.s.sol --sig<span class="o">=</span><span class="s2">&#34;someFunction(uint256 x)&#34;</span> <span class="m">10</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="脚本部署合约">脚本部署合约</h2>
+<p>编写部署脚本：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">// SPDX-License-Identifier: UNLICENSED
+</span></span><span class="line"><span class="cl">pragma solidity ^0.8.13<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">import <span class="s2">&#34;forge-std/Script.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">// 引入合约
+</span></span><span class="line"><span class="cl">import <span class="s2">&#34;../src/Counter.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">contract CounterScript is Script <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> setUp<span class="o">()</span> public <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        console2.log<span class="o">(</span><span class="s2">&#34;setup &#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> run<span class="o">()</span> public <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        vm.startBroadcast<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		//生成合约对象
+</span></span><span class="line"><span class="cl">        Counter <span class="nv">c</span> <span class="o">=</span> new Counter<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        vm.stopBroadcast<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>测试部署：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">forge script script/Counter.s.sol -vvvv --rpc-url<span class="o">=</span>http://127.0.0.1:8545
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>正式部署：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">forge script script/Counter.s.sol -vvvv --rpc-url=http://127.0.0.1:8545 --broadcast --private-key=privete_key
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>部署完成之后会多一个broadcast文件夹，查看该文件夹有<code>run-latest.json</code>可以看到部署的相应信息。</p>
+<h3 id="部署多个网络">部署多个网络</h3>
+<p>使用fork代码可以部署多个网络</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">uint256</span> <span class="nx">mainnet</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">createFork</span><span class="p">(</span><span class="nx">rpc</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="tips-1">Tips：</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">forge <span class="nb">test</span> --gas-report
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">forge inspect
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 对比gas是否减少</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">forge snapshot
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">forge snapshot --diff 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 交互式Debugger</span>
+</span></span><span class="line"><span class="cl">forge script script/Counter.s.sol --debug
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 链上交易debugger</span>
+</span></span><span class="line"><span class="cl">forge run --debug
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结">总结</h2>
+<p>介绍了以Solidity为中心的开发工具，并介绍了如何利用Foundry编译，部署，测试智能合约。由于Foundry的部署和测试脚本都是用Solidity编写，免去了开发者学习javascript的时间成本，并提供了更多练习Solidity的机会，推荐大家使用。</p>
+<h2 id="参考">参考</h2>
+<p><a href="https://www.youtube.com/watch?v=EXYeltwvftw" target="_blank" rel="noopener noreffer ">使用 foundry 框架加速智能合约开发</a></p>
+<p><a href="https://book.getfoundry.sh/reference/cast/" target="_blank" rel="noopener noreffer ">cast Commands - Foundry Book</a></p>
+<p><a href="https://twitter.com/wp__lai" target="_blank" rel="noopener noreffer ">https://twitter.com/wp__lai</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-06-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.webhooks.top/posts/tools-foundry-introduce.html" data-title="Foundry，以Solidity为中心的开发工具包" data-via="jollysone" data-hashtags="tools"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.webhooks.top/posts/tools-foundry-introduce.html" data-hashtag="tools"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.webhooks.top/posts/tools-foundry-introduce.html"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.webhooks.top/posts/tools-foundry-introduce.html" data-title="Foundry，以Solidity为中心的开发工具包" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.webhooks.top/posts/tools-foundry-introduce.html" data-title="Foundry，以Solidity为中心的开发工具包"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.webhooks.top/posts/tools-foundry-introduce.html" data-title="Foundry，以Solidity为中心的开发工具包"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.webhooks.top/posts/tools-foundry-introduce.html" data-title="Foundry，以Solidity为中心的开发工具包"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://blog.webhooks.top/posts/tools-foundry-introduce.html" data-title="Foundry，以Solidity为中心的开发工具包"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Skype" data-sharer="skype" data-url="https://blog.webhooks.top/posts/tools-foundry-introduce.html" data-title="Foundry，以Solidity为中心的开发工具包"><i class="fab fa-skype fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/tools.html">tools</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/tools-hardhat-introduce.html" class="prev" rel="prev" title="Hardhat以太坊开发环境"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Hardhat以太坊开发环境</a>
+            <a href="/posts/solidity-smart-contract-security-re-entrancy.html" class="next" rel="next" title="合约安全：重入攻击">合约安全：重入攻击<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">转载请注明出处</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2018 - 2023</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"data":{"id-1":"5oneXj′s","id-2":"5oneXj′s"},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":88}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Safemath - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
+        <link>https://blog.webhooks.top/tags/safemath.html</link>
+        <description>Safemath - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Thu, 25 Aug 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/safemath.html" rel="self" type="application/rss+xml" /><item>
+    <title>合约安全：整型溢出</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-overflow.html</link>
+    <pubDate>Thu, 25 Aug 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-overflow.html</guid>
+    <description><![CDATA[引言 整型溢出漏洞（Arithmetic Over/Under Flows）是一个比较经典的漏洞，Solidity 0.8 版本后内置了Safemath库，因此很少发生。 1]]></description>
+</item>
+</channel>
+</rss>

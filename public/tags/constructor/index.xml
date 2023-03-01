@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>constructor - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
+        <link>https://blog.webhooks.top/tags/constructor.html</link>
+        <description>constructor - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Thu, 20 Oct 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/constructor.html" rel="self" type="application/rss+xml" /><item>
+    <title>合约安全：绕过合约长度检查</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-bad-constructor-check.html</link>
+    <pubDate>Thu, 20 Oct 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-bad-constructor-check.html</guid>
+    <description><![CDATA[1 绕过合约检查 很多 freemint 的项目为了限制科学家（程序员）会用到 isContract() 方法，希望将调用者 msg.sender 限制为外部账户（EOA），而非合约。这个函数利用 extcodesize 获取该地址所]]></description>
+</item>
+</channel>
+</rss>

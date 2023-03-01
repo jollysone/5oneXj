@@ -1,16 +1,88 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Solidity - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
-        <link>https://jollysone.github.io/blog/tags/solidity/</link>
-        <description>Solidity - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
+        <title>solidity - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
+        <link>https://blog.webhooks.top/tags/solidity.html</link>
+        <description>solidity - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Fri, 20 Aug 2021 11:12:14 &#43;0800</lastBuildDate><atom:link href="https://jollysone.github.io/blog/tags/solidity/" rel="self" type="application/rss+xml" /><item>
-    <title>Solidity智能合约安全：重入攻击</title>
-    <link>https://jollysone.github.io/blog/20210820/solidity-smart-contract-security-re-entrancy.html/</link>
-    <pubDate>Fri, 20 Aug 2021 11:12:14 &#43;0800</pubDate>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Thu, 19 Jan 2023 20:13:10 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/solidity.html" rel="self" type="application/rss+xml" /><item>
+    <title>Metamask项目方给Solidity程序员的16个安全建议</title>
+    <link>https://blog.webhooks.top/posts/16-safety-recommendations.html</link>
+    <pubDate>Thu, 19 Jan 2023 20:13:10 &#43;0800</pubDate>
+    <author>Consensys</author>
+    <guid>https://blog.webhooks.top/posts/16-safety-recommendations.html</guid>
+    <description><![CDATA[Metamask项目方给Solidity程序员的16个安全建议 引言 原文：Solidity Best Practices for Smart Contract Security 原文作者：Consensys（metam]]></description>
+</item>
+<item>
+    <title>合约安全：操纵预言机</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html</link>
+    <pubDate>Thu, 22 Dec 2022 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://jollysone.github.io/blog/20210820/solidity-smart-contract-security-re-entrancy.html/</guid>
-    <description><![CDATA[引言 它曾导致以太坊分叉为 ETH 和 ETC（以太经典）。 1 什么是重入攻击？ 重入攻击是智能合约中最常见的一种攻击，攻击者通过合约漏洞（例如fallba]]></description>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-oracle-manipulation.html</guid>
+    <description><![CDATA[引言 操纵预言机攻击，并复现了一个攻击示例：用1 ETH兑换17万亿枚稳定币。仅2022年一年，操纵预言机攻击造成用户资产损失超过 2 亿美元。 1 价]]></description>
+</item>
+<item>
+    <title>合约安全：操纵区块时间</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-timestamp-manipulation.html</link>
+    <pubDate>Fri, 09 Dec 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-timestamp-manipulation.html</guid>
+    <description><![CDATA[引言 智能合约的操纵区块时间攻击，并使用 Foundry 复现。在合并（The Merge）之前，以太坊矿工可以操纵区块时间，如果抽奖合约的伪随机数依赖于区块时]]></description>
+</item>
+<item>
+    <title>合约安全：未检查的低级调用</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-low-level-calls-that-are-not-checked.html</link>
+    <pubDate>Fri, 02 Dec 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-low-level-calls-that-are-not-checked.html</guid>
+    <description><![CDATA[引言 智能合约的未检查低级调用（low-level call）的漏洞。失败的低级调用不会让交易回滚，如果合约中忘记对其返回值进行检查，往往会出现]]></description>
+</item>
+<item>
+    <title>合约安全：抢先交易</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-front-running.html</link>
+    <pubDate>Tue, 22 Nov 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-front-running.html</guid>
+    <description><![CDATA[引言 智能合约的抢先交易（Front-running，抢跑）。据统计，以太坊上的套利者通过三明治攻击（sandwich attack）共获利$1]]></description>
+</item>
+<item>
+    <title>合约安全：如何使用 tx.origin 进行钓鱼攻击</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-tx-origin.html</link>
+    <pubDate>Sun, 13 Nov 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-tx-origin.html</guid>
+    <description><![CDATA[1 tx.origin 钓鱼攻击 笔者上初中的时候特别喜欢玩游戏，但是项目方为了防止未成年人沉迷，规定只有身份证号显示已满十八岁的玩家才不受防沉迷限制。这该怎么办]]></description>
+</item>
+<item>
+    <title>合约安全：貔貅 Honeypot Scam</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-honeypot-token.html</link>
+    <pubDate>Sat, 29 Oct 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-honeypot-token.html</guid>
+    <description><![CDATA[引言 将介绍貔貅合约和预防方法（英文习惯叫蜜罐代币 honeypot token）。 1 貔貅学入门 貔貅是中国的一个神兽，因为在天庭犯了戒，被玉帝揍的肛门封闭了，只]]></description>
+</item>
+<item>
+    <title>合约安全：拒绝服务漏洞</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-dos-attack.html</link>
+    <pubDate>Sun, 23 Oct 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-dos-attack.html</guid>
+    <description><![CDATA[引言 智能合约的拒绝服务（Denial of Service, DoS）漏洞，并介绍预防的方法。NFT 项目 Akutar 曾因为 DoS 漏洞损失 11,539 ETH，当时价值 3400 万美元。 1 DoS 在 Web2 中，]]></description>
+</item>
+<item>
+    <title>合约安全：绕过合约长度检查</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-bad-constructor-check.html</link>
+    <pubDate>Thu, 20 Oct 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-bad-constructor-check.html</guid>
+    <description><![CDATA[1 绕过合约检查 很多 freemint 的项目为了限制科学家（程序员）会用到 isContract() 方法，希望将调用者 msg.sender 限制为外部账户（EOA），而非合约。这个函数利用 extcodesize 获取该地址所]]></description>
+</item>
+<item>
+    <title>合约安全：坏随机数</title>
+    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-bad-random-number.html</link>
+    <pubDate>Tue, 11 Oct 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-bad-random-number.html</guid>
+    <description><![CDATA[引言 智能合约的坏随机数（Bad Randomness）漏洞和预防方法，这个漏洞经常在 NFT 和 GameFi 中出现，包括 Meebits，Loots，Wolf Ga]]></description>
 </item>
 </channel>
 </rss>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Solidity基础中的数值类型、引用类型、映射类型和函数类型 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title><meta name="Description" content="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><meta property="og:title" content="Solidity基础中的数值类型、引用类型、映射类型和函数类型" />
+<meta property="og:description" content="Solidity中的变量类型 数值类型(Value Type)：包括布尔型，整数型等等，这类变量赋值时候直接传递数值。 引用类型(Referenc" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.webhooks.top/posts/solidity-1.html" /><meta property="og:image" content="https://blog.webhooks.top/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-01-22T11:12:14+08:00" />
+<meta property="article:modified_time" content="2021-01-22T11:12:14+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.webhooks.top/logo.png"/>
+
+<meta name="twitter:title" content="Solidity基础中的数值类型、引用类型、映射类型和函数类型"/>
+<meta name="twitter:description" content="Solidity中的变量类型 数值类型(Value Type)：包括布尔型，整数型等等，这类变量赋值时候直接传递数值。 引用类型(Referenc"/>
+<meta name="application-name" content="5oneXj′s Blog">
+<meta name="apple-mobile-web-app-title" content="5oneXj′s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.webhooks.top/posts/solidity-1.html" /><link rel="prev" href="https://blog.webhooks.top/posts/zero-value-transfer.html" /><link rel="next" href="https://blog.webhooks.top/posts/what-is-the-cross-chain-of-blockchain.html" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Solidity基础中的数值类型、引用类型、映射类型和函数类型",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.webhooks.top\/posts\/solidity-1.html"
+        },"image": ["https:\/\/blog.webhooks.top\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "solidity, basic","wordcount":  1442 ,
+        "url": "https:\/\/blog.webhooks.top\/posts\/solidity-1.html","datePublished": "2021-01-22T11:12:14+08:00","dateModified": "2021-01-22T11:12:14+08:00","publisher": {
+            "@type": "Organization",
+            "name": "5oneXj","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.webhooks.top\/images\/avatar.png",
+                    "width":  528 ,
+                    "height":  560 
+                }},"author": {
+                "@type": "Person",
+                "name": "5oneXj"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts.html" title="所有文章"> Posts </a><a class="menu-item" href="/tags.html" title="所有标签"> Tags </a><a class="menu-item" href="/categories.html" title="所有分类"> Categories </a><a class="menu-item" href="/about.html" title="关于"> About </a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts.html" title="所有文章">Posts</a><a class="menu-item" href="/tags.html" title="所有标签">Tags</a><a class="menu-item" href="/categories.html" title="所有分类">Categories</a><a class="menu-item" href="/about.html" title="关于">About</a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Solidity基础中的数值类型、引用类型、映射类型和函数类型</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a>&nbsp;<a href="/categories/solidity-%E5%9F%BA%E7%A1%80.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Solidity 基础</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-01-22">2021-01-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1442 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id="/posts/solidity-1.html" class="leancloud_visitors" data-flag-title="Solidity基础中的数值类型、引用类型、映射类型和函数类型">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#数值类型">数值类型</a>
+          <ul>
+            <li><a href="#1-布尔型">1. 布尔型</a></li>
+            <li><a href="#2-整型">2. 整型</a></li>
+            <li><a href="#3-地址类型">3. 地址类型</a></li>
+            <li><a href="#4-定长字节数组">4. 定长字节数组</a></li>
+            <li><a href="#5-枚举-enum">5. 枚举 enum</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw" aria-hidden="true"></i>Solidity中的变量类型<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ol>
+<li>
+<p><strong>数值类型(Value Type)</strong>：包括布尔型，整数型等等，这类变量赋值时候直接传递数值。</p>
+</li>
+<li>
+<p><strong>引用类型(Reference Type)</strong>：包括数组和结构体，这类变量<code>占空间大</code>，赋值时候直接传递地址（类似指针）。</p>
+</li>
+<li>
+<p><strong>映射类型(Mapping Type)</strong>: Solidity里的哈希表。</p>
+</li>
+<li>
+<p><strong>函数类型(Function Type)</strong>：Solidity文档里把函数归到数值类型，但我觉得他跟其他类型差别很大，所以单独分一类。</p>
+</li>
+</ol>
+</div>
+        </div>
+    </div>
+<h2 id="数值类型">数值类型</h2>
+<h3 id="1-布尔型">1. 布尔型</h3>
+<p>布尔型是二值变量，取值为<code>true</code>或<code>false</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kt">bool</span> <span class="k">public</span> <span class="n">_bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// 布尔值
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>布尔值的运算符，包括：</p>
+<ul>
+<li><code>!</code> （逻辑非）</li>
+<li><code>&amp;&amp;</code> （逻辑与， &ldquo;and&rdquo; ）</li>
+<li><code>||</code> （逻辑或， &ldquo;or&rdquo; ）</li>
+<li><code>==</code> （等于）</li>
+<li><code>!=</code> （不等于）</li>
+</ul>
+<p>代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 布尔运算
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">bool</span> <span class="k">public</span> <span class="n">_bool1</span> <span class="o">=</span> <span class="o">!</span><span class="n">_bool</span><span class="p">;</span> <span class="c1">//取非
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">bool</span> <span class="k">public</span> <span class="n">_bool2</span> <span class="o">=</span> <span class="n">_bool</span> <span class="o">&amp;&amp;</span> <span class="n">_bool1</span><span class="p">;</span> <span class="c1">//与
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">bool</span> <span class="k">public</span> <span class="n">_bool3</span> <span class="o">=</span> <span class="n">_bool</span> <span class="o">||</span> <span class="n">_bool1</span><span class="p">;</span> <span class="c1">//或
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">bool</span> <span class="k">public</span> <span class="n">_bool4</span> <span class="o">=</span> <span class="n">_bool</span> <span class="o">==</span> <span class="n">_bool1</span><span class="p">;</span> <span class="c1">//相等
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">bool</span> <span class="k">public</span> <span class="n">_bool5</span> <span class="o">=</span> <span class="n">_bool</span> <span class="o">!=</span> <span class="n">_bool1</span><span class="p">;</span> <span class="c1">//不相等
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面的代码中：变量<code>_bool</code>的取值是<code>true</code>；<code>_bool1</code>是<code>_bool</code>的非，为<code>false</code>；<code>_bool &amp;&amp; _bool1</code>为<code>false</code>；<code>_bool || _bool1</code>为<code>true</code>；<code>_bool == _bool1</code>为<code>false</code>；<code>_bool != _bool1</code>为<code>true</code>。</p>
+<p><strong>值得注意的是：</strong><code>&amp;&amp;</code> 和 <code>||</code>运算符遵循短路规则，这意味着，假如存在<code>f(x) || g(y)</code>的表达式，如果<code>f(x)</code>是<code>true</code>，<code>g(y)</code>不会被计算，即使它和<code>f(x)</code>的结果是相反的</p>
+<h3 id="2-整型">2. 整型</h3>
+<p>整型是<code>solidity</code>中的整数，最常用的包括</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 整型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="k">public</span> <span class="n">_int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="c1">// 整数，包括负数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint</span> <span class="k">public</span> <span class="n">_uint</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 正整数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint256</span> <span class="k">public</span> <span class="n">_number</span> <span class="o">=</span> <span class="mi">20220330</span><span class="p">;</span> <span class="c1">// 256位正整数
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>常用的整型运算符包括：</p>
+<ul>
+<li><strong>比较运算符（返回布尔值）</strong>： <code>&lt;=</code>， <code>&lt;</code>， <code>==</code>， <code>!=</code>， <code>&gt;=</code>， <code>&gt;</code></li>
+<li><strong>算数运算符</strong>： <code>+</code>， <code>-</code>， <code>*</code>， <code>/</code>， <code>%</code>（取余），<code>**</code>（幂）</li>
+</ul>
+<p>代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 整数运算
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint256</span> <span class="k">public</span> <span class="n">_number1</span> <span class="o">=</span> <span class="n">_number</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// +，-，*，/
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint256</span> <span class="k">public</span> <span class="n">_number2</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">2</span><span class="p">;</span> <span class="c1">// 指数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint256</span> <span class="k">public</span> <span class="n">_number3</span> <span class="o">=</span> <span class="mi">7</span> <span class="o">%</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// 取余数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">bool</span> <span class="k">public</span> <span class="n">_numberbool</span> <span class="o">=</span> <span class="n">_number2</span> <span class="o">&gt;</span> <span class="n">_number3</span><span class="p">;</span> <span class="c1">// 比大小
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3-地址类型">3. 地址类型</h3>
+<p>地址类型(address)有两类：</p>
+<ul>
+<li><strong>普通地址（address）</strong>: 存储一个 20 字节的值（以太坊地址的大小）。</li>
+<li><strong>payable address</strong>: 比普通地址多了<code>transfer</code>和<code>send</code>两个成员方法，用于接收转账。</li>
+</ul>
+<p>代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">address</span> <span class="k">public</span> <span class="n">_address</span> <span class="o">=</span> <span class="mh">0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="k">payable</span> <span class="k">public</span> <span class="n">_address1</span> <span class="o">=</span> <span class="k">payable</span><span class="p">(</span><span class="n">_address</span><span class="p">);</span> <span class="c1">// payable address，可以转账、查余额
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 地址类型的成员
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint256</span> <span class="k">public</span> <span class="nb">balance</span> <span class="o">=</span> <span class="n">_address1</span><span class="p">.</span><span class="nb">balance</span><span class="p">;</span> <span class="c1">// balance of address
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="4-定长字节数组">4. 定长字节数组</h3>
+<p>字节数组<code>bytes</code>分两种:</p>
+<ul>
+<li>定长: 属于数值类型，根据每个元素存储数据的大小分为 <code>byte</code>, <code>bytes8</code>, <code>bytes32</code> 等类型，每个元素最多存储 32 bytes数据。数组长度在声明之后不能改变。</li>
+<li>不定长: 属于引用类型，数组长度在声明之后可以改变，包括 <code>bytes</code> 等，之后的章节会详细介绍。</li>
+</ul>
+<p>代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 固定长度的字节数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">bytes32</span> <span class="k">public</span> <span class="n">_byte32</span> <span class="o">=</span> <span class="s">&#34;MiniSolidity&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="kt">bytes1</span> <span class="k">public</span> <span class="n">_byte</span> <span class="o">=</span> <span class="n">_byte32</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面代码中，<code>MiniSolidity</code>变量以字节的方式存储进变量<code>_byte32</code>。如果把它转换成<code>16进制</code>为，就是：<code>0x4d696e69536f6c69646974790000000000000000000000000000000000000000</code></p>
+<p><code>_byte</code>变量的值为<code>_byte32</code>的第一个字节，即<code>0x4d</code>。</p>
+<h3 id="5-枚举-enum">5. 枚举 enum</h3>
+<p>枚举（<code>enum</code>）是<code>solidity</code>中用户定义的数据类型。它主要用于为<code>uint</code>分配名称，使程序易于阅读和维护。它与<code>C语言</code>中的<code>enum</code>类似，使用名称来代替从<code>0</code>开始的<code>uint</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 用enum将uint 0， 1， 2表示为Buy, Hold, Sell
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">enum</span> <span class="nc">ActionSet</span> <span class="p">{</span> <span class="n">Buy</span><span class="p">,</span> <span class="n">Hold</span><span class="p">,</span> <span class="n">Sell</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 创建enum变量 action
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">ActionSet</span> <span class="n">action</span> <span class="o">=</span> <span class="n">ActionSet</span><span class="p">.</span><span class="n">Buy</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>它可以显式的和<code>uint</code>相互转换，并会检查转换的正整数是否在枚举的长度内，不然会报错：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// enum可以和uint显式的转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">enumToUint</span><span class="p">()</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span><span class="p">(</span><span class="kt">uint</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kt">uint</span><span class="p">(</span><span class="n">action</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>enum</code>的一个比较冷门的变量，几乎没什么人用。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-01-22</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.webhooks.top/posts/solidity-1.html" data-title="Solidity基础中的数值类型、引用类型、映射类型和函数类型" data-via="jollysone" data-hashtags="solidity,basic"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.webhooks.top/posts/solidity-1.html" data-hashtag="solidity"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.webhooks.top/posts/solidity-1.html"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.webhooks.top/posts/solidity-1.html" data-title="Solidity基础中的数值类型、引用类型、映射类型和函数类型" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.webhooks.top/posts/solidity-1.html" data-title="Solidity基础中的数值类型、引用类型、映射类型和函数类型"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.webhooks.top/posts/solidity-1.html" data-title="Solidity基础中的数值类型、引用类型、映射类型和函数类型"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.webhooks.top/posts/solidity-1.html" data-title="Solidity基础中的数值类型、引用类型、映射类型和函数类型"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://blog.webhooks.top/posts/solidity-1.html" data-title="Solidity基础中的数值类型、引用类型、映射类型和函数类型"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Skype" data-sharer="skype" data-url="https://blog.webhooks.top/posts/solidity-1.html" data-title="Solidity基础中的数值类型、引用类型、映射类型和函数类型"><i class="fab fa-skype fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/basic.html">basic</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/zero-value-transfer.html" class="prev" rel="prev" title="区块链上为什么有的交易值是0？"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>区块链上为什么有的交易值是0？</a>
+            <a href="/posts/what-is-the-cross-chain-of-blockchain.html" class="next" rel="next" title="区块链“跨链”是什么？为什么要“跨链”？">区块链“跨链”是什么？为什么要“跨链”？<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">转载请注明出处</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2018 - 2023</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"data":{"id-1":"5oneXj′s","id-2":"5oneXj′s"},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":88}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
