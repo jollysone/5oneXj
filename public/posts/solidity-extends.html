@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>简单继承与复杂继承之间的学习 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title><meta name="Description" content="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><meta property="og:title" content="简单继承与复杂继承之间的学习" />
+<meta property="og:description" content="继承 继承是面向对象编程很重要的组成部分，可以显著减少重复代码。如果把合约看作是对象的话，solidity也是面向对象的编程，也支持继承。 规则" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.webhooks.top/posts/solidity-extends.html" /><meta property="og:image" content="https://blog.webhooks.top/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-12T11:12:14+08:00" />
+<meta property="article:modified_time" content="2021-04-12T11:12:14+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.webhooks.top/logo.png"/>
+
+<meta name="twitter:title" content="简单继承与复杂继承之间的学习"/>
+<meta name="twitter:description" content="继承 继承是面向对象编程很重要的组成部分，可以显著减少重复代码。如果把合约看作是对象的话，solidity也是面向对象的编程，也支持继承。 规则"/>
+<meta name="application-name" content="5oneXj′s Blog">
+<meta name="apple-mobile-web-app-title" content="5oneXj′s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.webhooks.top/posts/solidity-extends.html" /><link rel="prev" href="https://blog.webhooks.top/posts/solidity-event.html" /><link rel="next" href="https://blog.webhooks.top/posts/solidity-abstract-interface.html" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "简单继承与复杂继承之间的学习",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.webhooks.top\/posts\/solidity-extends.html"
+        },"image": ["https:\/\/blog.webhooks.top\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "solidity, basic","wordcount":  2412 ,
+        "url": "https:\/\/blog.webhooks.top\/posts\/solidity-extends.html","datePublished": "2021-04-12T11:12:14+08:00","dateModified": "2021-04-12T11:12:14+08:00","publisher": {
+            "@type": "Organization",
+            "name": "5oneXj","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.webhooks.top\/images\/avatar.png",
+                    "width":  528 ,
+                    "height":  560 
+                }},"author": {
+                "@type": "Person",
+                "name": "5oneXj"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts.html" title="所有文章"> Posts </a><a class="menu-item" href="/tags.html" title="所有标签"> Tags </a><a class="menu-item" href="/categories.html" title="所有分类"> Categories </a><a class="menu-item" href="/about.html" title="关于"> About </a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts.html" title="所有文章">Posts</a><a class="menu-item" href="/tags.html" title="所有标签">Tags</a><a class="menu-item" href="/categories.html" title="所有分类">Categories</a><a class="menu-item" href="/about.html" title="关于">About</a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">简单继承与复杂继承之间的学习</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a>&nbsp;<a href="/categories/solidity-%E5%9F%BA%E7%A1%80.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Solidity 基础</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-04-12">2021-04-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2412 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="/posts/solidity-extends.html" class="leancloud_visitors" data-flag-title="简单继承与复杂继承之间的学习">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#继承">继承</a>
+          <ul>
+            <li><a href="#规则">规则</a></li>
+            <li><a href="#简单继承">简单继承</a></li>
+            <li><a href="#多重继承">多重继承</a></li>
+            <li><a href="#修饰器的继承">修饰器的继承</a></li>
+            <li><a href="#构造函数的继承">构造函数的继承</a></li>
+            <li><a href="#调用父合约的函数">调用父合约的函数</a></li>
+            <li><a href="#多重继承中的菱形继承">多重继承中的菱形继承</a></li>
+          </ul>
+        </li>
+        <li><a href="#在remix上验证">在Remix上验证</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="继承">继承</h2>
+<p>继承是面向对象编程很重要的组成部分，可以显著减少重复代码。如果把合约看作是对象的话，<code>solidity</code>也是面向对象的编程，也支持继承。</p>
+<h3 id="规则">规则</h3>
+<ul>
+<li>
+<p><code>virtual</code>: 父合约中的函数，如果希望子合约重写，需要加上<code>virtual</code>关键字。</p>
+</li>
+<li>
+<p><code>override</code>：子合约重写了父合约中的函数，需要加上<code>override</code>关键字。</p>
+</li>
+</ul>
+<p><strong>注意</strong>：用<code>override</code>修饰<code>public</code>变量，会重写与变量同名的<code>getter</code>函数，例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint256</span><span class="p">)</span> <span class="k">public</span> <span class="k">override</span> <span class="n">balanceOf</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="简单继承">简单继承</h3>
+<p>我们先写一个简单的爷爷合约<code>Yeye</code>，里面包含1个<code>Log</code>事件和3个<code>function</code>: <code>hip()</code>, <code>pop()</code>, <code>yeye()</code>，输出都是”Yeye”。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Yeye</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">event</span> <span class="nc">Log</span><span class="p">(</span><span class="kt">string</span> <span class="nb">msg</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 定义3个function: hip(), pop(), man()，Log值为Yeye。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">hip</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;Yeye&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">pop</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;Yeye&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">yeye</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;Yeye&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们再定义一个爸爸合约<code>Baba</code>，让他继承<code>Yeye</code>合约，语法就是<code>contract Baba is Yeye</code>，非常直观。在<code>Baba</code>合约里，我们重写一下<code>hip()</code>和<code>pop()</code>这两个函数，加上<code>override</code>关键字，并将他们的输出改为<code>”Baba”</code>；并且加一个新的函数<code>baba</code>，输出也是<code>”Baba”</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Baba</span> <span class="k">is</span> <span class="n">Yeye</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 继承两个function: hip()和pop()，输出改为Baba。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">hip</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span> <span class="k">override</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;Baba&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">pop</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span> <span class="k">override</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;Baba&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">baba</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;Baba&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们部署合约，可以看到<code>Baba</code>合约里有4个函数，其中<code>hip()</code>和<code>pop()</code>的输出被成功改写成<code>”Baba”</code>，而继承来的<code>yeye()</code>的输出仍然是<code>”Yeye”</code>。</p>
+<h3 id="多重继承">多重继承</h3>
+<p><code>solidity</code>的合约可以继承多个合约。规则：</p>
+<ol>
+<li>
+<p>继承时要按辈分最高到最低的顺序排。比如我们写一个<code>Erzi</code>合约，继承<code>Yeye</code>合约和<code>Baba</code>合约，那么就要写成<code>contract Erzi is Yeye, Baba</code>，而不能写成<code>contract Erzi is Baba, Yeye</code>，不然就会报错。</p>
+</li>
+<li>
+<p>如果某一个函数在多个继承的合约里都存在，比如例子中的<code>hip()</code>和<code>pop()</code>，在子合约里必须重写，不然会报错。</p>
+</li>
+<li>
+<p>重写在多个父合约中都重名的函数时，<code>override</code>关键字后面要加上所有父合约名字，例如<code>override(Yeye, Baba)</code>。</p>
+</li>
+</ol>
+<p>例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Erzi</span> <span class="k">is</span> <span class="n">Yeye</span><span class="p">,</span> <span class="n">Baba</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 继承两个function: hip()和pop()，输出值为Erzi。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">hip</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span> <span class="k">override</span><span class="p">(</span><span class="n">Yeye</span><span class="p">,</span> <span class="n">Baba</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;Erzi&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">pop</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span> <span class="k">override</span><span class="p">(</span><span class="n">Yeye</span><span class="p">,</span> <span class="n">Baba</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;Erzi&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们可以看到，<code>Erzi</code>合约里面重写了<code>hip()</code>和<code>pop()</code>两个函数，将输出改为<code>”Erzi”</code>，并且还分别从<code>Yeye</code>和<code>Baba</code>合约继承了<code>yeye()</code>和<code>baba()</code>两个函数。</p>
+<h3 id="修饰器的继承">修饰器的继承</h3>
+<p><code>Solidity</code>中的修饰器（<code>Modifier</code>）同样可以继承，用法与函数继承类似，在相应的地方加<code>virtual</code>和<code>override</code>关键字即可。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Base1</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">modifier</span> <span class="nf">exactDividedBy2And3</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_a</span><span class="p">)</span> <span class="k">virtual</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="n">_a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">_a</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Identifier</span> <span class="k">is</span> <span class="n">Base1</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//计算一个数分别被2除和被3除的值，但是传入的参数必须是2和3的倍数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">getExactDividedBy2And3</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_dividend</span><span class="p">)</span> <span class="k">public</span> <span class="n">exactDividedBy2And3</span><span class="p">(</span><span class="n">_dividend</span><span class="p">)</span> <span class="k">pure</span> <span class="k">returns</span><span class="p">(</span><span class="kt">uint</span><span class="p">,</span> <span class="kt">uint</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">getExactDividedBy2And3WithoutModifier</span><span class="p">(</span><span class="n">_dividend</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//计算一个数分别被2除和被3除的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">getExactDividedBy2And3WithoutModifier</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_dividend</span><span class="p">)</span> <span class="k">public</span> <span class="k">pure</span> <span class="k">returns</span><span class="p">(</span><span class="kt">uint</span><span class="p">,</span> <span class="kt">uint</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">uint</span> <span class="n">div2</span> <span class="o">=</span> <span class="n">_dividend</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">uint</span> <span class="n">div3</span> <span class="o">=</span> <span class="n">_dividend</span> <span class="o">/</span> <span class="mi">3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="n">div2</span><span class="p">,</span> <span class="n">div3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Identifier</code>合约可以直接在代码中使用父合约中的<code>exactDividedBy2And3</code>修饰器，也可以利用<code>override</code>关键字重写修饰器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">modifier</span> <span class="nf">exactDividedBy2And3</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_a</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="n">_a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">_a</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="构造函数的继承">构造函数的继承</h3>
+<p>子合约有两种方法继承父合约的构造函数。举个简单的例子，父合约<code>A</code>里面有一个状态变量<code>a</code>，并由构造函数的参数来确定：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// 构造函数的继承
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">abstract</span> <span class="kd">contract</span> <span class="nc">A</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">uint</span> <span class="k">public</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">constructor</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_a</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">a</span> <span class="o">=</span> <span class="n">_a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>在继承时声明父构造函数的参数，例如：<code>contract B is A(1)</code></li>
+<li>在子合约的构造函数中声明构造函数的参数，例如：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">C</span> <span class="k">is</span> <span class="n">A</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">constructor</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_c</span><span class="p">)</span> <span class="n">A</span><span class="p">(</span><span class="n">_c</span> <span class="o">*</span> <span class="n">_c</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="调用父合约的函数">调用父合约的函数</h3>
+<p>子合约有两种方式调用父合约的函数，直接调用和利用<code>super</code>关键字。</p>
+<ol>
+<li>直接调用：子合约可以直接用<code>父合约名.函数名()</code>的方式来调用父合约函数，例如<code>Yeye.pop()</code>。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">callParent</span><span class="p">()</span> <span class="k">public</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Yeye</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li><code>super</code>关键字：子合约可以利用<code>super.函数名()</code>来调用最近的父合约函数。<code>solidity</code>继承关系按声明时从右到左的顺序是：<code>contract Erzi is Yeye, Baba</code>，那么<code>Baba</code>是最近的父合约，<code>super.pop()</code>将调用<code>Baba.pop()</code>而不是<code>Yeye.pop()</code>：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">callParentSuper</span><span class="p">()</span> <span class="k">public</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将调用最近的父合约函数，Baba.pop()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">super</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="多重继承中的菱形继承">多重继承中的菱形继承</h3>
+<p>在面向对象编程中，钻石继承（菱形继承）指一个派生类同时有两个或两个以上的基类。</p>
+<p>在多重+菱形继承链条上使用<code>super</code>关键字时，需要注意的是使用<code>super</code>会调用继承链条上的每一个合约的相关函数，而不是只调用最近的父合约。</p>
+<p>我们先写一个合约<code>God</code>，再写<code>Adam</code>和<code>Eve</code>两个合约继承<code>God</code>合约，最后让创建合约<code>people</code>继承自<code>Adam</code>和<code>Eve</code>，每个合约都有<code>foo</code>和<code>bar</code>两个函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// SPDX-License-Identifier: MIT
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">pragma solidity</span> <span class="o">^</span><span class="mi">0</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="mi">13</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 继承树：
+</span></span></span><span class="line"><span class="cl"><span class="cm">  God
+</span></span></span><span class="line"><span class="cl"><span class="cm"> /  \
+</span></span></span><span class="line"><span class="cl"><span class="cm">Adam Eve
+</span></span></span><span class="line"><span class="cl"><span class="cm"> \  /
+</span></span></span><span class="line"><span class="cl"><span class="cm">people
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">God</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">event</span> <span class="nc">Log</span><span class="p">(</span><span class="kt">string</span> <span class="n">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">foo</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;God.foo called&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">bar</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;God.bar called&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Adam</span> <span class="k">is</span> <span class="n">God</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">foo</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span> <span class="k">override</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;Adam.foo called&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">bar</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span> <span class="k">override</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;Adam.bar called&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">.</span><span class="n">bar</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Eve</span> <span class="k">is</span> <span class="n">God</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">foo</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span> <span class="k">override</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;Eve.foo called&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Eve</span><span class="p">.</span><span class="n">foo</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">bar</span><span class="p">()</span> <span class="k">public</span> <span class="k">virtual</span> <span class="k">override</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Log</span><span class="p">(</span><span class="s">&#34;Eve.bar called&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">.</span><span class="n">bar</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">people</span> <span class="k">is</span> <span class="n">Adam</span><span class="p">,</span> <span class="n">Eve</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">foo</span><span class="p">()</span> <span class="k">public</span> <span class="k">override</span><span class="p">(</span><span class="n">Adam</span><span class="p">,</span> <span class="n">Eve</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">.</span><span class="n">foo</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">bar</span><span class="p">()</span> <span class="k">public</span> <span class="k">override</span><span class="p">(</span><span class="n">Adam</span><span class="p">,</span> <span class="n">Eve</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">.</span><span class="n">bar</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这个例子中，调用合约<code>people</code>中的<code>super.bar()</code>会依次调用<code>Eve</code>、<code>Adam</code>，最后是<code>God</code>合约。</p>
+<p>虽然<code>Eve</code>、<code>Adam</code>都是<code>God</code>的子合约，但整个过程中<code>God</code>合约只会被调用一次。原因是Solidity借鉴了Python的方式，强制一个由基类构成的DAG（有向无环图）使其保证一个特定的顺序。更多细节你可以查阅<a href="https://solidity-cn.readthedocs.io/zh/develop/contracts.html?highlight=%E7%BB%A7%E6%89%BF#index-16" target="_blank" rel="noopener noreffer ">Solidity的官方文档</a>。</p>
+<h2 id="在remix上验证">在Remix上验证</h2>
+<ul>
+<li>
+<p>合约简单继承示例, 可以观察到Baba合约多了Yeye的函数
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012306964.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012306964.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012306964.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012306964.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012306964.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012306964.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012307301.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012307301.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012307301.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012307301.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012307301.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012307301.png" /></p>
+</li>
+<li>
+<p>合约多重继承可以参考简单继承的操作步骤来增加部署Erzi合约，然后观察暴露的函数以及尝试调用来查看日志</p>
+</li>
+<li>
+<p>修饰器继承示例
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012307498.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012307498.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012307498.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012307498.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012307498.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012307498.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012308307.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012308307.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012308307.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012308307.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012308307.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012308307.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012308977.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012308977.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012308977.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012308977.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012308977.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012308977.png" /></p>
+</li>
+<li>
+<p>构造函数继承示例
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309241.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309241.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309241.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309241.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309241.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309241.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309546.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309546.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309546.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309546.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309546.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309546.png" /></p>
+</li>
+<li>
+<p>调用父合约示例
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309388.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309388.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309388.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309388.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309388.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012309388.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012310214.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012310214.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012310214.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012310214.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012310214.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012310214.png" /></p>
+</li>
+<li>
+<p>菱形继承示例
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012310903.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012310903.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012310903.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012310903.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012310903.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303012310903.png" /></p>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-04-12</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.webhooks.top/posts/solidity-extends.html" data-title="简单继承与复杂继承之间的学习" data-via="jollysone" data-hashtags="solidity,basic"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.webhooks.top/posts/solidity-extends.html" data-hashtag="solidity"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.webhooks.top/posts/solidity-extends.html"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.webhooks.top/posts/solidity-extends.html" data-title="简单继承与复杂继承之间的学习" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.webhooks.top/posts/solidity-extends.html" data-title="简单继承与复杂继承之间的学习"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.webhooks.top/posts/solidity-extends.html" data-title="简单继承与复杂继承之间的学习"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.webhooks.top/posts/solidity-extends.html" data-title="简单继承与复杂继承之间的学习"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://blog.webhooks.top/posts/solidity-extends.html" data-title="简单继承与复杂继承之间的学习"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Skype" data-sharer="skype" data-url="https://blog.webhooks.top/posts/solidity-extends.html" data-title="简单继承与复杂继承之间的学习"><i class="fab fa-skype fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/basic.html">basic</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/solidity-event.html" class="prev" rel="prev" title="合约中的事件（Event）介绍"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>合约中的事件（Event）介绍</a>
+            <a href="/posts/solidity-abstract-interface.html" class="next" rel="next" title="抽象合约（abstract）和接口（interface）">抽象合约（abstract）和接口（interface）<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">转载请注明出处</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2018 - 2023</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"data":{"id-1":"5oneXj′s","id-2":"5oneXj′s"},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":88}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

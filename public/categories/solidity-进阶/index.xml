@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Solidity 进阶 - 分类 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
+        <link>https://blog.webhooks.top/categories/solidity-%E8%BF%9B%E9%98%B6.html</link>
+        <description>Solidity 进阶 - 分类 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Mon, 12 Jul 2021 11:12:14 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/categories/solidity-%E8%BF%9B%E9%98%B6.html" rel="self" type="application/rss+xml" /><item>
+    <title>库合约（library）站在巨人的肩膀上</title>
+    <link>https://blog.webhooks.top/posts/solidity-library.html</link>
+    <pubDate>Mon, 12 Jul 2021 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-library.html</guid>
+    <description><![CDATA[库函数 库函数是一种特殊的合约，为了提升solidity代码的复用性和减少gas而存在。库合约一般都是一些好用的函数合集（库函数），由大神或者]]></description>
+</item>
+<item>
+    <title>进阶学习之函数重载</title>
+    <link>https://blog.webhooks.top/posts/solidity-overloading.html</link>
+    <pubDate>Wed, 30 Jun 2021 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-overloading.html</guid>
+    <description><![CDATA[重载 solidity中允许函数进行重载（overloading），即名字相同但输入参数类型不同的函数可以同时存在，他们被视为不同的函数。注意]]></description>
+</item>
+</channel>
+</rss>

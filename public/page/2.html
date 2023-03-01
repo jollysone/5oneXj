@@ -99,6 +99,11 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" width="528" height="560" /></a></div><h1 class="home-title">5oneXj</h1><div class="home-subtitle">专注于区块链智能合约开发和审计</div><div class="links"><a href="https://github.com/jollysone" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/jollysone" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://discordapp.com/users/jollysone#7888" title="Discord" target="_blank" rel="noopener noreffer me"><i class="fab fa-discord fa-fw" aria-hidden="true"></i></a><a href="mailto:jollysone@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">______________</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/solidity-smart-contract-security-low-level-calls-that-are-not-checked.html">合约安全：未检查的低级调用</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-12-02">2022-12-02</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>合约安全</a></span></div><div class="content">引言 智能合约的未检查低级调用（low-level call）的漏洞。失败的低级调用不会让交易回滚，如果合约中忘记对其返回值进行检查，往往会出现</div><div class="post-footer">
+        <a href="/posts/solidity-smart-contract-security-low-level-calls-that-are-not-checked.html">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/security.html">security</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/posts/solidity-smart-contract-security-front-running.html">合约安全：抢先交易</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-11-22">2022-11-22</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>合约安全</a></span></div><div class="content">引言 智能合约的抢先交易（Front-running，抢跑）。据统计，以太坊上的套利者通过三明治攻击（sandwich attack）共获利$1</div><div class="post-footer">
         <a href="/posts/solidity-smart-contract-security-front-running.html">阅读全文</a><div class="post-tags">
@@ -123,11 +128,6 @@
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-10-20">2022-10-20</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>合约安全</a></span></div><div class="content">1 绕过合约检查 很多 freemint 的项目为了限制科学家（程序员）会用到 isContract() 方法，希望将调用者 msg.sender 限制为外部账户（EOA），而非合约。这个函数利用 extcodesize 获取该地址所</div><div class="post-footer">
         <a href="/posts/solidity-smart-contract-security-bad-constructor-check.html">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/security.html">security</a>,&nbsp;<a href="/tags/constructor.html">constructor</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/solidity-smart-contract-security-bad-random-number.html">合约安全：坏随机数</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-10-11">2022-10-11</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>合约安全</a></span></div><div class="content">引言 智能合约的坏随机数（Bad Randomness）漏洞和预防方法，这个漏洞经常在 NFT 和 GameFi 中出现，包括 Meebits，Loots，Wolf Ga</div><div class="post-footer">
-        <a href="/posts/solidity-smart-contract-security-bad-random-number.html">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/security.html">security</a>,&nbsp;<a href="/tags/random.html">random</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -148,7 +148,7 @@
                     <span class="page-link" aria-hidden="true">&hellip;</span>
                 </li><li class="page-item ">
                     <span class="page-link">
-                        <a href="/page/6.html">6</a>
+                        <a href="/page/8.html">8</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">

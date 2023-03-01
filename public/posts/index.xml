@@ -4,13 +4,21 @@
         <link>https://blog.webhooks.top/posts.html</link>
         <description>所有文章 | 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Thu, 19 Jan 2023 20:13:10 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/posts.html" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Wed, 01 Mar 2023 19:15:10 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/posts.html" rel="self" type="application/rss+xml" /><item>
     <title>智能合约中通过 tx.origin 授权引发的不安全问题</title>
     <link>https://blog.webhooks.top/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html</link>
     <pubDate>Fri, 01 Oct 2021 17:55:28 &#43;0800</pubDate>
     <author>5oneXj</author>
     <guid>https://blog.webhooks.top/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html</guid>
     <description><![CDATA[1 前言 在合约代码中，最常用的是使用 msg.sender 来检查授权，但有时由于有些程序员不熟悉 tx.origin 和 msg.sender 的区别，如果使用了 tx.origin 可能导致合约的安全问题。黑客最典型的攻击]]></description>
+</item>
+<item>
+    <title>让你可以在web3社区高谈阔论的黑话总结</title>
+    <link>https://blog.webhooks.top/posts/web3-slang.html</link>
+    <pubDate>Wed, 01 Mar 2023 19:15:10 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/web3-slang.html</guid>
+    <description><![CDATA[A ABI：Application Binary Interface，类似于API，是两个二进制程序模块之间接口。 address：钱包/合约地址。 alpha]]></description>
 </item>
 <item>
     <title>Metamask项目方给Solidity程序员的16个安全建议</title>
@@ -75,14 +83,6 @@
     <author>5oneXj</author>
     <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-honeypot-token.html</guid>
     <description><![CDATA[引言 将介绍貔貅合约和预防方法（英文习惯叫蜜罐代币 honeypot token）。 1 貔貅学入门 貔貅是中国的一个神兽，因为在天庭犯了戒，被玉帝揍的肛门封闭了，只]]></description>
-</item>
-<item>
-    <title>合约安全：拒绝服务漏洞</title>
-    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-dos-attack.html</link>
-    <pubDate>Sun, 23 Oct 2022 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-dos-attack.html</guid>
-    <description><![CDATA[引言 智能合约的拒绝服务（Denial of Service, DoS）漏洞，并介绍预防的方法。NFT 项目 Akutar 曾因为 DoS 漏洞损失 11,539 ETH，当时价值 3400 万美元。 1 DoS 在 Web2 中，]]></description>
 </item>
 </channel>
 </rss>

@@ -99,6 +99,11 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" width="528" height="560" /></a></div><h1 class="home-title">5oneXj</h1><div class="home-subtitle">专注于区块链智能合约开发和审计</div><div class="links"><a href="https://github.com/jollysone" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/jollysone" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://discordapp.com/users/jollysone#7888" title="Discord" target="_blank" rel="noopener noreffer me"><i class="fab fa-discord fa-fw" aria-hidden="true"></i></a><a href="mailto:jollysone@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">______________</h3></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/solidity-smart-contract-security-bad-random-number.html">合约安全：坏随机数</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-10-11">2022-10-11</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>合约安全</a></span></div><div class="content">引言 智能合约的坏随机数（Bad Randomness）漏洞和预防方法，这个漏洞经常在 NFT 和 GameFi 中出现，包括 Meebits，Loots，Wolf Ga</div><div class="post-footer">
+        <a href="/posts/solidity-smart-contract-security-bad-random-number.html">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/security.html">security</a>,&nbsp;<a href="/tags/random.html">random</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/posts/solidity-smart-contract-security-signature-replay.html">合约安全：签名重放</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-09-19">2022-09-19</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>合约安全</a></span></div><div class="content">引言 智能合约的签名重放（Signature Replay）攻击和预防方法，它曾间接导致了著名做市商 Wintermute 被盗2000万枚 $OP。 1 签名重放 上学的时</div><div class="post-footer">
         <a href="/posts/solidity-smart-contract-security-signature-replay.html">阅读全文</a><div class="post-tags">
@@ -123,11 +128,6 @@
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-08-25">2022-08-25</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>合约安全</a></span></div><div class="content">引言 整型溢出漏洞（Arithmetic Over/Under Flows）是一个比较经典的漏洞，Solidity 0.8 版本后内置了Safemath库，因此很少发生。 1</div><div class="post-footer">
         <a href="/posts/solidity-smart-contract-security-overflow.html">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/security.html">security</a>,&nbsp;<a href="/tags/safemath.html">Safemath</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/solidity-smart-contract-security-nft-re-entrancy.html">合约安全：NFT重入攻击</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2022-08-22">2022-08-22</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>合约安全</a></span></div><div class="content">1 NFT重入风险 重入攻击是智能合约中最常见的一种攻击，攻击者通过合约漏洞（例如fallback函数）循环调用合约，将合约中资产转走或铸造大量</div><div class="post-footer">
-        <a href="/posts/solidity-smart-contract-security-nft-re-entrancy.html">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/security.html">security</a>,&nbsp;<a href="/tags/fallback.html">fallback</a>,&nbsp;<a href="/tags/nft.html">nft</a>,&nbsp;<a href="/tags/erc721.html">erc721</a>,&nbsp;<a href="/tags/erc1155.html">erc1155</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -149,8 +149,10 @@
                         <a href="/page/5.html">5</a>
                     </span>
                 </li><li class="page-item ">
+                    <span class="page-link" aria-hidden="true">&hellip;</span>
+                </li><li class="page-item ">
                     <span class="page-link">
-                        <a href="/page/6.html">6</a>
+                        <a href="/page/8.html">8</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">

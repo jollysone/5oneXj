@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>让你可以在web3社区高谈阔论的黑话总结 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title><meta name="Description" content="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><meta property="og:title" content="让你可以在web3社区高谈阔论的黑话总结" />
+<meta property="og:description" content="A ABI：Application Binary Interface，类似于API，是两个二进制程序模块之间接口。 address：钱包/合约地址。 alpha" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.webhooks.top/posts/web3-slang.html" /><meta property="og:image" content="https://blog.webhooks.top/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-01T19:15:10+08:00" />
+<meta property="article:modified_time" content="2023-03-01T19:15:10+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.webhooks.top/logo.png"/>
+
+<meta name="twitter:title" content="让你可以在web3社区高谈阔论的黑话总结"/>
+<meta name="twitter:description" content="A ABI：Application Binary Interface，类似于API，是两个二进制程序模块之间接口。 address：钱包/合约地址。 alpha"/>
+<meta name="application-name" content="5oneXj′s Blog">
+<meta name="apple-mobile-web-app-title" content="5oneXj′s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.webhooks.top/posts/web3-slang.html" /><link rel="prev" href="https://blog.webhooks.top/posts/16-safety-recommendations.html" /><link rel="next" href="https://blog.webhooks.top/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "让你可以在web3社区高谈阔论的黑话总结",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.webhooks.top\/posts\/web3-slang.html"
+        },"image": ["https:\/\/blog.webhooks.top\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "基础知识","wordcount":  3432 ,
+        "url": "https:\/\/blog.webhooks.top\/posts\/web3-slang.html","datePublished": "2023-03-01T19:15:10+08:00","dateModified": "2023-03-01T19:15:10+08:00","publisher": {
+            "@type": "Organization",
+            "name": "5oneXj","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.webhooks.top\/images\/avatar.png",
+                    "width":  528 ,
+                    "height":  560 
+                }},"author": {
+                "@type": "Person",
+                "name": "5oneXj"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts.html" title="所有文章"> Posts </a><a class="menu-item" href="/tags.html" title="所有标签"> Tags </a><a class="menu-item" href="/categories.html" title="所有分类"> Categories </a><a class="menu-item" href="/about.html" title="关于"> About </a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts.html" title="所有文章">Posts</a><a class="menu-item" href="/tags.html" title="所有标签">Tags</a><a class="menu-item" href="/categories.html" title="所有分类">Categories</a><a class="menu-item" href="/about.html" title="关于">About</a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">让你可以在web3社区高谈阔论的黑话总结</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-01">2023-03-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3432 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id="/posts/web3-slang.html" class="leancloud_visitors" data-flag-title="让你可以在web3社区高谈阔论的黑话总结">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#a">A</a></li>
+        <li><a href="#b">B</a></li>
+        <li><a href="#c">C</a></li>
+        <li><a href="#d">D</a></li>
+        <li><a href="#e">E</a></li>
+        <li><a href="#f">F</a></li>
+        <li><a href="#g">G</a></li>
+        <li><a href="#h">H</a></li>
+        <li><a href="#i">I</a></li>
+        <li><a href="#l">L</a></li>
+        <li><a href="#m">M</a></li>
+        <li><a href="#n">N</a></li>
+        <li><a href="#o">O</a></li>
+        <li><a href="#p">P</a></li>
+        <li><a href="#r">R</a></li>
+        <li><a href="#s">S</a></li>
+        <li><a href="#t">T</a></li>
+        <li><a href="#u">U</a></li>
+        <li><a href="#w">W</a></li>
+        <li><a href="#y">Y</a></li>
+        <li><a href="#z">Z</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="a">A</h2>
+<p>ABI：Application Binary Interface，类似于API，是两个二进制程序模块之间接口。</p>
+<p>address：钱包/合约地址。</p>
+<p>alpha：超额收益机会。</p>
+<p>AMA：Ask Me Anything，项目方面向公众的问答会。</p>
+<p>AMM：Autonomous Market Making，自动化做市商，是去中心化交易所的常用技术。</p>
+<p>ape：梭哈。</p>
+<p>ATH：All Time High，历史最高的价格。</p>
+<h2 id="b">B</h2>
+<p>Blockchain：区块链。</p>
+<p>Bridge：跨链桥，连接不同公链上的资产的应用。</p>
+<p>Buy the fucking dip: 抄底。</p>
+<p>Beeple: 数字艺术家，他出售的NFT “<a href="https://en.wikipedia.org/wiki/Everydays:_the_First_5000_Days" target="_blank" rel="noopener noreffer ">Everydays - The First 5000 Days</a>” 以价格6900万美元被购买。</p>
+<h2 id="c">C</h2>
+<p>CeFi：Centralized Finance，中心化金融。</p>
+<p>Cex：Centralized Exchange，中心化交易所。</p>
+<p>ctf：Capture The Flag，网络安全技术比赛。</p>
+<p>chad: 牛逼的人 。(一般指男性)</p>
+<h2 id="d">D</h2>
+<p>DAO：Decentralized Autonomous Organization，去中心化自治组织。</p>
+<p>Dapp：Decentralized Application，去中心化应用。</p>
+<p>DeFi：Decentralized Finance，去中心化金融。</p>
+<p>degen：degenerate，赌徒/梭哈的人。</p>
+<p>delist：下架。</p>
+<p>DeSci：Decentralized Science，去中心化科学。</p>
+<p>DeSoc：Decentralized Society，去中心化社会。</p>
+<p>DeX：Decentralized Exchange，去中心化交易所。列子：可以通过 <a href="https://defillama.com/protocols/Dexes" target="_blank" rel="noopener noreffer ">DefiLlama</a> 找到完整的DEX列表</p>
+<p>Diamond hands：钻石手，长期持有代币/NFT的人。</p>
+<p>DID：Decentralized Identity，去中心化身份。</p>
+<p>discord：社群常用的信息传播平台。</p>
+<p>dm：direct message，私信。</p>
+<p>DYOR：Do Your Own Research，自己研究，自己负责。</p>
+<p>Due diligence: 尽职调查。</p>
+<h2 id="e">E</h2>
+<p>EOA：Externally Owned Accounts，以太坊网络中的个人用户，而非智能合约地址。</p>
+<p>ERC20：以太坊上的同质化代币标准。</p>
+<p>ERC721：以太坊上的非同质化代币标准。</p>
+<p>Ethereum：以太坊，一个去中心化的开源区块链网络，也是它的原生代币名字。</p>
+<p>EVM：Ethereum Virtual Machine，以太坊虚拟机，是区块链开发人员用来在以太坊区块链上部署去中心化应用程序 (Dapp) 的软件应用程序。</p>
+<h2 id="f">F</h2>
+<p>FT: fungible token，同质化代币。</p>
+<p>fam：family 家人。</p>
+<p>floor price：地板价。</p>
+<p>fren：friend，朋友。</p>
+<p>Fomo：Fear of Missing Out，害怕踏空而盲目跟风。</p>
+<p>FUD：Fear, Uncertainty, and Doubt，过分夸大的市场的消极信息。</p>
+<p>FDV：Fully Diluted Valuation，即“完全稀释估值”。</p>
+<p>FYI(for your information): 供你参考。</p>
+<p>Full Send: 全力以赴。</p>
+<p>flash loan: 闪电贷。在同一笔交易内完成借款和还款，常用于套利。</p>
+<h2 id="g">G</h2>
+<p>gas：燃料，表示在区块链完成交易所需的计算工作量。</p>
+<p>gas fee：燃料费，表示在区块链完成交易所需的支付的以太坊费用。</p>
+<p>gas limit：交易中燃料的最大消耗量。</p>
+<p>gas price：区块链中每单位燃料的价格。</p>
+<p>gas war：因为争抢热门项目而导致燃料飙升。</p>
+<p>gm：good morning，早安，类似web3中的“您吃了没？”。</p>
+<p>gn：good night，晚安。</p>
+<p>gg: good game。</p>
+<h2 id="h">H</h2>
+<p>hacked：被黑客攻击了。</p>
+<p>HODL：hold on dear love，钻石手，长期持有。</p>
+<h2 id="i">I</h2>
+<p>IRL：In Real Life，现实生活中。</p>
+<p>ifykyk: 懂得都懂。</p>
+<p>ICO: Initial Coin Offering 首次代币发行。</p>
+<p>IFO：Initial Farm Offering 首次农场（质押）发行。</p>
+<p>IEO：Initial Exchange Offering 首次交易所发行（比如在币安交易所发行）。</p>
+<p>IDO：Initial DEX Offering 首次去中心化交易所发行（比如在Pancakeswap上发行）。</p>
+<h2 id="l">L</h2>
+<p>layer2：建立在现有公链上的二层框架，通常会有更快更便宜的交易、更多的存储空间。</p>
+<p>LFG：Let&rsquo;s Fucking Go！冲！梭哈！</p>
+<p>LGTM: Looks good to me， 我看行。</p>
+<p>liquidity：流动性。</p>
+<p>LP token: liquidity Pool(LP) token 流动性资金池代币 列子：当用户给Uniswap/Curve 的某个资金池提供资金，会产生的一个收据凭证(可以是基础的ERC20，或者ERC 721 NFT for Uniswap V3)</p>
+<p>LP farmer： 通过在不同的去中心化平台以提供流动性来赚取收益的一部分人。因为经常需要提取收益复投，所以以此自称</p>
+<p>Lending protocol: 允许用户存款以及借贷的平台。列子：可以通过 <a href="https://defillama.com/protocols/Lending" target="_blank" rel="noopener noreffer ">DefiLlama</a> 找到完整的借贷列表</p>
+<p>Liquid staking protocol：允许用户质押资产，并且质押凭证可以自由交易。列子：stETH 可以通过 <a href="https://defillama.com/protocols/Liquid%20Staking" target="_blank" rel="noopener noreffer ">DefiLlama</a> 找到完整列表</p>
+<p>LMAO：laugh my ass off 笑死我了</p>
+<h2 id="m">M</h2>
+<p>maxi：maximalist， 极端主义者。</p>
+<p>meme：谜因/梗，可以传播的东西。</p>
+<p>Mempool：交易缓冲池，在交易被发出但未上链的时候，会出现在这里。</p>
+<p>Merkle Tree：区块链用于安全验证和汇总大型数据集的数据结构。</p>
+<p>MEV：Miner Extractable Value 或 Maximal Extractable Value，指矿工通过在一个区块中包含、排除或重新排序交易可以获得的利润。</p>
+<p>Mint：铸造 NFT/ERC20。</p>
+<p>Moon: to the moon, 暴涨。</p>
+<h2 id="n">N</h2>
+<p>nfa：Not Financial Advice，不是投资建议。</p>
+<p>NFT：Non-Fungible Token，非同质化代币。</p>
+<p>ngmi：Not ganna make it，不会成功的。</p>
+<p>Noob：菜鸡。</p>
+<p>Nonce：在以太坊的发送的transaction中，它的含义是与以太坊交易相关的一个数字，每笔交易nonce都会增加1，每个nonce只能使用一次。这是为了避免交易的重复。（注意在不同的环境中，nonce的意思会不同，在比如，在比特币中的nonce的含义就完全不相同）</p>
+<p>ngl：not gonna lie，老实说</p>
+<h2 id="o">O</h2>
+<p>OG：Original Gangster，元老。</p>
+<p>on-chain：链上。</p>
+<p>off-chain：链下，不上链。</p>
+<p>optimistic rollups：乐观汇总，一种以太坊layer2解决方案。</p>
+<p>oracle：预言机， 把信息通过去中心化的方式转到链上， 通过保证传入信息的去中心化程度和准确性， 从而保持该Dapp的去中心化程度。</p>
+<p>OAT：On-Chain Achievement Tokens，是一种可以代表出席证明或是成就证明的NFT。当你完成项目给出的任务或是符合条件，就可以获得OAT 徽章，证明你是项目活动的参与者。</p>
+<h2 id="p">P</h2>
+<p>paper hands：纸手，钻石手的反义词。</p>
+<p>pfp：profile picture，个人头像。</p>
+<p>PoS：Proof of Stake，权益证明，参与者通过持仓质押维护区块链网络正常运行。</p>
+<p>PoW：Proof of Work，工作量证明，参与者通过花费计算能力和能量维护区块链网络正常运行。</p>
+<p>prolly nothing：Probbably Nothing，可能什么都不会发生，用于卖关子。</p>
+<p>Pump and dump：拉盘砸盘，形容一个项目被严重控盘。</p>
+<h2 id="r">R</h2>
+<p>ReFi：Regenerative Finance，可再生/可持续金融。</p>
+<p>rekt：wrecked, 完蛋了，破产了。</p>
+<p>roadmap：路线图（画大饼）。</p>
+<p>RT：Retweet 推特转发。</p>
+<p>rug：rug-pull，撤摊子/跑路/归零。</p>
+<h2 id="s">S</h2>
+<p>Sandwich Attack：三明治攻击/夹子，攻击者会抢在受害者的大笔买入订单之前买入、提高价格，在受害者订单后下达卖单，赚取收益。</p>
+<p>SBT：Soulbound Token，灵魂绑定代币，不能交易的NFT。</p>
+<p>shilling：推销。</p>
+<p>Smart Contracts：智能合约，在区块链上运行的一段代码。</p>
+<p>solidity：以太坊上的编写智能合约的语言。</p>
+<p>sweep floor：扫地板。</p>
+<p>Send it: 懂了，支持</p>
+<h2 id="t">T</h2>
+<p>Tokenomics：代币经济学。</p>
+<p>tradfi: traditional finance, 主流金融体系</p>
+<p>TVL：Total Value Locked，协议中锁定的资金总价值。</p>
+<p>tbh：to be honest，老实说。</p>
+<h2 id="u">U</h2>
+<p>Up Only：一直上涨（大家的美好愿望）。</p>
+<h2 id="w">W</h2>
+<p>wagmi：We are gonna make it，我们会成功的。也是一个Web3常用的react前端库的名字，包装了很多常用的hooks。</p>
+<p>wallet：钱包。</p>
+<p>web3.0：以去中心化和数字所有权为特征的互联网，与Web1.0和Web2.0不同。</p>
+<p>wen：when，什么时候。</p>
+<p>WETH：Wrapped Ethereum，ERC20标准的以太坊代币化版本。</p>
+<p>whale：鲸鱼，持有大量资金/筹码的人。</p>
+<p>WL：White List，白名单。</p>
+<h2 id="y">Y</h2>
+<p>Yield protocol: 提供质押收益的平台 列子：Convex， 可以通过 <a href="https://defillama.com/protocols/Yield" target="_blank" rel="noopener noreffer ">DefiLlama</a> 找到完整的列表
+Yield Aggregator:  通过存入质押凭证，平台能够自动复投收益 俗称机枪池。 列子： Yearn Finance 可以通过 <a href="https://defillama.com/protocols/Yield%20Aggregator" target="_blank" rel="noopener noreffer ">DefiLlama</a> 找到完整的列表
+Yield-bearing Token： 随着时间的推移自行产生利息的代币。列子： stETH,SFRXETH 根据协议的不同，要区分清楚哪一个代币是自动生息</p>
+<h2 id="z">Z</h2>
+<p>zk：zero-knowledge proof，零知识证明，可以证明一个人拥有某个秘密，但不用泄露秘密本身。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-03-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.webhooks.top/posts/web3-slang.html" data-title="让你可以在web3社区高谈阔论的黑话总结" data-via="jollysone" data-hashtags="基础知识"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.webhooks.top/posts/web3-slang.html" data-hashtag="基础知识"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.webhooks.top/posts/web3-slang.html"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.webhooks.top/posts/web3-slang.html" data-title="让你可以在web3社区高谈阔论的黑话总结" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.webhooks.top/posts/web3-slang.html" data-title="让你可以在web3社区高谈阔论的黑话总结"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.webhooks.top/posts/web3-slang.html" data-title="让你可以在web3社区高谈阔论的黑话总结"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.webhooks.top/posts/web3-slang.html" data-title="让你可以在web3社区高谈阔论的黑话总结"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://blog.webhooks.top/posts/web3-slang.html" data-title="让你可以在web3社区高谈阔论的黑话总结"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Skype" data-sharer="skype" data-url="https://blog.webhooks.top/posts/web3-slang.html" data-title="让你可以在web3社区高谈阔论的黑话总结"><i class="fab fa-skype fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html">基础知识</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/16-safety-recommendations.html" class="prev" rel="prev" title="Metamask项目方给Solidity程序员的16个安全建议"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Metamask项目方给Solidity程序员的16个安全建议</a>
+            <a href="/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html" class="next" rel="next" title="智能合约中通过 tx.origin 授权引发的不安全问题">智能合约中通过 tx.origin 授权引发的不安全问题<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">转载请注明出处</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2018 - 2023</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"data":{"id-1":"5oneXj′s","id-2":"5oneXj′s"},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":88}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
