@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>如何在合约中创建新合约？ - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title><meta name="Description" content="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><meta property="og:title" content="如何在合约中创建新合约？" />
+<meta property="og:description" content="引言 在以太坊链上，用户（外部账户，EOA）可以创建智能合约，智能合约同样也可以创建新的智能合约。去中心化交易所uniswap就是利用工厂合约" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.webhooks.top/posts/solidity-new-contract.html" /><meta property="og:image" content="https://blog.webhooks.top/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-09-17T11:12:14+08:00" />
+<meta property="article:modified_time" content="2021-09-17T11:12:14+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.webhooks.top/logo.png"/>
+
+<meta name="twitter:title" content="如何在合约中创建新合约？"/>
+<meta name="twitter:description" content="引言 在以太坊链上，用户（外部账户，EOA）可以创建智能合约，智能合约同样也可以创建新的智能合约。去中心化交易所uniswap就是利用工厂合约"/>
+<meta name="application-name" content="5oneXj′s Blog">
+<meta name="apple-mobile-web-app-title" content="5oneXj′s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.webhooks.top/posts/solidity-new-contract.html" /><link rel="prev" href="https://blog.webhooks.top/posts/solidity-delegatecall.html" /><link rel="next" href="https://blog.webhooks.top/posts/solidity-delete-contract.html" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "如何在合约中创建新合约？",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.webhooks.top\/posts\/solidity-new-contract.html"
+        },"image": ["https:\/\/blog.webhooks.top\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "solidity, basic","wordcount":  3457 ,
+        "url": "https:\/\/blog.webhooks.top\/posts\/solidity-new-contract.html","datePublished": "2021-09-17T11:12:14+08:00","dateModified": "2021-09-17T11:12:14+08:00","publisher": {
+            "@type": "Organization",
+            "name": "5oneXj","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/blog.webhooks.top\/images\/avatar.png",
+                    "width":  528 ,
+                    "height":  560 
+                }},"author": {
+                "@type": "Person",
+                "name": "5oneXj"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts.html" title="所有文章"> Posts </a><a class="menu-item" href="/tags.html" title="所有标签"> Tags </a><a class="menu-item" href="/categories.html" title="所有分类"> Categories </a><a class="menu-item" href="/about.html" title="关于"> About </a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts.html" title="所有文章">Posts</a><a class="menu-item" href="/tags.html" title="所有标签">Tags</a><a class="menu-item" href="/categories.html" title="所有分类">Categories</a><a class="menu-item" href="/about.html" title="关于">About</a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">如何在合约中创建新合约？</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a>&nbsp;<a href="/categories/solidity-%E8%BF%9B%E9%98%B6.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Solidity 进阶</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-09-17">2021-09-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3457 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id="/posts/solidity-new-contract.html" class="leancloud_visitors" data-flag-title="如何在合约中创建新合约？">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-create">1 <code>create</code></a></li>
+        <li><a href="#create极简uniswap">create极简Uniswap</a>
+          <ul>
+            <li><a href="#pair合约"><code>Pair</code>合约</a></li>
+            <li><a href="#pairfactory"><code>PairFactory</code></a></li>
+            <li><a href="#在remix上验证">在remix上验证</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-create2">2 <code>create2</code></a>
+          <ul>
+            <li><a href="#create如何计算地址">CREATE如何计算地址</a></li>
+            <li><a href="#create2如何计算地址">CREATE2如何计算地址</a></li>
+          </ul>
+        </li>
+        <li><a href="#如何使用create2">如何使用<code>CREATE2</code></a></li>
+        <li><a href="#create2极简uniswap2">Create2极简Uniswap2</a>
+          <ul>
+            <li><a href="#pair"><code>Pair</code></a></li>
+            <li><a href="#pairfactory2"><code>PairFactory2</code></a></li>
+            <li><a href="#事先计算pair地址">事先计算<code>Pair</code>地址</a>
+              <ul>
+                <li><a href="#如果部署合约构造函数中存在参数">如果部署合约构造函数中存在参数</a></li>
+              </ul>
+            </li>
+            <li><a href="#在remix上验证-1">在remix上验证</a></li>
+          </ul>
+        </li>
+        <li><a href="#create2的实际应用场景">create2的实际应用场景</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw" aria-hidden="true"></i>引言<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p>在以太坊链上，用户（外部账户，<code>EOA</code>）可以创建智能合约，智能合约同样也可以创建新的智能合约。去中心化交易所<code>uniswap</code>就是利用工厂合约（<code>Factory</code>）创建了无数个币对合约（<code>Pair</code>）。这一讲，我会用简化版的<code>uniswap</code>讲如何通过合约创建合约。</p>
+<p><strong>有两种方法可以在合约中创建新合约</strong>，<code>create</code>和<code>create2</code>。</p>
+</div>
+        </div>
+    </div>
+<h2 id="1-create">1 <code>create</code></h2>
+<p><code>create</code>的用法很简单，就是<code>new</code>一个合约，并传入新合约构造函数所需的参数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="n">Contract</span> <span class="n">x</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Contract</span><span class="p">{</span><span class="nb">value</span><span class="o">:</span> <span class="n">_value</span><span class="p">}(</span><span class="n">params</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中<code>Contract</code>是要创建的合约名，<code>x</code>是合约对象（地址），如果构造函数是<code>payable</code>，可以创建时转入<code>_value</code>数量的<code>ETH</code>，<code>params</code>是新合约构造函数的参数。</p>
+<h2 id="create极简uniswap">create极简Uniswap</h2>
+<p><code>Uniswap V2</code><a href="https://github.com/Uniswap/v2-core/tree/master/contracts" target="_blank" rel="noopener noreffer ">核心合约</a>中包含两个合约：</p>
+<ol>
+<li>UniswapV2Pair: 币对合约，用于管理币对地址、流动性、买卖。</li>
+<li>UniswapV2Factory: 工厂合约，用于创建新的币对，并管理币对地址。</li>
+</ol>
+<p>下面我们用<code>create</code>方法实现一个极简版的<code>Uniswap</code>：<code>Pair</code>币对合约负责管理币对地址，<code>PairFactory</code>工厂合约用于创建新的币对，并管理币对地址。</p>
+<h3 id="pair合约"><code>Pair</code>合约</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Pair</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="k">public</span> <span class="n">factory</span><span class="p">;</span> <span class="c1">// 工厂合约地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">address</span> <span class="k">public</span> <span class="n">token0</span><span class="p">;</span> <span class="c1">// 代币1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">address</span> <span class="k">public</span> <span class="n">token1</span><span class="p">;</span> <span class="c1">// 代币2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kd">constructor</span><span class="p">()</span> <span class="k">payable</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">factory</span> <span class="o">=</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// called once by the factory at time of deployment
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">initialize</span><span class="p">(</span><span class="kt">address</span> <span class="n">_token0</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_token1</span><span class="p">)</span> <span class="k">external</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span> <span class="o">==</span> <span class="n">factory</span><span class="p">,</span> <span class="s">&#39;UniswapV2: FORBIDDEN&#39;</span><span class="p">);</span> <span class="c1">// sufficient check
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">token0</span> <span class="o">=</span> <span class="n">_token0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">token1</span> <span class="o">=</span> <span class="n">_token1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Pair</code>合约很简单，包含3个状态变量：<code>factory</code>，<code>token0</code>和<code>token1</code>。</p>
+<p>构造函数<code>constructor</code>在部署时将<code>factory</code>赋值为工厂合约地址。<code>initialize</code>函数会在<code>Pair</code>合约创建的时候被工厂合约调用一次，将<code>token0</code>和<code>token1</code>更新为币对中两种代币的地址。</p>
+<blockquote>
+<p><strong>提问</strong>：为什么<code>uniswap</code>不在<code>constructor</code>中将<code>token0</code>和<code>token1</code>地址更新好？</p>
+<p><strong>答</strong>：因为<code>uniswap</code>使用的是<code>create2</code>创建合约，限制构造函数不能有参数。当使用<code>create</code>时，<code>Pair</code>合约允许构造函数有参数，可以在<code>constructor</code>中将<code>token0</code>和<code>token1</code>地址更新好。</p>
+</blockquote>
+<h3 id="pairfactory"><code>PairFactory</code></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">PairFactory</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kd">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">address</span><span class="p">))</span> <span class="k">public</span> <span class="n">getPair</span><span class="p">;</span> <span class="c1">// 通过两个代币地址查Pair地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">address</span><span class="p">[]</span> <span class="k">public</span> <span class="n">allPairs</span><span class="p">;</span> <span class="c1">// 保存所有Pair地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">createPair</span><span class="p">(</span><span class="kt">address</span> <span class="n">tokenA</span><span class="p">,</span> <span class="kt">address</span> <span class="n">tokenB</span><span class="p">)</span> <span class="k">external</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">address</span> <span class="n">pairAddr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 创建新合约
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Pair</span> <span class="n">pair</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pair</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl">        <span class="c1">// 调用新合约的initialize方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">pair</span><span class="p">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">tokenA</span><span class="p">,</span> <span class="n">tokenB</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 更新地址map
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">pairAddr</span> <span class="o">=</span> <span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">allPairs</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">pairAddr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">getPair</span><span class="p">[</span><span class="n">tokenA</span><span class="p">][</span><span class="n">tokenB</span><span class="p">]</span> <span class="o">=</span> <span class="n">pairAddr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">getPair</span><span class="p">[</span><span class="n">tokenB</span><span class="p">][</span><span class="n">tokenA</span><span class="p">]</span> <span class="o">=</span> <span class="n">pairAddr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>工厂合约（<code>PairFactory</code>）有两个状态变量<code>getPair</code>是两个代币地址到币对地址的<code>map</code>，方便根据代币找到币对地址；<code>allPairs</code>是币对地址的数组，存储了所有代币地址。</p>
+<p><code>PairFactory</code>合约只有一个<code>createPair</code>函数，根据输入的两个代币地址<code>tokenA</code>和<code>tokenB</code>来创建新的<code>Pair</code>合约。其中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="n">Pair</span> <span class="n">pair</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pair</span><span class="p">();</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就是创建合约的代码，非常简单。大家可以部署好<code>PairFactory</code>合约，然后用下面两个地址作为参数调用<code>createPair</code>，看看创建的币对地址是什么：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">WBNB地址: 0x2c44b726ADF1963cA47Af88B284C06f30380fC78
+</span></span><span class="line"><span class="cl">BSC链上的PEOPLE地址: 0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="在remix上验证">在remix上验证</h3>
+<p>1.使用<code>WBNB</code>和<code>PEOPLE</code>的地址作为参数调用<code>createPair</code>,得到<code>Pair</code>合约地址：0xD3e2008b4Da2cD6DEAF73471590fF30C86778A48</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311260.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311260.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311260.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311260.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311260.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311260.png" /></p>
+<p>2.查看<code>Pair</code>合约变量</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311455.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311455.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311455.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311455.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311455.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311455.png" /></p>
+<p>3.Debug查看<code>create</code>操作码</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311801.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311801.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311801.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311801.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311801.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022311801.png" /></p>
+<h2 id="2-create2">2 <code>create2</code></h2>
+<p><code>CREATE2</code> 操作码使我们在智能合约部署在以太坊网络之前就能预测合约的地址。<code>Uniswap</code>创建<code>Pair</code>合约用的就是<code>CREATE2</code>而不是<code>CREATE</code>。</p>
+<h3 id="create如何计算地址">CREATE如何计算地址</h3>
+<p>智能合约可以由其他合约和普通账户利用<code>CREATE</code>操作码创建。 在这两种情况下，新合约的地址都以相同的方式计算：创建者的地址(通常为部署的钱包地址或者合约地址)和<code>nonce</code>(该地址发送交易的总数,对于合约账户是创建的合约总数,每创建一个合约nonce+1))的哈希。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">新地址 = hash(创建者地址, nonce)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>创建者地址不会变，但<code>nonce</code>可能会随时间而改变，因此用<code>CREATE</code>创建的合约地址不好预测。</p>
+<h3 id="create2如何计算地址">CREATE2如何计算地址</h3>
+<p><code>CREATE2</code>的目的是为了让合约地址独立于未来的事件。不管未来区块链上发生了什么，你都可以把合约部署在事先计算好的地址上。用<code>CREATE2</code>创建的合约地址由4个部分决定：</p>
+<ul>
+<li><code>0xFF</code>：一个常数，避免和<code>CREATE</code>冲突</li>
+<li>创建者地址</li>
+<li><code>salt</code>（盐）：一个创建者给定的数值</li>
+<li>待部署合约的字节码（<code>bytecode</code>）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">新地址 = hash(&#34;0xFF&#34;,创建者地址, salt, bytecode)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>CREATE2</code> 确保，如果创建者使用 <code>CREATE2</code> 和提供的 <code>salt</code> 部署给定的合约<code>bytecode</code>，它将存储在 <code>新地址</code> 中。</p>
+<h2 id="如何使用create2">如何使用<code>CREATE2</code></h2>
+<p><code>CREATE2</code>的用法和之前讲的<code>Create</code>类似，同样是<code>new</code>一个合约，并传入新合约构造函数所需的参数，只不过要多传一个<code>salt</code>参数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Contract x = new Contract{salt: _salt, value: _value}(params)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中<code>Contract</code>是要创建的合约名，<code>x</code>是合约对象（地址），<code>_salt</code>是指定的盐；如果构造函数是<code>payable</code>，可以创建时转入<code>_value</code>数量的<code>ETH</code>，<code>params</code>是新合约构造函数的参数。</p>
+<h2 id="create2极简uniswap2">Create2极简Uniswap2</h2>
+<p>用<code>Create2</code>来实现极简<code>Uniswap</code>。</p>
+<h3 id="pair"><code>Pair</code></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Pair</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="k">public</span> <span class="n">factory</span><span class="p">;</span> <span class="c1">// 工厂合约地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">address</span> <span class="k">public</span> <span class="n">token0</span><span class="p">;</span> <span class="c1">// 代币1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">address</span> <span class="k">public</span> <span class="n">token1</span><span class="p">;</span> <span class="c1">// 代币2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kd">constructor</span><span class="p">()</span> <span class="k">payable</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">factory</span> <span class="o">=</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// called once by the factory at time of deployment
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">initialize</span><span class="p">(</span><span class="kt">address</span> <span class="n">_token0</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_token1</span><span class="p">)</span> <span class="k">external</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span> <span class="o">==</span> <span class="n">factory</span><span class="p">,</span> <span class="s">&#39;UniswapV2: FORBIDDEN&#39;</span><span class="p">);</span> <span class="c1">// sufficient check
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">token0</span> <span class="o">=</span> <span class="n">_token0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">token1</span> <span class="o">=</span> <span class="n">_token1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Pair</code>合约很简单，包含3个状态变量：<code>factory</code>，<code>token0</code>和<code>token1</code>。</p>
+<p>构造函数<code>constructor</code>在部署时将<code>factory</code>赋值为工厂合约地址。<code>initialize</code>函数会在<code>Pair</code>合约创建的时候被工厂合约调用一次，将<code>token0</code>和<code>token1</code>更新为币对中两种代币的地址。</p>
+<h3 id="pairfactory2"><code>PairFactory2</code></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">PairFactory2</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kd">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">address</span><span class="p">))</span> <span class="k">public</span> <span class="n">getPair</span><span class="p">;</span> <span class="c1">// 通过两个代币地址查Pair地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">address</span><span class="p">[]</span> <span class="k">public</span> <span class="n">allPairs</span><span class="p">;</span> <span class="c1">// 保存所有Pair地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">        <span class="kd">function</span> <span class="nf">createPair2</span><span class="p">(</span><span class="kt">address</span> <span class="n">tokenA</span><span class="p">,</span> <span class="kt">address</span> <span class="n">tokenB</span><span class="p">)</span> <span class="k">external</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">address</span> <span class="n">pairAddr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">require</span><span class="p">(</span><span class="n">tokenA</span> <span class="o">!=</span> <span class="n">tokenB</span><span class="p">,</span> <span class="s">&#39;IDENTICAL_ADDRESSES&#39;</span><span class="p">);</span> <span class="c1">//避免tokenA和tokenB相同产生的冲突
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// 用tokenA和tokenB地址计算salt
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="p">(</span><span class="kt">address</span> <span class="n">token0</span><span class="p">,</span> <span class="kt">address</span> <span class="n">token1</span><span class="p">)</span> <span class="o">=</span> <span class="n">tokenA</span> <span class="o">&lt;</span> <span class="n">tokenB</span> <span class="o">?</span> <span class="p">(</span><span class="n">tokenA</span><span class="p">,</span> <span class="n">tokenB</span><span class="p">)</span> <span class="o">:</span> <span class="p">(</span><span class="n">tokenB</span><span class="p">,</span> <span class="n">tokenA</span><span class="p">);</span> <span class="c1">//将tokenA和tokenB按大小排序
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kt">bytes32</span> <span class="n">salt</span> <span class="o">=</span> <span class="nb">keccak256</span><span class="p">(</span><span class="nb">abi</span><span class="p">.</span><span class="nb">encodePacked</span><span class="p">(</span><span class="n">token0</span><span class="p">,</span> <span class="n">token1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 用create2部署新合约
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">Pair</span> <span class="n">pair</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pair</span><span class="p">{</span><span class="n">salt</span><span class="o">:</span> <span class="n">salt</span><span class="p">}();</span> 
+</span></span><span class="line"><span class="cl">            <span class="c1">// 调用新合约的initialize方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">pair</span><span class="p">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">tokenA</span><span class="p">,</span> <span class="n">tokenB</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 更新地址map
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">pairAddr</span> <span class="o">=</span> <span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">allPairs</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">pairAddr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">getPair</span><span class="p">[</span><span class="n">tokenA</span><span class="p">][</span><span class="n">tokenB</span><span class="p">]</span> <span class="o">=</span> <span class="n">pairAddr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">getPair</span><span class="p">[</span><span class="n">tokenB</span><span class="p">][</span><span class="n">tokenA</span><span class="p">]</span> <span class="o">=</span> <span class="n">pairAddr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>工厂合约（<code>PairFactory2</code>）有两个状态变量<code>getPair</code>是两个代币地址到币对地址的<code>map</code>，方便根据代币找到币对地址；<code>allPairs</code>是币对地址的数组，存储了所有币对地址。</p>
+<p><code>PairFactory2</code>合约只有一个<code>createPair2</code>函数，使用<code>CREATE2</code>根据输入的两个代币地址<code>tokenA</code>和<code>tokenB</code>来创建新的<code>Pair</code>合约。其中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="n">Pair</span> <span class="n">pair</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pair</span><span class="p">{</span><span class="n">salt</span><span class="o">:</span> <span class="n">salt</span><span class="p">}();</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就是利用<code>CREATE2</code>创建合约的代码，非常简单，而<code>salt</code>为<code>token1</code>和<code>token2</code>的<code>hash</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kt">bytes32</span> <span class="n">salt</span> <span class="o">=</span> <span class="nb">keccak256</span><span class="p">(</span><span class="nb">abi</span><span class="p">.</span><span class="nb">encodePacked</span><span class="p">(</span><span class="n">token0</span><span class="p">,</span> <span class="n">token1</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="事先计算pair地址">事先计算<code>Pair</code>地址</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">        <span class="c1">// 提前计算pair合约地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kd">function</span> <span class="nf">calculateAddr</span><span class="p">(</span><span class="kt">address</span> <span class="n">tokenA</span><span class="p">,</span> <span class="kt">address</span> <span class="n">tokenB</span><span class="p">)</span> <span class="k">public</span> <span class="k">view</span> <span class="k">returns</span><span class="p">(</span><span class="kt">address</span> <span class="n">predictedAddress</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">require</span><span class="p">(</span><span class="n">tokenA</span> <span class="o">!=</span> <span class="n">tokenB</span><span class="p">,</span> <span class="s">&#39;IDENTICAL_ADDRESSES&#39;</span><span class="p">);</span> <span class="c1">//避免tokenA和tokenB相同产生的冲突
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// 计算用tokenA和tokenB地址计算salt
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="p">(</span><span class="kt">address</span> <span class="n">token0</span><span class="p">,</span> <span class="kt">address</span> <span class="n">token1</span><span class="p">)</span> <span class="o">=</span> <span class="n">tokenA</span> <span class="o">&lt;</span> <span class="n">tokenB</span> <span class="o">?</span> <span class="p">(</span><span class="n">tokenA</span><span class="p">,</span> <span class="n">tokenB</span><span class="p">)</span> <span class="o">:</span> <span class="p">(</span><span class="n">tokenB</span><span class="p">,</span> <span class="n">tokenA</span><span class="p">);</span> <span class="c1">//将tokenA和tokenB按大小排序
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kt">bytes32</span> <span class="n">salt</span> <span class="o">=</span> <span class="nb">keccak256</span><span class="p">(</span><span class="nb">abi</span><span class="p">.</span><span class="nb">encodePacked</span><span class="p">(</span><span class="n">token0</span><span class="p">,</span> <span class="n">token1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 计算合约地址方法 hash()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">predictedAddress</span> <span class="o">=</span> <span class="kt">address</span><span class="p">(</span><span class="kt">uint160</span><span class="p">(</span><span class="kt">uint</span><span class="p">(</span><span class="nb">keccak256</span><span class="p">(</span><span class="nb">abi</span><span class="p">.</span><span class="nb">encodePacked</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="kt">bytes1</span><span class="p">(</span><span class="mh">0xff</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="n">salt</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">keccak256</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nc">Pair</span><span class="p">).</span><span class="nb">creationCode</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)))));</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们写了一个<code>calculateAddr</code>函数来事先计算<code>tokenA</code>和<code>tokenB</code>将会生成的<code>Pair</code>地址。通过它，我们可以验证我们事先计算的地址和实际地址是否相同。</p>
+<p>大家可以部署好<code>PairFactory2</code>合约，然后用下面两个地址作为参数调用<code>createPair2</code>，看看创建的币对地址是什么，是否与事先计算的地址一样：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">WBNB地址: 0x2c44b726ADF1963cA47Af88B284C06f30380fC78
+</span></span><span class="line"><span class="cl">BSC链上的PEOPLE地址:
+</span></span><span class="line"><span class="cl">0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="如果部署合约构造函数中存在参数">如果部署合约构造函数中存在参数</h4>
+<p>例如当create2合约时：</p>
+<blockquote>
+<p>Pair pair = new Pair{salt: salt}(address(this));</p>
+</blockquote>
+<p>计算时，需要将参数和bytecode一起进行打包：</p>
+<blockquote>
+<p><del>keccak256(type(Pair).creationCode)</del>
+=&gt; keccak256(abi.encodePacked(type(Pair).creationCode, abi.encode(address(this))))</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="n">predictedAddress</span> <span class="o">=</span> <span class="kt">address</span><span class="p">(</span><span class="kt">uint160</span><span class="p">(</span><span class="kt">uint</span><span class="p">(</span><span class="nb">keccak256</span><span class="p">(</span><span class="nb">abi</span><span class="p">.</span><span class="nb">encodePacked</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="kt">bytes1</span><span class="p">(</span><span class="mh">0xff</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="n">salt</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">keccak256</span><span class="p">(</span><span class="nb">abi</span><span class="p">.</span><span class="nb">encodePacked</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nc">Pair</span><span class="p">).</span><span class="nb">creationCode</span><span class="p">,</span> <span class="nb">abi</span><span class="p">.</span><span class="nb">encode</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)))));</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="在remix上验证-1">在remix上验证</h3>
+<ol>
+<li>首先用<code>WBNB</code>和<code>PEOPLE</code>的地址哈希作为<code>salt</code>来计算出<code>Pair</code>合约的地址</li>
+<li>调用<code>PairFactory2.createPair2</code>传入参数为<code>WBNB</code>和<code>PEOPLE</code>的地址，获取出创建的<code>pair</code>合约地址</li>
+<li>对比合约地址</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022314463.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022314463.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022314463.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022314463.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022314463.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303022314463.png" /></p>
+<h2 id="create2的实际应用场景">create2的实际应用场景</h2>
+<ol>
+<li>
+<p>交易所为新用户预留创建钱包合约地址。</p>
+</li>
+<li>
+<p>由 <code>CREATE2</code> 驱动的 <code>factory</code> 合约，在<code>uniswapV2</code>中交易对的创建是在 <code>Factory</code>中调用<code>create2</code>完成。这样做的好处是: 它可以得到一个确定的<code>pair</code>地址, 使得 <code>Router</code>中就可以通过 <code>(tokenA, tokenB)</code> 计算出<code>pair</code>地址, 不再需要执行一次 <code>Factory.getPair(tokenA, tokenB)</code> 的跨合约调用。</p>
+</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p><code>CREATE2</code>让我们可以在部署合约前确定它的合约地址，这也是一些<code>layer2</code>项目的基础。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-09-17</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.webhooks.top/posts/solidity-new-contract.html" data-title="如何在合约中创建新合约？" data-via="jollysone" data-hashtags="solidity,basic"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.webhooks.top/posts/solidity-new-contract.html" data-hashtag="solidity"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.webhooks.top/posts/solidity-new-contract.html"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.webhooks.top/posts/solidity-new-contract.html" data-title="如何在合约中创建新合约？" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.webhooks.top/posts/solidity-new-contract.html" data-title="如何在合约中创建新合约？"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.webhooks.top/posts/solidity-new-contract.html" data-title="如何在合约中创建新合约？"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.webhooks.top/posts/solidity-new-contract.html" data-title="如何在合约中创建新合约？"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://blog.webhooks.top/posts/solidity-new-contract.html" data-title="如何在合约中创建新合约？"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Skype" data-sharer="skype" data-url="https://blog.webhooks.top/posts/solidity-new-contract.html" data-title="如何在合约中创建新合约？"><i class="fab fa-skype fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/basic.html">basic</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/solidity-delegatecall.html" class="prev" rel="prev" title="低级成员函数Delegatecall委托调用的用法"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>低级成员函数Delegatecall委托调用的用法</a>
+            <a href="/posts/solidity-delete-contract.html" class="next" rel="next" title="开始自毁跑路！删除合约">开始自毁跑路！删除合约<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2018 - 2023</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"data":{"id-1":"5oneXj′s","id-2":"5oneXj′s"},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":88}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

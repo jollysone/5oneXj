@@ -6,15 +6,12 @@ draft: false
 author: "5oneXj"
 
 categories: ["基础知识", "Solidity 进阶"]
-tags: ["solidity", "basic"]
+tags: ["solidity", "basic", "import"]
 ---
 
 
 ## 库函数
 库函数是一种特殊的合约，为了提升`solidity`代码的复用性和减少`gas`而存在。库合约一般都是一些好用的函数合集（`库函数`），由大神或者项目方创作，咱们站在巨人的肩膀上，会用就行了。
-
-
-![库合约：站在巨人的肩膀上](https://images.mirror-media.xyz/publication-images/HJC0UjkALdrL8a2BmAE2J.jpeg?height=300&width=388)
 
 他和普通合约主要有以下几点不同：
 
@@ -113,6 +110,8 @@ library Strings {
 
 
 ![成功调用库函数](https://images.mirror-media.xyz/publication-images/bzB_JDC9f5VWHRjsjQyQa.png?height=750&width=580)
+
+
 ## 总结
 这一讲，我们用`ERC721`的引用的库函数`String`为例介绍`solidity`中的库函数（`Library`）。99%的开发者都不需要自己去写库合约，会用大神写的就可以了。我们只需要知道什么情况该用什么库合约。常用的有：
 

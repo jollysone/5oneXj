@@ -28,5 +28,13 @@
     <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html</guid>
     <description><![CDATA[引言 它曾导致以太坊分叉为 ETH 和 ETC（以太经典）。 1 什么是重入攻击？ 重入攻击是智能合约中最常见的一种攻击，攻击者通过合约漏洞（例如fallba]]></description>
 </item>
+<item>
+    <title>合约接收ETH（receive和fallback）</title>
+    <link>https://blog.webhooks.top/posts/solidity-receive-eth.html</link>
+    <pubDate>Mon, 19 Jul 2021 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-receive-eth.html</guid>
+    <description><![CDATA[引言 Solidity支持两种特殊的回调函数，receive()和fallback()，他们主要在两种情况下被使用： 接收ETH 处理合约中不存在]]></description>
+</item>
 </channel>
 </rss>

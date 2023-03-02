@@ -58,9 +58,25 @@
             <loc>https://blog.webhooks.top/posts/tools-alchemy-introduce.html</loc><lastmod>2022-03-20T01:13:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.webhooks.top/posts/tools-infura-introduce.html</loc><lastmod>2022-02-21T01:13:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.webhooks.top/posts/tools-remix-introduce.html</loc><lastmod>2022-01-22T01:13:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/tags/basic.html</loc><lastmod>2021-12-15T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/categories/solidity-%E8%BF%9B%E9%98%B6.html</loc><lastmod>2021-12-15T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/posts/solidity-try-catch.html</loc><lastmod>2021-12-15T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/posts/solidity-selector.html</loc><lastmod>2021-11-27T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/posts/solidity-hash.html</loc><lastmod>2021-11-14T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/posts/solidity-abi.html</loc><lastmod>2021-11-02T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/posts/solidity-delete-contract.html</loc><lastmod>2021-10-15T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.webhooks.top/tags/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8.html</loc><lastmod>2021-10-01T17:55:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://blog.webhooks.top/tags/basic.html</loc><lastmod>2021-07-12T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://blog.webhooks.top/categories/solidity-%E8%BF%9B%E9%98%B6.html</loc><lastmod>2021-07-12T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/posts/solidity-new-contract.html</loc><lastmod>2021-09-17T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/posts/solidity-delegatecall.html</loc><lastmod>2021-08-29T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/posts/solidity-call.html</loc><lastmod>2021-08-13T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/posts/solidity-call-contract.html</loc><lastmod>2021-08-04T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/tags/call.html</loc><lastmod>2021-07-28T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/tags/send.html</loc><lastmod>2021-07-28T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/tags/transfer.html</loc><lastmod>2021-07-28T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/posts/solidity-transfer-eth.html</loc><lastmod>2021-07-28T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/tags/receive.html</loc><lastmod>2021-07-19T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/posts/solidity-receive-eth.html</loc><lastmod>2021-07-19T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.webhooks.top/tags/import.html</loc><lastmod>2021-07-12T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.webhooks.top/posts/solidity-library.html</loc><lastmod>2021-07-12T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.webhooks.top/posts/solidity-overloading.html</loc><lastmod>2021-06-30T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.webhooks.top/categories/solidity-%E5%9F%BA%E7%A1%80.html</loc><lastmod>2021-06-27T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>

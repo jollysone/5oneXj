@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>transfer - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
+        <link>https://blog.webhooks.top/tags/transfer.html</link>
+        <description>transfer - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Wed, 28 Jul 2021 11:12:14 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/transfer.html" rel="self" type="application/rss+xml" /><item>
+    <title>发送ETH的三种方式及比较</title>
+    <link>https://blog.webhooks.top/posts/solidity-transfer-eth.html</link>
+    <pubDate>Wed, 28 Jul 2021 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>https://blog.webhooks.top/posts/solidity-transfer-eth.html</guid>
+    <description><![CDATA[引言 Solidity有三种方法向其他合约发送ETH，他们是：transfer()，send()和call()，其中call()是被鼓励的用法]]></description>
+</item>
+</channel>
+</rss>
