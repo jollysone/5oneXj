@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>如何创建一个NFT交易所 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title><meta name="Description" content="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><meta property="og:title" content="如何创建一个NFT交易所" />
+<meta property="og:description" content="引言 Opensea是以太坊上最大的NFT交易平台，总交易总量达到了$300亿。Opensea在交易中抽成2.5%，因此它通过用户交易至少获利" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/solidity-erc721-nft-swap.html" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-27T11:12:14+08:00" />
+<meta property="article:modified_time" content="2022-08-27T11:12:14+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="如何创建一个NFT交易所"/>
+<meta name="twitter:description" content="引言 Opensea是以太坊上最大的NFT交易平台，总交易总量达到了$300亿。Opensea在交易中抽成2.5%，因此它通过用户交易至少获利"/>
+<meta name="application-name" content="5oneXj′s Blog">
+<meta name="apple-mobile-web-app-title" content="5oneXj′s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="/posts/solidity-erc721-nft-swap.html" /><link rel="prev" href="/posts/solidity-smart-contract-security-overflow.html" /><link rel="next" href="/posts/solidity-smart-contract-security-selector-clash.html" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "如何创建一个NFT交易所",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/posts\/solidity-erc721-nft-swap.html"
+        },"image": ["\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "solidity, basic","wordcount":  3749 ,
+        "url": "\/posts\/solidity-erc721-nft-swap.html","datePublished": "2022-08-27T11:12:14+08:00","dateModified": "2022-08-27T11:12:14+08:00","publisher": {
+            "@type": "Organization",
+            "name": "5oneXj","logo": {
+                    "@type": "ImageObject",
+                    "url": "\/images\/avatar.png",
+                    "width":  528 ,
+                    "height":  560 
+                }},"author": {
+                "@type": "Person",
+                "name": "5oneXj"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts.html" title="所有文章"> Posts </a><a class="menu-item" href="/tags.html" title="所有标签"> Tags </a><a class="menu-item" href="/categories.html" title="所有分类"> Categories </a><a class="menu-item" href="/about.html" title="关于"> About </a><a class="menu-item" href="/https:/github.com/jollysone" title="GitHub">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts.html" title="所有文章">Posts</a><a class="menu-item" href="/tags.html" title="所有标签">Tags</a><a class="menu-item" href="/categories.html" title="所有分类">Categories</a><a class="menu-item" href="/about.html" title="关于">About</a><a class="menu-item" href="/https:/github.com/jollysone" title="GitHub"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">如何创建一个NFT交易所</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a>&nbsp;<a href="/categories/solidity-%E5%BA%94%E7%94%A8.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Solidity 应用</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-08-27">2022-08-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3749 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/posts/solidity-erc721-nft-swap.html" class="leancloud_visitors" data-flag-title="如何创建一个NFT交易所">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#设计逻辑">设计逻辑</a></li>
+        <li><a href="#nftswap合约"><code>NFTSwap</code>合约</a>
+          <ul>
+            <li><a href="#事件">事件</a></li>
+            <li><a href="#订单">订单</a></li>
+            <li><a href="#回退函数">回退函数</a></li>
+            <li><a href="#onerc721received">onERC721Received</a></li>
+            <li><a href="#交易">交易</a></li>
+          </ul>
+        </li>
+        <li><a href="#remix实现"><code>Remix</code>实现</a>
+          <ul>
+            <li><a href="#1-部署nft合约">1. 部署NFT合约</a></li>
+            <li><a href="#2-部署nftswap合约">2. 部署<code>NFTSwap</code>合约</a></li>
+            <li><a href="#3-将要上架的nft授权给nftswap合约">3. 将要上架的<code>NFT</code>授权给<code>NFTSwap</code>合约</a></li>
+            <li><a href="#4-上架nft">4. 上架<code>NFT</code></a></li>
+            <li><a href="#5-查看上架nft">5. 查看上架NFT</a></li>
+            <li><a href="#6-更新nft价格">6. 更新<code>NFT</code>价格</a></li>
+            <li><a href="#7-下架nft">7. 下架NFT</a></li>
+            <li><a href="#8-购买nft">8. 购买<code>NFT</code></a></li>
+            <li><a href="#7-验证nft持有人改变">7. 验证<code>NFT</code>持有人改变</a></li>
+          </ul>
+        </li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw" aria-hidden="true"></i>引言<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><code>Opensea</code>是以太坊上最大的<code>NFT</code>交易平台，总交易总量达到了<code>$300亿</code>。<code>Opensea</code>在交易中抽成<code>2.5%</code>，因此它通过用户交易至少获利了<code>$7.5亿</code>。另外，它的运作并不去中心化，且不准备发币补偿用户。<code>NFT</code>玩家苦<code>Opensea</code>久已，今天我们就利用智能合约搭建一个零手续费的去中心化<code>NFT</code>交易所：<code>NFTSwap</code>。</div>
+        </div>
+    </div>
+<h2 id="设计逻辑">设计逻辑</h2>
+<ul>
+<li>卖家：出售<code>NFT</code>的一方，可以挂单<code>list</code>、撤单<code>revoke</code>、修改价格<code>update</code>。</li>
+<li>买家：购买<code>NFT</code>的一方，可以购买<code>purchase</code>。</li>
+<li>订单：卖家发布的<code>NFT</code>链上订单，一个系列的同一<code>tokenId</code>最多存在一个订单，其中包含挂单价格<code>price</code>和持有人<code>owner</code>信息。当一个订单交易完成或被撤单后，其中信息清零。</li>
+</ul>
+<h2 id="nftswap合约"><code>NFTSwap</code>合约</h2>
+<h3 id="事件">事件</h3>
+<p>合约包含<code>4</code>个事件，对应挂单<code>list</code>、撤单<code>revoke</code>、修改价格<code>update</code>、购买<code>purchase</code>这四个行为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">event</span> <span class="nc">List</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">seller</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">nftAddr</span><span class="p">,</span> <span class="kt">uint256</span> <span class="k">indexed</span> <span class="n">tokenId</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">price</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">event</span> <span class="nc">Purchase</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">buyer</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">nftAddr</span><span class="p">,</span> <span class="kt">uint256</span> <span class="k">indexed</span> <span class="n">tokenId</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">price</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">event</span> <span class="nc">Revoke</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">seller</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">nftAddr</span><span class="p">,</span> <span class="kt">uint256</span> <span class="k">indexed</span> <span class="n">tokenId</span><span class="p">);</span>    
+</span></span><span class="line"><span class="cl">    <span class="kd">event</span> <span class="nc">Update</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">seller</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">nftAddr</span><span class="p">,</span> <span class="kt">uint256</span> <span class="k">indexed</span> <span class="n">tokenId</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">newPrice</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="订单">订单</h3>
+<p><code>NFT</code>订单抽象为<code>Order</code>结构体，包含挂单价格<code>price</code>和持有人<code>owner</code>信息。<code>nftList</code>映射记录了订单是对应的<code>NFT</code>系列（合约地址）和<code>tokenId</code>信息。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 定义order结构体
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">struct</span> <span class="nc">Order</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">address</span> <span class="n">owner</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">uint256</span> <span class="n">price</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// NFT Order映射
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kd">mapping</span><span class="p">(</span><span class="kt">uint256</span> <span class="o">=&gt;</span> <span class="n">Order</span><span class="p">))</span> <span class="k">public</span> <span class="n">nftList</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="回退函数">回退函数</h3>
+<p>在<code>NFTSwap</code>中，用户使用<code>ETH</code>购买<code>NFT</code>。因此，合约需要实现<code>fallback()</code>函数来接收<code>ETH</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="n">fallback</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span><span class="p">{}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="onerc721received">onERC721Received</h3>
+<p><code>ERC721</code>的安全转账函数会检查接收合约是否实现了<code>onERC721Received()</code>函数，并返回正确的选择器<code>selector</code>。用户下单之后，需要将<code>NFT</code>发送给<code>NFTSwap</code>合约。因此<code>NFTSwap</code>继承<code>IERC721Receiver</code>接口，并实现<code>onERC721Received()</code>函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">contract NFTSwap is IERC721Receiver{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    // 实现{IERC721Receiver}的onERC721Received，能够接收ERC721代币
+</span></span><span class="line"><span class="cl">    function onERC721Received(
+</span></span><span class="line"><span class="cl">        address operator,
+</span></span><span class="line"><span class="cl">        address from,
+</span></span><span class="line"><span class="cl">        uint tokenId,
+</span></span><span class="line"><span class="cl">        bytes calldata data
+</span></span><span class="line"><span class="cl">    ) external override returns (bytes4){
+</span></span><span class="line"><span class="cl">        return IERC721Receiver.onERC721Received.selector;
+</span></span><span class="line"><span class="cl">    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="交易">交易</h3>
+<p>合约实现了<code>4</code>个交易相关的函数：</p>
+<ul>
+<li>挂单<code>list()</code>：卖家创建<code>NFT</code>并创建订单，并释放<code>List</code>事件。参数为<code>NFT</code>合约地址<code>_nftAddr</code>，<code>NFT</code>对应的<code>_tokenId</code>，挂单价格<code>_price</code>（<strong>注意：单位是<code>wei</code></strong>）。成功后，<code>NFT</code>会从卖家转到<code>NFTSwap</code>合约中。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 挂单: 卖家上架NFT，合约地址为_nftAddr，tokenId为_tokenId，价格_price为以太坊（单位是wei）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">list</span><span class="p">(</span><span class="kt">address</span> <span class="n">_nftAddr</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_tokenId</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_price</span><span class="p">)</span> <span class="k">public</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">IERC721</span> <span class="n">_nft</span> <span class="o">=</span> <span class="n">IERC721</span><span class="p">(</span><span class="n">_nftAddr</span><span class="p">);</span> <span class="c1">// 声明IERC721接口合约变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">require</span><span class="p">(</span><span class="n">_nft</span><span class="p">.</span><span class="n">getApproved</span><span class="p">(</span><span class="n">_tokenId</span><span class="p">)</span> <span class="o">==</span> <span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">),</span> <span class="s">&#34;Need Approval&#34;</span><span class="p">);</span> <span class="c1">// 合约得到授权
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">require</span><span class="p">(</span><span class="n">_price</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// 价格大于0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">        <span class="n">Order</span> <span class="k">storage</span> <span class="n">_order</span> <span class="o">=</span> <span class="n">nftList</span><span class="p">[</span><span class="n">_nftAddr</span><span class="p">][</span><span class="n">_tokenId</span><span class="p">];</span> <span class="c1">//设置NF持有人和价格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">_order</span><span class="p">.</span><span class="n">owner</span> <span class="o">=</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">_order</span><span class="p">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">_price</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将NFT转账到合约
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">_nft</span><span class="p">.</span><span class="n">safeTransferFrom</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">),</span> <span class="n">_tokenId</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 释放List事件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">emit</span> <span class="n">List</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="n">_nftAddr</span><span class="p">,</span> <span class="n">_tokenId</span><span class="p">,</span> <span class="n">_price</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>撤单<code>revoke()</code>：卖家撤回挂单，并释放<code>Revoke</code>事件。参数为<code>NFT</code>合约地址<code>_nftAddr</code>，<code>NFT</code>对应的<code>_tokenId</code>。成功后，<code>NFT</code>会从<code>NFTSwap</code>合约转回卖家。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 撤单： 卖家取消挂单
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">revoke</span><span class="p">(</span><span class="kt">address</span> <span class="n">_nftAddr</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_tokenId</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Order</span> <span class="k">storage</span> <span class="n">_order</span> <span class="o">=</span> <span class="n">nftList</span><span class="p">[</span><span class="n">_nftAddr</span><span class="p">][</span><span class="n">_tokenId</span><span class="p">];</span> <span class="c1">// 取得Order        
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">require</span><span class="p">(</span><span class="n">_order</span><span class="p">.</span><span class="n">owner</span> <span class="o">==</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="s">&#34;Not Owner&#34;</span><span class="p">);</span> <span class="c1">// 必须由持有人发起
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// 声明IERC721接口合约变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">IERC721</span> <span class="n">_nft</span> <span class="o">=</span> <span class="n">IERC721</span><span class="p">(</span><span class="n">_nftAddr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="n">_nft</span><span class="p">.</span><span class="n">ownerOf</span><span class="p">(</span><span class="n">_tokenId</span><span class="p">)</span> <span class="o">==</span> <span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">),</span> <span class="s">&#34;Invalid Order&#34;</span><span class="p">);</span> <span class="c1">// NFT在合约中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将NFT转给卖家
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">_nft</span><span class="p">.</span><span class="n">safeTransferFrom</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">),</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="n">_tokenId</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">delete</span> <span class="n">nftList</span><span class="p">[</span><span class="n">_nftAddr</span><span class="p">][</span><span class="n">_tokenId</span><span class="p">];</span> <span class="c1">// 删除order
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      
+</span></span><span class="line"><span class="cl">        <span class="c1">// 释放Revoke事件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">emit</span> <span class="n">Revoke</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="n">_nftAddr</span><span class="p">,</span> <span class="n">_tokenId</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>修改价格<code>update()</code>：卖家修改<code>NFT</code>订单价格，并释放<code>Update</code>事件。参数为<code>NFT</code>合约地址<code>_nftAddr</code>，<code>NFT</code>对应的<code>_tokenId</code>，更新后的挂单价格<code>_newPrice</code>（<strong>注意：单位是<code>wei</code></strong>）。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 调整价格: 卖家调整挂单价格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">update</span><span class="p">(</span><span class="kt">address</span> <span class="n">_nftAddr</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_tokenId</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_newPrice</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="n">_newPrice</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#34;Invalid Price&#34;</span><span class="p">);</span> <span class="c1">// NFT价格大于0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Order</span> <span class="k">storage</span> <span class="n">_order</span> <span class="o">=</span> <span class="n">nftList</span><span class="p">[</span><span class="n">_nftAddr</span><span class="p">][</span><span class="n">_tokenId</span><span class="p">];</span> <span class="c1">// 取得Order        
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">require</span><span class="p">(</span><span class="n">_order</span><span class="p">.</span><span class="n">owner</span> <span class="o">==</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="s">&#34;Not Owner&#34;</span><span class="p">);</span> <span class="c1">// 必须由持有人发起
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// 声明IERC721接口合约变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">IERC721</span> <span class="n">_nft</span> <span class="o">=</span> <span class="n">IERC721</span><span class="p">(</span><span class="n">_nftAddr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="n">_nft</span><span class="p">.</span><span class="n">ownerOf</span><span class="p">(</span><span class="n">_tokenId</span><span class="p">)</span> <span class="o">==</span> <span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">),</span> <span class="s">&#34;Invalid Order&#34;</span><span class="p">);</span> <span class="c1">// NFT在合约中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        
+</span></span><span class="line"><span class="cl">        <span class="c1">// 调整NFT价格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">_order</span><span class="p">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">_newPrice</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">        <span class="c1">// 释放Update事件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">emit</span> <span class="n">Update</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="n">_nftAddr</span><span class="p">,</span> <span class="n">_tokenId</span><span class="p">,</span> <span class="n">_newPrice</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>购买<code>purchase</code>：买家支付<code>ETH</code>购买挂单的<code>NFT</code>，并释放<code>Purchase</code>事件。参数为<code>NFT</code>合约地址<code>_nftAddr</code>，<code>NFT</code>对应的<code>_tokenId</code>。成功后，<code>ETH</code>将转给卖家，<code>NFT</code>将从<code>NFTSwap</code>合约转给买家。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 购买: 买家购买NFT，合约为_nftAddr，tokenId为_tokenId，调用函数时要附带ETH
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">purchase</span><span class="p">(</span><span class="kt">address</span> <span class="n">_nftAddr</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_tokenId</span><span class="p">)</span> <span class="k">payable</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Order</span> <span class="k">storage</span> <span class="n">_order</span> <span class="o">=</span> <span class="n">nftList</span><span class="p">[</span><span class="n">_nftAddr</span><span class="p">][</span><span class="n">_tokenId</span><span class="p">];</span> <span class="c1">// 取得Order        
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">require</span><span class="p">(</span><span class="n">_order</span><span class="p">.</span><span class="n">price</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#34;Invalid Price&#34;</span><span class="p">);</span> <span class="c1">// NFT价格大于0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">require</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span> <span class="o">&gt;=</span> <span class="n">_order</span><span class="p">.</span><span class="n">price</span><span class="p">,</span> <span class="s">&#34;Increase price&#34;</span><span class="p">);</span> <span class="c1">// 购买价格大于标价
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// 声明IERC721接口合约变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">IERC721</span> <span class="n">_nft</span> <span class="o">=</span> <span class="n">IERC721</span><span class="p">(</span><span class="n">_nftAddr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="n">_nft</span><span class="p">.</span><span class="n">ownerOf</span><span class="p">(</span><span class="n">_tokenId</span><span class="p">)</span> <span class="o">==</span> <span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">),</span> <span class="s">&#34;Invalid Order&#34;</span><span class="p">);</span> <span class="c1">// NFT在合约中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将NFT转给买家
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">_nft</span><span class="p">.</span><span class="n">safeTransferFrom</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">),</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="n">_tokenId</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将ETH转给卖家，多余ETH给买家退款
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">payable</span><span class="p">(</span><span class="n">_order</span><span class="p">.</span><span class="n">owner</span><span class="p">).</span><span class="nb">transfer</span><span class="p">(</span><span class="n">_order</span><span class="p">.</span><span class="n">price</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">payable</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">).</span><span class="nb">transfer</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="o">-</span><span class="n">_order</span><span class="p">.</span><span class="n">price</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">delete</span> <span class="n">nftList</span><span class="p">[</span><span class="n">_nftAddr</span><span class="p">][</span><span class="n">_tokenId</span><span class="p">];</span> <span class="c1">// 删除order
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 释放Purchase事件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">emit</span> <span class="n">Purchase</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="n">_nftAddr</span><span class="p">,</span> <span class="n">_tokenId</span><span class="p">,</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="remix实现"><code>Remix</code>实现</h2>
+<h3 id="1-部署nft合约">1. 部署NFT合约</h3>
+<p>部署<code>Ape</code> NFT合约。</p>
+<p>将首个NFT mint给自己，这里mint给自己是为了之后能够上架NFT、修改价格等一系类操作。</p>
+<p><code>mint(address to, uint tokenId)</code>方法有2个参数:</p>
+<p><code>to</code>:将 NFT mint给指定的地址，这里通常是自己的钱包地址。</p>
+<p><code>tokenId</code>: <code>Ape</code>合约定义了总量为10000个NFT，图中mint它的的第一个和第二个NFT，<code>tokenId</code>分别为<code>0</code>和<code>1</code>。</p>
+<p>在<code>Ape</code>合约中，利用<code>ownerOf</code>确认自己已经获得<code>tokenId</code>为0的NFT。</p>
+<p><code>ownerOf(uint tokenId)</code>方法有1个参数:</p>
+<p><code>tokenId</code>: <code>tokenId</code>为NFT的id，本案例中为上述mint的<code>0</code>Id。</p>
+<p>按照上述方法，将TokenId为 <code>0</code> 和 <code>1</code> 的NFT都mint给自己，其中<code>tokenId</code>为<code>0</code>的，我们执行更新购买操作，<code>tokenId</code>为<code>1</code>的，我们执行下架操作。</p>
+<h3 id="2-部署nftswap合约">2. 部署<code>NFTSwap</code>合约</h3>
+<p>部署<code>NFTSwap</code>合约。</p>
+<h3 id="3-将要上架的nft授权给nftswap合约">3. 将要上架的<code>NFT</code>授权给<code>NFTSwap</code>合约</h3>
+<p>在<code>Ape</code>合约中调用 <code>approve()</code>授权函数，将自己持有的<code>tokenId</code>为0的NFT授权给<code>NFTSwap</code>合约地址。</p>
+<p><code>approve(address to, uint tokenId)</code>方法有2个参数:</p>
+<p><code>to</code>: 将tokenId授权给 <code>to</code> 地址，本案例中将授权给<code>NFTSwap</code>合约地址。</p>
+<p><code>tokenId</code>: <code>tokenId</code>为NFT的id，本案例中为上述mint的<code>0</code>Id。</p>
+<p>按照上述方法，同理将<code>tokenId</code>为<code>1</code>的NFT也授权给<code>NFTSwap</code>合约地址。</p>
+<h3 id="4-上架nft">4. 上架<code>NFT</code></h3>
+<p>调用<code>NFTSwap</code>合约的<code>list()</code>函数，将自己持有的<code>tokenId</code>为0的NFT上架到<code>NFTSwap</code>，价格设为1 <code>wei</code>。</p>
+<p><code>list(address _nftAddr, uint256 _tokenId, uint256 _price)</code>方法有3个参数:</p>
+<p><code>_nftAddr</code>: <code>_nftAddr</code>为NFT合约地址，本案例中为<code>Ape</code>合约地址。</p>
+<p><code>_tokenId</code>: <code>_tokenId</code>为NFT的id，本案例中为上述mint的<code>0</code>Id。</p>
+<p><code>_price</code>: <code>_price</code>为NFT的价格，本案例中为1 <code>wei</code>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032321636.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032321636.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032321636.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032321636.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032321636.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032321636.png" /></p>
+<p>按照上述方法，同理将自己持有的<code>tokenId</code>为1的NFT上架到<code>NFTSwap</code>，价格设为1 <code>wei</code>。</p>
+<h3 id="5-查看上架nft">5. 查看上架NFT</h3>
+<p>调用<code>NFTSwap</code>合约的<code>nftList()</code>函数查看上架的NFT。</p>
+<p><code>nftList</code>:是一个NFT Order的映射，结构如下：</p>
+<p><code>nftList[_nftAddr][_tokenId]</code>: 输入<code>_nftAddr</code>和<code>_tokenId</code>，返回一个NFT订单。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032322106.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032322106.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032322106.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032322106.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032322106.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032322106.png" /></p>
+<h3 id="6-更新nft价格">6. 更新<code>NFT</code>价格</h3>
+<p>调用<code>NFTSwap</code>合约的<code>update()</code>函数，将<code>tokenId</code>为0的NFT价格更新为77 <code>wei</code></p>
+<p><code>update(address _nftAddr, uint256 _tokenId, uint256 _newPrice)</code>方法有3个参数:</p>
+<p><code>_nftAddr</code>: <code>_nftAddr</code>为NFT合约地址，本案例中为<code>Ape</code>合约地址。</p>
+<p><code>_tokenId</code>: <code>_tokenId</code>为NFT的id，本案例中为上述mint的<code>0</code>Id。</p>
+<p><code>_newPrice</code>: <code>_newPrice</code>为NFT的新价格，本案例中为77 <code>wei</code>。</p>
+<p>执行<code>update</code>之后，调用<code>nftList</code> 查看更新后的价格</p>
+<h3 id="7-下架nft">7. 下架NFT</h3>
+<p>调用<code>NFTSwap</code>合约的<code>revoke()</code>函数下架NFT。</p>
+<p>上述文章中，我们上架了2个NFT，<code>tokenId</code>分别为 <code>0</code> 和 <code>1</code>。本次方法中，我们下架<code>tokenId</code>为<code>1</code>的NFT。</p>
+<p><code>revoke(address _nftAddr, uint256 _tokenId)</code>方法有2个参数:</p>
+<p><code>_nftAddr</code>: <code>_nftAddr</code>为NFT合约地址，本案例中为<code>Ape</code>合约地址。</p>
+<p><code>_tokenId</code>: <code>_tokenId</code>为NFT的id，本案例中为上述mint的<code>1</code>Id。</p>
+<p>调用<code>NFTSwap</code>合约的<code>nftList()</code>函数，可以看到<code>NFT</code>已经下架。再次上架需要重新授权。</p>
+<p><strong>注意下架NFT之后，需要重新从步骤3开始，重新授权和上架NFT之后，才能进行购买</strong></p>
+<h3 id="8-购买nft">8. 购买<code>NFT</code></h3>
+<p>切换账号，调用<code>NFTSwap</code>合约的<code>purchase()</code>函数购买NFT，购买时需要输入<code>NFT</code>合约地址，<code>tokenId</code>，并输入支付的<code>ETH</code>。</p>
+<p>我们下架了<code>tokenId</code>为<code>1</code>的NFT，现在还存在<code>tokenId</code>为<code>0</code>的NFT，所以我们可以购买<code>tokenId</code>为<code>0</code>的NFT。</p>
+<p><code>purchase(address _nftAddr, uint256 _tokenId, uint256 _wei)</code>方法有3个参数:</p>
+<p><code>_nftAddr</code>: <code>_nftAddr</code>为NFT合约地址，本案例中为<code>Ape</code>合约地址。</p>
+<p><code>_tokenId</code>: <code>_tokenId</code>为NFT的id，本案例中为上述mint的<code>0</code>Id。</p>
+<p><code>_wei</code>: <code>_wei</code>为支付的<code>ETH</code>数量，本案例中为77 <code>wei</code>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032324377.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032324377.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032324377.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032324377.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032324377.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303032324377.png" /></p>
+<h3 id="7-验证nft持有人改变">7. 验证<code>NFT</code>持有人改变</h3>
+<p>购买成功之后，调用<code>Ape</code>合约的<code>ownerOf()</code>函数，可以看到<code>NFT</code>持有者发生变化，购买成功！</p>
+<h2 id="总结">总结</h2>
+<p>我们建立了一个零手续费的去中心化<code>NFT</code>交易所。<code>OpenSea</code>虽然对<code>NFT</code>的发展做了很大贡献，但它的缺点也非常明显：高手续费、不发币回馈用户、交易机制容易被钓鱼导致用户资产丢失。目前<code>Looksrare</code>和<code>dydx</code>等新的<code>NFT</code>交易平台正在挑战<code>OpenSea</code>的位置，<code>Uniswap</code>也在研究新的<code>NFT</code>交易所。相信不久的将来，我们会用到更好的<code>NFT</code>交易所。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-08-27</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/posts/solidity-erc721-nft-swap.html" data-title="如何创建一个NFT交易所" data-via="jollysone" data-hashtags="solidity,basic"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/posts/solidity-erc721-nft-swap.html" data-hashtag="solidity"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="/posts/solidity-erc721-nft-swap.html"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="/posts/solidity-erc721-nft-swap.html" data-title="如何创建一个NFT交易所" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="/posts/solidity-erc721-nft-swap.html" data-title="如何创建一个NFT交易所"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="/posts/solidity-erc721-nft-swap.html" data-title="如何创建一个NFT交易所"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/posts/solidity-erc721-nft-swap.html" data-title="如何创建一个NFT交易所"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/posts/solidity-erc721-nft-swap.html" data-title="如何创建一个NFT交易所"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Skype" data-sharer="skype" data-url="/posts/solidity-erc721-nft-swap.html" data-title="如何创建一个NFT交易所"><i class="fab fa-skype fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/basic.html">basic</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/solidity-smart-contract-security-overflow.html" class="prev" rel="prev" title="合约安全：整型溢出"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>合约安全：整型溢出</a>
+            <a href="/posts/solidity-smart-contract-security-selector-clash.html" class="next" rel="next" title="合约安全：选择器碰撞">合约安全：选择器碰撞<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2018 - 2023</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"data":{"id-1":"5oneXj′s","id-2":"5oneXj′s"},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":88}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

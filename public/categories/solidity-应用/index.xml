@@ -1,42 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>基础知识 - 分类 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
-        <link>/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html</link>
-        <description>基础知识 - 分类 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
+        <title>Solidity 应用 - 分类 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
+        <link>/categories/solidity-%E5%BA%94%E7%94%A8.html</link>
+        <description>Solidity 应用 - 分类 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Wed, 01 Mar 2023 19:15:10 &#43;0800</lastBuildDate><atom:link href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html" rel="self" type="application/rss+xml" /><item>
-    <title>智能合约中通过 tx.origin 授权引发的不安全问题</title>
-    <link>/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html</link>
-    <pubDate>Fri, 01 Oct 2021 17:55:28 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html</guid>
-    <description><![CDATA[1 前言 在合约代码中，最常用的是使用 msg.sender 来检查授权，但有时由于有些程序员不熟悉 tx.origin 和 msg.sender 的区别，如果使用了 tx.origin 可能导致合约的安全问题。黑客最典型的攻击]]></description>
-</item>
-<item>
-    <title>让你可以在web3社区高谈阔论的黑话总结</title>
-    <link>/posts/web3-slang.html</link>
-    <pubDate>Wed, 01 Mar 2023 19:15:10 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/web3-slang.html</guid>
-    <description><![CDATA[A ABI：Application Binary Interface，类似于API，是两个二进制程序模块之间接口。 address：钱包/合约地址。 alpha]]></description>
-</item>
-<item>
-    <title>Metamask项目方给Solidity程序员的16个安全建议</title>
-    <link>/posts/16-safety-recommendations.html</link>
-    <pubDate>Thu, 19 Jan 2023 20:13:10 &#43;0800</pubDate>
-    <author>Consensys</author>
-    <guid>/posts/16-safety-recommendations.html</guid>
-    <description><![CDATA[Metamask项目方给Solidity程序员的16个安全建议 引言 原文：Solidity Best Practices for Smart Contract Security 原文作者：Consensys（metam]]></description>
-</item>
-<item>
-    <title>区块链技术面试题</title>
-    <link>/posts/blockchain-technology-interview-question-and-answer.html</link>
-    <pubDate>Tue, 20 Dec 2022 15:25:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/blockchain-technology-interview-question-and-answer.html</guid>
-    <description><![CDATA[1 以太坊常见问题 在以太坊中，Wei和Ether(以太币)有什么区别？ 答： Wei是以太币的最小面值，就好比说人民币的最小面值是分，英镑的最小面]]></description>
-</item>
-<item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Wed, 07 Sep 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="/categories/solidity-%E5%BA%94%E7%94%A8.html" rel="self" type="application/rss+xml" /><item>
     <title>GameFi中常见的ERC1155代币标准</title>
     <link>/posts/solidity-erc1155.html</link>
     <pubDate>Wed, 07 Sep 2022 11:12:14 &#43;0800</pubDate>

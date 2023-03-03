@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>以太坊ERC20代币标准 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title><meta name="Description" content="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><meta property="og:title" content="以太坊ERC20代币标准" />
+<meta property="og:description" content="ERC20 ERC20是以太坊上的代币标准，来自2015年11月V神参与的EIP20。它实现了代币转账的基本逻辑： 账户余额 转账 授权转账 代币总供给 代币信" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/solidity-erc20.html" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-15T11:12:14+08:00" />
+<meta property="article:modified_time" content="2022-05-15T11:12:14+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="以太坊ERC20代币标准"/>
+<meta name="twitter:description" content="ERC20 ERC20是以太坊上的代币标准，来自2015年11月V神参与的EIP20。它实现了代币转账的基本逻辑： 账户余额 转账 授权转账 代币总供给 代币信"/>
+<meta name="application-name" content="5oneXj′s Blog">
+<meta name="apple-mobile-web-app-title" content="5oneXj′s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="/posts/solidity-erc20.html" /><link rel="prev" href="/posts/tools-ganache-introduce.html" /><link rel="next" href="/posts/tools-dune-introduce.html" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "以太坊ERC20代币标准",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/posts\/solidity-erc20.html"
+        },"image": ["\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "solidity, basic","wordcount":  2454 ,
+        "url": "\/posts\/solidity-erc20.html","datePublished": "2022-05-15T11:12:14+08:00","dateModified": "2022-05-15T11:12:14+08:00","publisher": {
+            "@type": "Organization",
+            "name": "5oneXj","logo": {
+                    "@type": "ImageObject",
+                    "url": "\/images\/avatar.png",
+                    "width":  528 ,
+                    "height":  560 
+                }},"author": {
+                "@type": "Person",
+                "name": "5oneXj"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts.html" title="所有文章"> Posts </a><a class="menu-item" href="/tags.html" title="所有标签"> Tags </a><a class="menu-item" href="/categories.html" title="所有分类"> Categories </a><a class="menu-item" href="/about.html" title="关于"> About </a><a class="menu-item" href="/https:/github.com/jollysone" title="GitHub">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts.html" title="所有文章">Posts</a><a class="menu-item" href="/tags.html" title="所有标签">Tags</a><a class="menu-item" href="/categories.html" title="所有分类">Categories</a><a class="menu-item" href="/about.html" title="关于">About</a><a class="menu-item" href="/https:/github.com/jollysone" title="GitHub"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">以太坊ERC20代币标准</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a>&nbsp;<a href="/categories/solidity-%E5%BA%94%E7%94%A8.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Solidity 应用</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-05-15">2022-05-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2454 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="/posts/solidity-erc20.html" class="leancloud_visitors" data-flag-title="以太坊ERC20代币标准">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#erc20">ERC20</a></li>
+        <li><a href="#ierc20">IERC20</a>
+          <ul>
+            <li><a href="#事件">事件</a></li>
+            <li><a href="#函数">函数</a></li>
+          </ul>
+        </li>
+        <li><a href="#实现erc20">实现ERC20</a>
+          <ul>
+            <li><a href="#状态变量">状态变量</a></li>
+            <li><a href="#函数-1">函数</a></li>
+          </ul>
+        </li>
+        <li><a href="#发行erc20代币">发行<code>ERC20</code>代币</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="erc20">ERC20</h2>
+<p><code>ERC20</code>是以太坊上的代币标准，来自2015年11月V神参与的<a href="https://eips.ethereum.org/EIPS/eip-20" target="_blank" rel="noopener noreffer "><code>EIP20</code></a>。它实现了代币转账的基本逻辑：</p>
+<ul>
+<li>账户余额</li>
+<li>转账</li>
+<li>授权转账</li>
+<li>代币总供给</li>
+<li>代币信息（可选）：名称，代号，小数位数</li>
+</ul>
+<h2 id="ierc20">IERC20</h2>
+<p><code>IERC20</code>是<code>ERC20</code>代币标准的接口合约，规定了<code>ERC20</code>代币需要实现的函数和事件。
+之所以需要定义接口，是因为有了规范后，就存在所有的<code>ERC20</code>代币都通用的函数名称，输入参数，输出参数。
+在接口函数中，只需要定义函数名称，输入参数，输出参数，并不关心函数内部如何实现。
+由此，函数就分为内部和外部两个内容，一个重点是实现，另一个是对外接口，约定共同数据。
+这就是为什么需要<code>ERC20.sol</code>和<code>IERC20.sol</code>两个文件实现一个合约。</p>
+<h3 id="事件">事件</h3>
+<p><code>IERC20</code>定义了<code>2</code>个事件：<code>Transfer</code>事件和<code>Approval</code>事件，分别在转账和授权时被释放</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @dev 释放条件：当 `value` 单位的货币从账户 (`from`) 转账到另一账户 (`to`)时.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">event</span> <span class="nc">Transfer</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="k">from</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">to</span><span class="p">,</span> <span class="kt">uint256</span> <span class="nb">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @dev 释放条件：当 `value` 单位的货币从账户 (`owner`) 授权给另一账户 (`spender`)时.
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">event</span> <span class="nc">Approval</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">owner</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">spender</span><span class="p">,</span> <span class="kt">uint256</span> <span class="nb">value</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="函数">函数</h3>
+<p><code>IERC20</code>定义了<code>6</code>个函数，提供了转移代币的基本功能，并允许代币获得批准，以便其他链上第三方使用。</p>
+<ul>
+<li>
+<p><code>totalSupply()</code>返回代币总供给</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * @dev 返回代币总供给.
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">totalSupply</span><span class="p">()</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>balanceOf()</code>返回账户余额</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * @dev 返回账户`account`所持有的代币数.
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">balanceOf</span><span class="p">(</span><span class="kt">address</span> <span class="n">account</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>transfer()</code>转账</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * @dev 转账 `amount` 单位代币，从调用者账户到另一账户 `to`.
+</span></span></span><span class="line"><span class="cl"><span class="cm">    *
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * 如果成功，返回 `true`.
+</span></span></span><span class="line"><span class="cl"><span class="cm">    *
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * 释放 {Transfer} 事件.
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">transfer</span><span class="p">(</span><span class="kt">address</span> <span class="n">to</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">amount</span><span class="p">)</span> <span class="k">external</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bool</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>allowance()</code>返回授权额度</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * @dev 返回`owner`账户授权给`spender`账户的额度，默认为0。
+</span></span></span><span class="line"><span class="cl"><span class="cm">    *
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * 当{approve} 或 {transferFrom} 被调用时，`allowance`会改变.
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">allowance</span><span class="p">(</span><span class="kt">address</span> <span class="n">owner</span><span class="p">,</span> <span class="kt">address</span> <span class="n">spender</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>approve()</code>授权</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * @dev 调用者账户给`spender`账户授权 `amount`数量代币。
+</span></span></span><span class="line"><span class="cl"><span class="cm">    *
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * 如果成功，返回 `true`.
+</span></span></span><span class="line"><span class="cl"><span class="cm">    *
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * 释放 {Approval} 事件.
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">approve</span><span class="p">(</span><span class="kt">address</span> <span class="n">spender</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">amount</span><span class="p">)</span> <span class="k">external</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bool</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>transferFrom()</code>授权转账</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * @dev 通过授权机制，从`from`账户向`to`账户转账`amount`数量代币。转账的部分会从调用者的`allowance`中扣除。
+</span></span></span><span class="line"><span class="cl"><span class="cm">    *
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * 如果成功，返回 `true`.
+</span></span></span><span class="line"><span class="cl"><span class="cm">    *
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * 释放 {Transfer} 事件.
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">transferFrom</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">address</span> <span class="k">from</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">address</span> <span class="n">to</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">uint256</span> <span class="n">amount</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span> <span class="k">external</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bool</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="实现erc20">实现ERC20</h2>
+<p>现在我们写一个<code>ERC20</code>，将<code>IERC20</code>规定的函数简单实现。</p>
+<h3 id="状态变量">状态变量</h3>
+<p>我们需要状态变量来记录账户余额，授权额度和代币信息。其中<code>balanceOf</code>, <code>allowance</code>和<code>totalSupply</code>为<code>public</code>类型，会自动生成一个同名<code>getter</code>函数，实现<code>IERC20</code>规定的<code>balanceOf()</code>, <code>allowance()</code>和<code>totalSupply()</code>。而<code>name</code>, <code>symbol</code>, <code>decimals</code>则对应代币的名称，代号和小数位数。</p>
+<p><strong>注意</strong>：用<code>override</code>修饰<code>public</code>变量，会重写继承自父合约的与变量同名的<code>getter</code>函数，比如<code>IERC20</code>中的<code>balanceOf()</code>函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint256</span><span class="p">)</span> <span class="k">public</span> <span class="k">override</span> <span class="n">balanceOf</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kd">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint256</span><span class="p">))</span> <span class="k">public</span> <span class="k">override</span> <span class="n">allowance</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">uint256</span> <span class="k">public</span> <span class="k">override</span> <span class="n">totalSupply</span><span class="p">;</span>   <span class="c1">// 代币总供给
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kt">string</span> <span class="k">public</span> <span class="nb">name</span><span class="p">;</span>   <span class="c1">// 名称
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">string</span> <span class="k">public</span> <span class="n">symbol</span><span class="p">;</span>  <span class="c1">// 代号
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
+</span></span><span class="line"><span class="cl">    <span class="kt">uint8</span> <span class="k">public</span> <span class="n">decimals</span> <span class="o">=</span> <span class="mi">18</span><span class="p">;</span> <span class="c1">// 小数位数
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="函数-1">函数</h3>
+<ul>
+<li>
+<p>构造函数：初始化代币名称、代号。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">constructor</span><span class="p">(</span><span class="kt">string</span> <span class="k">memory</span> <span class="n">name_</span><span class="p">,</span> <span class="kt">string</span> <span class="k">memory</span> <span class="n">symbol_</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">name</span> <span class="o">=</span> <span class="n">name_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">symbol</span> <span class="o">=</span> <span class="n">symbol_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>transfer()</code>函数：实现<code>IERC20</code>中的<code>transfer</code>函数，代币转账逻辑。调用方扣除<code>amount</code>数量代币，接收方增加相应代币。土狗币会魔改这个函数，加入税收、分红、抽奖等逻辑。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">transfer</span><span class="p">(</span><span class="kt">address</span> <span class="n">recipient</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">amount</span><span class="p">)</span> <span class="k">external</span> <span class="k">override</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">balanceOf</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">balanceOf</span><span class="p">[</span><span class="n">recipient</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Transfer</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="n">recipient</span><span class="p">,</span> <span class="n">amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>approve()</code>函数：实现<code>IERC20</code>中的<code>approve</code>函数，代币授权逻辑。被授权方<code>spender</code>可以支配授权方的<code>amount</code>数量的代币。<code>spender</code>可以是EOA账户，也可以是合约账户：当你用<code>uniswap</code>交易代币时，你需要将代币授权给<code>uniswap</code>合约。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">approve</span><span class="p">(</span><span class="kt">address</span> <span class="n">spender</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">amount</span><span class="p">)</span> <span class="k">external</span> <span class="k">override</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">allowance</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">][</span><span class="n">spender</span><span class="p">]</span> <span class="o">=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Approval</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="n">spender</span><span class="p">,</span> <span class="n">amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>transferFrom()</code>函数：实现<code>IERC20</code>中的<code>transferFrom</code>函数，授权转账逻辑。被授权方将授权方<code>sender</code>的<code>amount</code>数量的代币转账给接收方<code>recipient</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">transferFrom</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">address</span> <span class="nb">sender</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">address</span> <span class="n">recipient</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">uint</span> <span class="n">amount</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span> <span class="k">external</span> <span class="k">override</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">allowance</span><span class="p">[</span><span class="nb">sender</span><span class="p">][</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">balanceOf</span><span class="p">[</span><span class="nb">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">balanceOf</span><span class="p">[</span><span class="n">recipient</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Transfer</span><span class="p">(</span><span class="nb">sender</span><span class="p">,</span> <span class="n">recipient</span><span class="p">,</span> <span class="n">amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>mint()</code>函数：铸造代币函数，不在<code>IERC20</code>标准中。这里为了教程方便，任何人可以铸造任意数量的代币，实际应用中会加权限管理，只有<code>owner</code>可以铸造代币：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">mint</span><span class="p">(</span><span class="kt">uint</span> <span class="n">amount</span><span class="p">)</span> <span class="k">external</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">balanceOf</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">totalSupply</span> <span class="o">+=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Transfer</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="n">amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>burn()</code>函数：销毁代币函数，不在<code>IERC20</code>标准中。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">burn</span><span class="p">(</span><span class="kt">uint</span> <span class="n">amount</span><span class="p">)</span> <span class="k">external</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">balanceOf</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">totalSupply</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">Transfer</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="kt">address</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="发行erc20代币">发行<code>ERC20</code>代币</h2>
+<p>有了<code>ERC20</code>标准后，在<code>ETH</code>链上发行代币变得非常简单。现在，我们发行属于我们的第一个代币。</p>
+<p>在<code>Remix</code>上编译好<code>ERC20</code>合约，在部署栏输入构造函数的参数，<code>name_</code>和<code>symbol_</code>都设为<code>BLOG</code>，然后点击<code>transact</code>键进行部署。</p>
+<p>这样，我们就创建好了<code>BLOG</code>代币。我们需要运行<code>mint()</code>函数来给自己铸造一些代币。点开<code>Deployed Contract</code>中的<code>ERC20</code>合约，在<code>mint</code>函数那一栏输入<code>100</code>并点击<code>mint</code>按钮，为自己铸造<code>100</code>个<code>BLOG</code>代币。</p>
+<p>可以点开右侧的Debug按钮，具体查看下面的logs。</p>
+<p>里面包含四个关键信息：</p>
+<ul>
+<li>事件<code>Transfer</code></li>
+<li>铸币地址<code>0x0000000000000000000000000000000000000000</code></li>
+<li>接收地址<code>0x5B38Da6a701c568545dCfcB03FcB875f56beddC4</code></li>
+<li>代币数额<code>100</code></li>
+</ul>
+<p>我们利用<code>balanceOf()</code>函数来查询账户余额。输入我们当前的账户，可以看到余额变为<code>100</code>，铸造成功。</p>
+<p>账户信息如图左侧，右侧标注为函数执行的具体信息。</p>
+<h2 id="总结">总结</h2>
+<p>2015年底提出的<code>ERC20</code>代币标准极大的降低了以太坊上发行代币的门槛，并开启了<code>ICO</code>大时代。在投资时，仔细阅读项目的代币合约，可以有效避开貔貅，增加投资成功率。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-05-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/posts/solidity-erc20.html" data-title="以太坊ERC20代币标准" data-via="jollysone" data-hashtags="solidity,basic"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/posts/solidity-erc20.html" data-hashtag="solidity"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="/posts/solidity-erc20.html"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="/posts/solidity-erc20.html" data-title="以太坊ERC20代币标准" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="/posts/solidity-erc20.html" data-title="以太坊ERC20代币标准"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="/posts/solidity-erc20.html" data-title="以太坊ERC20代币标准"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/posts/solidity-erc20.html" data-title="以太坊ERC20代币标准"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/posts/solidity-erc20.html" data-title="以太坊ERC20代币标准"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Skype" data-sharer="skype" data-url="/posts/solidity-erc20.html" data-title="以太坊ERC20代币标准"><i class="fab fa-skype fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/basic.html">basic</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/tools-ganache-introduce.html" class="prev" rel="prev" title="Ganache，搭建本地测试网络"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Ganache，搭建本地测试网络</a>
+            <a href="/posts/tools-dune-introduce.html" class="next" rel="next" title="使用Dune可视化区块链数据">使用Dune可视化区块链数据<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2018 - 2023</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"data":{"id-1":"5oneXj′s","id-2":"5oneXj′s"},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":88}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
