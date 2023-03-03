@@ -1,87 +1,87 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>基础知识 - 分类 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
-        <link>https://blog.webhooks.top/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html</link>
+        <link>/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html</link>
         <description>基础知识 - 分类 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Wed, 01 Mar 2023 19:15:10 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Wed, 01 Mar 2023 19:15:10 &#43;0800</lastBuildDate><atom:link href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html" rel="self" type="application/rss+xml" /><item>
     <title>智能合约中通过 tx.origin 授权引发的不安全问题</title>
-    <link>https://blog.webhooks.top/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html</link>
+    <link>/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html</link>
     <pubDate>Fri, 01 Oct 2021 17:55:28 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html</guid>
+    <guid>/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html</guid>
     <description><![CDATA[1 前言 在合约代码中，最常用的是使用 msg.sender 来检查授权，但有时由于有些程序员不熟悉 tx.origin 和 msg.sender 的区别，如果使用了 tx.origin 可能导致合约的安全问题。黑客最典型的攻击]]></description>
 </item>
 <item>
     <title>让你可以在web3社区高谈阔论的黑话总结</title>
-    <link>https://blog.webhooks.top/posts/web3-slang.html</link>
+    <link>/posts/web3-slang.html</link>
     <pubDate>Wed, 01 Mar 2023 19:15:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/web3-slang.html</guid>
+    <guid>/posts/web3-slang.html</guid>
     <description><![CDATA[A ABI：Application Binary Interface，类似于API，是两个二进制程序模块之间接口。 address：钱包/合约地址。 alpha]]></description>
 </item>
 <item>
     <title>Metamask项目方给Solidity程序员的16个安全建议</title>
-    <link>https://blog.webhooks.top/posts/16-safety-recommendations.html</link>
+    <link>/posts/16-safety-recommendations.html</link>
     <pubDate>Thu, 19 Jan 2023 20:13:10 &#43;0800</pubDate>
     <author>Consensys</author>
-    <guid>https://blog.webhooks.top/posts/16-safety-recommendations.html</guid>
+    <guid>/posts/16-safety-recommendations.html</guid>
     <description><![CDATA[Metamask项目方给Solidity程序员的16个安全建议 引言 原文：Solidity Best Practices for Smart Contract Security 原文作者：Consensys（metam]]></description>
 </item>
 <item>
     <title>区块链技术面试题</title>
-    <link>https://blog.webhooks.top/posts/blockchain-technology-interview-question-and-answer.html</link>
+    <link>/posts/blockchain-technology-interview-question-and-answer.html</link>
     <pubDate>Tue, 20 Dec 2022 15:25:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/blockchain-technology-interview-question-and-answer.html</guid>
+    <guid>/posts/blockchain-technology-interview-question-and-answer.html</guid>
     <description><![CDATA[1 以太坊常见问题 在以太坊中，Wei和Ether(以太币)有什么区别？ 答： Wei是以太币的最小面值，就好比说人民币的最小面值是分，英镑的最小面]]></description>
 </item>
 <item>
     <title>合约开发中的异常处理Try Catch</title>
-    <link>https://blog.webhooks.top/posts/solidity-try-catch.html</link>
+    <link>/posts/solidity-try-catch.html</link>
     <pubDate>Wed, 15 Dec 2021 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/solidity-try-catch.html</guid>
+    <guid>/posts/solidity-try-catch.html</guid>
     <description><![CDATA[引言 try-catch是现代编程语言几乎都有的处理异常的一种标准方式，solidity0.6版本也添加了它。这一讲，我们将介绍如何利用try]]></description>
 </item>
 <item>
     <title>合约中函数选择器Selector介绍</title>
-    <link>https://blog.webhooks.top/posts/solidity-selector.html</link>
+    <link>/posts/solidity-selector.html</link>
     <pubDate>Sat, 27 Nov 2021 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/solidity-selector.html</guid>
+    <guid>/posts/solidity-selector.html</guid>
     <description><![CDATA[selector 当我们调用智能合约时，本质上是向目标合约发送了一段calldata，在remix中发送一次交易后，可以在详细信息中看见input即为此次交]]></description>
 </item>
 <item>
     <title>Solidity智能合约中的Hash函数</title>
-    <link>https://blog.webhooks.top/posts/solidity-hash.html</link>
+    <link>/posts/solidity-hash.html</link>
     <pubDate>Sun, 14 Nov 2021 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/solidity-hash.html</guid>
+    <guid>/posts/solidity-hash.html</guid>
     <description><![CDATA[引言 哈希函数（hash function）是一个密码学概念，它可以将任意长度的消息转换为一个固定长度的值，这个值也称作哈希（hash）。 Has]]></description>
 </item>
 <item>
     <title>合约高级用法之ABI编码解码</title>
-    <link>https://blog.webhooks.top/posts/solidity-abi.html</link>
+    <link>/posts/solidity-abi.html</link>
     <pubDate>Tue, 02 Nov 2021 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/solidity-abi.html</guid>
+    <guid>/posts/solidity-abi.html</guid>
     <description><![CDATA[引言 ABI (Application Binary Interface，应用二进制接口)是与以太坊智能合约交互的标准。数据基于他们的类型编码；并且由于编码后不包含类型信息，解码时需要]]></description>
 </item>
 <item>
     <title>开始自毁跑路！删除合约</title>
-    <link>https://blog.webhooks.top/posts/solidity-delete-contract.html</link>
+    <link>/posts/solidity-delete-contract.html</link>
     <pubDate>Fri, 15 Oct 2021 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/solidity-delete-contract.html</guid>
+    <guid>/posts/solidity-delete-contract.html</guid>
     <description><![CDATA[selfdestruct selfdestruct命令可以用来删除智能合约，并将该合约剩余ETH转到指定地址。selfdestruct是为了应对合约出错的极端情况而]]></description>
 </item>
 <item>
     <title>如何在合约中创建新合约？</title>
-    <link>https://blog.webhooks.top/posts/solidity-new-contract.html</link>
+    <link>/posts/solidity-new-contract.html</link>
     <pubDate>Fri, 17 Sep 2021 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/solidity-new-contract.html</guid>
+    <guid>/posts/solidity-new-contract.html</guid>
     <description><![CDATA[引言 在以太坊链上，用户（外部账户，EOA）可以创建智能合约，智能合约同样也可以创建新的智能合约。去中心化交易所uniswap就是利用工厂合约]]></description>
 </item>
 </channel>

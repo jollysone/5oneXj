@@ -1,71 +1,71 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>基础知识 - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
-        <link>https://blog.webhooks.top/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html</link>
+        <link>/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html</link>
         <description>基础知识 - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Wed, 01 Mar 2023 19:15:10 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Wed, 01 Mar 2023 19:15:10 &#43;0800</lastBuildDate><atom:link href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html" rel="self" type="application/rss+xml" /><item>
     <title>智能合约中通过 tx.origin 授权引发的不安全问题</title>
-    <link>https://blog.webhooks.top/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html</link>
+    <link>/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html</link>
     <pubDate>Fri, 01 Oct 2021 17:55:28 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html</guid>
+    <guid>/posts/unsafe-problems-caused-by-tx-origin-authorization-in-smart-contracts.html</guid>
     <description><![CDATA[1 前言 在合约代码中，最常用的是使用 msg.sender 来检查授权，但有时由于有些程序员不熟悉 tx.origin 和 msg.sender 的区别，如果使用了 tx.origin 可能导致合约的安全问题。黑客最典型的攻击]]></description>
 </item>
 <item>
     <title>让你可以在web3社区高谈阔论的黑话总结</title>
-    <link>https://blog.webhooks.top/posts/web3-slang.html</link>
+    <link>/posts/web3-slang.html</link>
     <pubDate>Wed, 01 Mar 2023 19:15:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/web3-slang.html</guid>
+    <guid>/posts/web3-slang.html</guid>
     <description><![CDATA[A ABI：Application Binary Interface，类似于API，是两个二进制程序模块之间接口。 address：钱包/合约地址。 alpha]]></description>
 </item>
 <item>
     <title>区块链技术面试题</title>
-    <link>https://blog.webhooks.top/posts/blockchain-technology-interview-question-and-answer.html</link>
+    <link>/posts/blockchain-technology-interview-question-and-answer.html</link>
     <pubDate>Tue, 20 Dec 2022 15:25:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/blockchain-technology-interview-question-and-answer.html</guid>
+    <guid>/posts/blockchain-technology-interview-question-and-answer.html</guid>
     <description><![CDATA[1 以太坊常见问题 在以太坊中，Wei和Ether(以太币)有什么区别？ 答： Wei是以太币的最小面值，就好比说人民币的最小面值是分，英镑的最小面]]></description>
 </item>
 <item>
     <title>什么是去中心化自治组织 (DAO)？</title>
-    <link>https://blog.webhooks.top/posts/what-is-decentralized-autonomous-organization-dao.html</link>
+    <link>/posts/what-is-decentralized-autonomous-organization-dao.html</link>
     <pubDate>Thu, 20 May 2021 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/what-is-decentralized-autonomous-organization-dao.html</guid>
+    <guid>/posts/what-is-decentralized-autonomous-organization-dao.html</guid>
     <description><![CDATA[引言 没有集中领导的、成员共同拥有的社区。 一种与互联网上的陌生人合作的安全方式。 一个为特定事业投入资金的安全场所。 1 什么是去中心化自治组织？ 去]]></description>
 </item>
 <item>
     <title>区块链“跨链”是什么？为什么要“跨链”？</title>
-    <link>https://blog.webhooks.top/posts/what-is-the-cross-chain-of-blockchain.html</link>
+    <link>/posts/what-is-the-cross-chain-of-blockchain.html</link>
     <pubDate>Fri, 26 Feb 2021 11:05:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/what-is-the-cross-chain-of-blockchain.html</guid>
+    <guid>/posts/what-is-the-cross-chain-of-blockchain.html</guid>
     <description><![CDATA[1 跨链概念 跨链是通过连接相对独立的区块链系统，实现资产、数据等的跨链互操作，跨链的主要实现形式包括跨链资产互换和跨链资产转移。 跨链技术 201]]></description>
 </item>
 <item>
     <title>区块链开发中必学的 Node.js 技术</title>
-    <link>https://blog.webhooks.top/posts/node.js-technology-is-a-must-for-learning-blockchain.html</link>
+    <link>/posts/node.js-technology-is-a-must-for-learning-blockchain.html</link>
     <pubDate>Sun, 31 Mar 2019 14:06:11 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/node.js-technology-is-a-must-for-learning-blockchain.html</guid>
+    <guid>/posts/node.js-technology-is-a-must-for-learning-blockchain.html</guid>
     <description><![CDATA[1 基础语法 1.1 定义变量 var 允许对同一个变量重新定义，覆盖原有值。 1 2 var a = 1; var a = 2; let 允许修改，但不允许重新定义 1 2 let b = 1; b = 2; const 初始化后不允]]></description>
 </item>
 <item>
     <title>比特币发行量由什么决定？比特币2100万发行量由来？</title>
-    <link>https://blog.webhooks.top/posts/origin-of-bitcoins-21-million-circulation.html</link>
+    <link>/posts/origin-of-bitcoins-21-million-circulation.html</link>
     <pubDate>Tue, 06 Mar 2018 19:15:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/origin-of-bitcoins-21-million-circulation.html</guid>
+    <guid>/posts/origin-of-bitcoins-21-million-circulation.html</guid>
     <description><![CDATA[1 比特币发行量由什么决定？ 对于发行总量的粗略描述是这样的：每10分钟产生一定量的比特币，每四年减半，发行总量上限是2100万枚。 说说减半的规]]></description>
 </item>
 <item>
     <title>什么是区块链(Blockchain)?</title>
-    <link>https://blog.webhooks.top/posts/what-is-blockchain.html</link>
+    <link>/posts/what-is-blockchain.html</link>
     <pubDate>Fri, 02 Mar 2018 15:25:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/what-is-blockchain.html</guid>
+    <guid>/posts/what-is-blockchain.html</guid>
     <description><![CDATA[1 区块链的由来 区块链概念最早是从比特币衍生出来的。比特币（Bitcoin）诞生于2008年，是由一个名叫中本聪（Satoshi Nakamot]]></description>
 </item>
 </channel>

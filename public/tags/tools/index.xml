@@ -1,63 +1,63 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>tools - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
-        <link>https://blog.webhooks.top/tags/tools.html</link>
+        <link>/tags/tools.html</link>
         <description>tools - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sun, 19 Jun 2022 20:13:10 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/tools.html" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sun, 19 Jun 2022 20:13:10 &#43;0800</lastBuildDate><atom:link href="/tags/tools.html" rel="self" type="application/rss+xml" /><item>
     <title>Foundry，以Solidity为中心的开发工具包</title>
-    <link>https://blog.webhooks.top/posts/tools-foundry-introduce.html</link>
+    <link>/posts/tools-foundry-introduce.html</link>
     <pubDate>Sun, 19 Jun 2022 20:13:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/tools-foundry-introduce.html</guid>
+    <guid>/posts/tools-foundry-introduce.html</guid>
     <description><![CDATA[什么是 Foundry? 来自 Foundry 官网 (getfoundry.sh) 对该工具的介绍： Foundry是 一个用 Rust编写的用于以太坊应用程序开发的极快、可移植和模块化的工具包 ( Foundry is a blazing fast, portable and]]></description>
 </item>
 <item>
     <title>Hardhat以太坊开发环境</title>
-    <link>https://blog.webhooks.top/posts/tools-hardhat-introduce.html</link>
+    <link>/posts/tools-hardhat-introduce.html</link>
     <pubDate>Fri, 27 May 2022 01:13:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/tools-hardhat-introduce.html</guid>
+    <guid>/posts/tools-hardhat-introduce.html</guid>
     <description><![CDATA[Hardhat是以太坊最流行的开发环境，它可以帮你编译和部署智能合约，并且提供了Hardhat Network支持本地测试和运行Solidit]]></description>
 </item>
 <item>
     <title>使用Dune可视化区块链数据</title>
-    <link>https://blog.webhooks.top/posts/tools-dune-introduce.html</link>
+    <link>/posts/tools-dune-introduce.html</link>
     <pubDate>Mon, 16 May 2022 01:13:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/tools-dune-introduce.html</guid>
+    <guid>/posts/tools-dune-introduce.html</guid>
     <description><![CDATA[Dune是什么？ Dune是区块链查询分析工具，每个人可以通过写类sql语言查询区块链上的所有信息，例如巨鲸，链上交易的数据等等。同时Dune]]></description>
 </item>
 <item>
     <title>Ganache，搭建本地测试网络</title>
-    <link>https://blog.webhooks.top/posts/tools-ganache-introduce.html</link>
+    <link>/posts/tools-ganache-introduce.html</link>
     <pubDate>Wed, 13 Apr 2022 01:13:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/tools-ganache-introduce.html</guid>
+    <guid>/posts/tools-ganache-introduce.html</guid>
     <description><![CDATA[引言 Infura是Consensys(小狐狸钱包母公司)开发的区块链基础设施，帮助用户/开发者更好的与以太坊区块链交互。 Ganache 是一个适用于 “开发]]></description>
 </item>
 <item>
     <title>Alchemy, 区块链API和节点基础设施</title>
-    <link>https://blog.webhooks.top/posts/tools-alchemy-introduce.html</link>
+    <link>/posts/tools-alchemy-introduce.html</link>
     <pubDate>Sun, 20 Mar 2022 01:13:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/tools-alchemy-introduce.html</guid>
+    <guid>/posts/tools-alchemy-introduce.html</guid>
     <description><![CDATA[Alchemy是什么 Alchemy 超级节点是 Ethereum、Polygon、Solana、Arbitrum、Optimism、Flow 和 Crypto.org 使用最广泛的]]></description>
 </item>
 <item>
     <title>Infura, 连接链下与链上的桥梁</title>
-    <link>https://blog.webhooks.top/posts/tools-infura-introduce.html</link>
+    <link>/posts/tools-infura-introduce.html</link>
     <pubDate>Mon, 21 Feb 2022 01:13:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/tools-infura-introduce.html</guid>
+    <guid>/posts/tools-infura-introduce.html</guid>
     <description><![CDATA[引言 Infura是Consensys(小狐狸钱包母公司)开发的区块链基础设施，帮助用户/开发者更好的与以太坊区块链交互。 连接应用和区块链 在以]]></description>
 </item>
 <item>
     <title>Remix, 最易用的Solidity IDE</title>
-    <link>https://blog.webhooks.top/posts/tools-remix-introduce.html</link>
+    <link>/posts/tools-remix-introduce.html</link>
     <pubDate>Sat, 22 Jan 2022 01:13:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/tools-remix-introduce.html</guid>
+    <guid>/posts/tools-remix-introduce.html</guid>
     <description><![CDATA[引言 Remix是以太坊官方推荐的智能合约开发IDE，非常易用。Remix让你可以直接在浏览器中快速部署测试智能合约，而不需要安装配置任何程序]]></description>
 </item>
 </channel>

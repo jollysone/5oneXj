@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>跨链技术 - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
-        <link>https://blog.webhooks.top/tags/%E8%B7%A8%E9%93%BE%E6%8A%80%E6%9C%AF.html</link>
+        <link>/tags/%E8%B7%A8%E9%93%BE%E6%8A%80%E6%9C%AF.html</link>
         <description>跨链技术 - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Fri, 26 Feb 2021 11:05:10 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/%E8%B7%A8%E9%93%BE%E6%8A%80%E6%9C%AF.html" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Fri, 26 Feb 2021 11:05:10 &#43;0800</lastBuildDate><atom:link href="/tags/%E8%B7%A8%E9%93%BE%E6%8A%80%E6%9C%AF.html" rel="self" type="application/rss+xml" /><item>
     <title>区块链“跨链”是什么？为什么要“跨链”？</title>
-    <link>https://blog.webhooks.top/posts/what-is-the-cross-chain-of-blockchain.html</link>
+    <link>/posts/what-is-the-cross-chain-of-blockchain.html</link>
     <pubDate>Fri, 26 Feb 2021 11:05:10 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/what-is-the-cross-chain-of-blockchain.html</guid>
+    <guid>/posts/what-is-the-cross-chain-of-blockchain.html</guid>
     <description><![CDATA[1 跨链概念 跨链是通过连接相对独立的区块链系统，实现资产、数据等的跨链互操作，跨链的主要实现形式包括跨链资产互换和跨链资产转移。 跨链技术 201]]></description>
 </item>
 </channel>

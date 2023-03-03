@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>multi-sig - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
-        <link>https://blog.webhooks.top/tags/multi-sig.html</link>
+        <link>/tags/multi-sig.html</link>
         <description>multi-sig - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sun, 04 Sep 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/multi-sig.html" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sun, 04 Sep 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="/tags/multi-sig.html" rel="self" type="application/rss+xml" /><item>
     <title>合约安全：中心化风险</title>
-    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-centralization.html</link>
+    <link>/posts/solidity-smart-contract-security-centralization.html</link>
     <pubDate>Sun, 04 Sep 2022 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-centralization.html</guid>
+    <guid>/posts/solidity-smart-contract-security-centralization.html</guid>
     <description><![CDATA[引言 智能合约中的中心化和伪去中心化所带来的风险。Ronin桥和Harmony桥因该漏洞被黑客攻击，分别被盗取了 6.24 亿美元和 1 亿美元。 1 中心化风]]></description>
 </item>
 </channel>

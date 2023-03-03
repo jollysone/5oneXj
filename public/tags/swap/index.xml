@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>swap - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
-        <link>https://blog.webhooks.top/tags/swap.html</link>
+        <link>/tags/swap.html</link>
         <description>swap - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sat, 29 Oct 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/swap.html" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sat, 29 Oct 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="/tags/swap.html" rel="self" type="application/rss+xml" /><item>
     <title>合约安全：貔貅 Honeypot Scam</title>
-    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-honeypot-token.html</link>
+    <link>/posts/solidity-smart-contract-security-honeypot-token.html</link>
     <pubDate>Sat, 29 Oct 2022 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-honeypot-token.html</guid>
+    <guid>/posts/solidity-smart-contract-security-honeypot-token.html</guid>
     <description><![CDATA[引言 将介绍貔貅合约和预防方法（英文习惯叫蜜罐代币 honeypot token）。 1 貔貅学入门 貔貅是中国的一个神兽，因为在天庭犯了戒，被玉帝揍的肛门封闭了，只]]></description>
 </item>
 </channel>

@@ -1,23 +1,23 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>modifier - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
-        <link>https://blog.webhooks.top/tags/modifier.html</link>
+        <link>/tags/modifier.html</link>
         <description>modifier - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sat, 10 Sep 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/modifier.html" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sat, 10 Sep 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="/tags/modifier.html" rel="self" type="application/rss+xml" /><item>
     <title>合约安全：权限管理漏洞</title>
-    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-access-control-exploit.html</link>
+    <link>/posts/solidity-smart-contract-security-access-control-exploit.html</link>
     <pubDate>Sat, 10 Sep 2022 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-access-control-exploit.html</guid>
+    <guid>/posts/solidity-smart-contract-security-access-control-exploit.html</guid>
     <description><![CDATA[引言 智能合约的权限管理漏洞。这个漏洞导致了跨链桥 Poly Network 被黑 6.11 亿美元，并导致了BSC上DeFi项目 ShadowFi 被黑 $300,000。 1 权限管理漏洞 智能合约]]></description>
 </item>
 <item>
     <title>合约安全：重入攻击</title>
-    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html</link>
+    <link>/posts/solidity-smart-contract-security-re-entrancy.html</link>
     <pubDate>Sat, 20 Aug 2022 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html</guid>
+    <guid>/posts/solidity-smart-contract-security-re-entrancy.html</guid>
     <description><![CDATA[引言 它曾导致以太坊分叉为 ETH 和 ETC（以太经典）。 1 什么是重入攻击？ 重入攻击是智能合约中最常见的一种攻击，攻击者通过合约漏洞（例如fallba]]></description>
 </item>
 </channel>

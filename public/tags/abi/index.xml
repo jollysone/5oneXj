@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>abi - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
-        <link>https://blog.webhooks.top/tags/abi.html</link>
+        <link>/tags/abi.html</link>
         <description>abi - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sat, 03 Sep 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/abi.html" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sat, 03 Sep 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="/tags/abi.html" rel="self" type="application/rss+xml" /><item>
     <title>合约安全：选择器碰撞</title>
-    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-selector-clash.html</link>
+    <link>/posts/solidity-smart-contract-security-selector-clash.html</link>
     <pubDate>Sat, 03 Sep 2022 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-selector-clash.html</guid>
+    <guid>/posts/solidity-smart-contract-security-selector-clash.html</guid>
     <description><![CDATA[引言 选择器碰撞攻击，它是导致跨链桥 Poly Network 被黑的原因之一。在2021年8月，Poly Network在ETH，BSC，和 Polygon 上的跨链桥合约被盗，损失]]></description>
 </item>
 </channel>

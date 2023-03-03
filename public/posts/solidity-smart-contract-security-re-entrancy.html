@@ -7,18 +7,18 @@
         <title>合约安全：重入攻击 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title><meta name="Description" content="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><meta property="og:title" content="合约安全：重入攻击" />
 <meta property="og:description" content="引言 它曾导致以太坊分叉为 ETH 和 ETC（以太经典）。 1 什么是重入攻击？ 重入攻击是智能合约中最常见的一种攻击，攻击者通过合约漏洞（例如fallba" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html" /><meta property="og:image" content="https://blog.webhooks.top/logo.png"/><meta property="article:section" content="posts" />
+<meta property="og:url" content="/posts/solidity-smart-contract-security-re-entrancy.html" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-08-20T11:12:14+08:00" />
 <meta property="article:modified_time" content="2022-08-20T11:12:14+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://blog.webhooks.top/logo.png"/>
+<meta name="twitter:image" content="/logo.png"/>
 
 <meta name="twitter:title" content="合约安全：重入攻击"/>
 <meta name="twitter:description" content="引言 它曾导致以太坊分叉为 ETH 和 ETC（以太经典）。 1 什么是重入攻击？ 重入攻击是智能合约中最常见的一种攻击，攻击者通过合约漏洞（例如fallba"/>
 <meta name="application-name" content="5oneXj′s Blog">
 <meta name="apple-mobile-web-app-title" content="5oneXj′s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html" /><link rel="prev" href="https://blog.webhooks.top/posts/tools-foundry-introduce.html" /><link rel="next" href="https://blog.webhooks.top/posts/solidity-smart-contract-security-nft-re-entrancy.html" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="/posts/solidity-smart-contract-security-re-entrancy.html" /><link rel="prev" href="/posts/tools-foundry-introduce.html" /><link rel="next" href="/posts/solidity-smart-contract-security-nft-re-entrancy.html" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -28,13 +28,13 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/blog.webhooks.top\/posts\/solidity-smart-contract-security-re-entrancy.html"
-        },"image": ["https:\/\/blog.webhooks.top\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "solidity, security, fallback, modifier","wordcount":  2874 ,
-        "url": "https:\/\/blog.webhooks.top\/posts\/solidity-smart-contract-security-re-entrancy.html","datePublished": "2022-08-20T11:12:14+08:00","dateModified": "2022-08-20T11:12:14+08:00","publisher": {
+            "@id": "\/posts\/solidity-smart-contract-security-re-entrancy.html"
+        },"image": ["\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "solidity, security, fallback, modifier","wordcount":  2874 ,
+        "url": "\/posts\/solidity-smart-contract-security-re-entrancy.html","datePublished": "2022-08-20T11:12:14+08:00","dateModified": "2022-08-20T11:12:14+08:00","publisher": {
             "@type": "Organization",
             "name": "5oneXj","logo": {
                     "@type": "ImageObject",
-                    "url": "https:\/\/blog.webhooks.top\/images\/avatar.png",
+                    "url": "\/images\/avatar.png",
                     "width":  528 ,
                     "height":  560 
                 }},"author": {
@@ -51,7 +51,7 @@
             <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts.html" title="所有文章"> Posts </a><a class="menu-item" href="/tags.html" title="所有标签"> Tags </a><a class="menu-item" href="/categories.html" title="所有分类"> Categories </a><a class="menu-item" href="/about.html" title="关于"> About </a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/posts.html" title="所有文章"> Posts </a><a class="menu-item" href="/tags.html" title="所有标签"> Tags </a><a class="menu-item" href="/categories.html" title="所有分类"> Categories </a><a class="menu-item" href="/about.html" title="关于"> About </a><a class="menu-item" href="/https:/github.com/jollysone" title="GitHub">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
                             <i class="fas fa-search fa-fw" aria-hidden="true"></i>
@@ -93,7 +93,7 @@
                     <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/posts.html" title="所有文章">Posts</a><a class="menu-item" href="/tags.html" title="所有标签">Tags</a><a class="menu-item" href="/categories.html" title="所有分类">Categories</a><a class="menu-item" href="/about.html" title="关于">About</a><a class="menu-item" href="https://github.com/jollysone" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                </div><a class="menu-item" href="/posts.html" title="所有文章">Posts</a><a class="menu-item" href="/tags.html" title="所有标签">Tags</a><a class="menu-item" href="/categories.html" title="所有分类">Categories</a><a class="menu-item" href="/about.html" title="关于">About</a><a class="menu-item" href="/https:/github.com/jollysone" title="GitHub"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
             </a></div>
     </div>
@@ -447,7 +447,7 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击" data-via="jollysone" data-hashtags="solidity,security,fallback,modifier"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html" data-hashtag="solidity"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Skype" data-sharer="skype" data-url="https://blog.webhooks.top/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击"><i class="fab fa-skype fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击" data-via="jollysone" data-hashtags="solidity,security,fallback,modifier"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/posts/solidity-smart-contract-security-re-entrancy.html" data-hashtag="solidity"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="/posts/solidity-smart-contract-security-re-entrancy.html"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Skype" data-sharer="skype" data-url="/posts/solidity-smart-contract-security-re-entrancy.html" data-title="合约安全：重入攻击"><i class="fab fa-skype fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>

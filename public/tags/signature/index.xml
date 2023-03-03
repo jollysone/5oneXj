@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>signature - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
-        <link>https://blog.webhooks.top/tags/signature.html</link>
+        <link>/tags/signature.html</link>
         <description>signature - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Mon, 19 Sep 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/signature.html" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Mon, 19 Sep 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="/tags/signature.html" rel="self" type="application/rss+xml" /><item>
     <title>合约安全：签名重放</title>
-    <link>https://blog.webhooks.top/posts/solidity-smart-contract-security-signature-replay.html</link>
+    <link>/posts/solidity-smart-contract-security-signature-replay.html</link>
     <pubDate>Mon, 19 Sep 2022 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/solidity-smart-contract-security-signature-replay.html</guid>
+    <guid>/posts/solidity-smart-contract-security-signature-replay.html</guid>
     <description><![CDATA[引言 智能合约的签名重放（Signature Replay）攻击和预防方法，它曾间接导致了著名做市商 Wintermute 被盗2000万枚 $OP。 1 签名重放 上学的时]]></description>
 </item>
 </channel>

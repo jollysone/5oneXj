@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Node.js - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
-        <link>https://blog.webhooks.top/tags/node.js.html</link>
+        <link>/tags/node.js.html</link>
         <description>Node.js - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sun, 31 Mar 2019 14:06:11 &#43;0800</lastBuildDate><atom:link href="https://blog.webhooks.top/tags/node.js.html" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sun, 31 Mar 2019 14:06:11 &#43;0800</lastBuildDate><atom:link href="/tags/node.js.html" rel="self" type="application/rss+xml" /><item>
     <title>区块链开发中必学的 Node.js 技术</title>
-    <link>https://blog.webhooks.top/posts/node.js-technology-is-a-must-for-learning-blockchain.html</link>
+    <link>/posts/node.js-technology-is-a-must-for-learning-blockchain.html</link>
     <pubDate>Sun, 31 Mar 2019 14:06:11 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>https://blog.webhooks.top/posts/node.js-technology-is-a-must-for-learning-blockchain.html</guid>
+    <guid>/posts/node.js-technology-is-a-must-for-learning-blockchain.html</guid>
     <description><![CDATA[1 基础语法 1.1 定义变量 var 允许对同一个变量重新定义，覆盖原有值。 1 2 var a = 1; var a = 2; let 允许修改，但不允许重新定义 1 2 let b = 1; b = 2; const 初始化后不允]]></description>
 </item>
 </channel>
