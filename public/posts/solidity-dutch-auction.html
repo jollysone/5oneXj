@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>简化版Azuki荷兰拍卖 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title><meta name="Description" content="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><meta property="og:title" content="简化版Azuki荷兰拍卖" />
+<meta property="og:description" content="荷兰拍卖 荷兰拍卖（Dutch Auction）是一种特殊的拍卖形式。 亦称“减价拍卖”，它是指拍卖标的的竞价由高到低依次递减直到第一个竞买人应价" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/solidity-dutch-auction.html" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-22T11:12:14+08:00" />
+<meta property="article:modified_time" content="2022-09-22T11:12:14+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="简化版Azuki荷兰拍卖"/>
+<meta name="twitter:description" content="荷兰拍卖 荷兰拍卖（Dutch Auction）是一种特殊的拍卖形式。 亦称“减价拍卖”，它是指拍卖标的的竞价由高到低依次递减直到第一个竞买人应价"/>
+<meta name="application-name" content="5oneXj′s Blog">
+<meta name="apple-mobile-web-app-title" content="5oneXj′s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="/posts/solidity-dutch-auction.html" /><link rel="prev" href="/posts/solidity-smart-contract-security-signature-replay.html" /><link rel="next" href="/posts/solidity-merkle-tree.html" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "简化版Azuki荷兰拍卖",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/posts\/solidity-dutch-auction.html"
+        },"image": ["\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "solidity, basic","wordcount":  2042 ,
+        "url": "\/posts\/solidity-dutch-auction.html","datePublished": "2022-09-22T11:12:14+08:00","dateModified": "2022-09-22T11:12:14+08:00","publisher": {
+            "@type": "Organization",
+            "name": "5oneXj","logo": {
+                    "@type": "ImageObject",
+                    "url": "\/images\/avatar.png",
+                    "width":  528 ,
+                    "height":  560 
+                }},"author": {
+                "@type": "Person",
+                "name": "5oneXj"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts.html" title="所有文章"> Posts </a><a class="menu-item" href="/tags.html" title="所有标签"> Tags </a><a class="menu-item" href="/categories.html" title="所有分类"> Categories </a><a class="menu-item" href="/about.html" title="关于"> About </a><a class="menu-item" href="/https:/github.com/jollysone" title="GitHub">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts.html" title="所有文章">Posts</a><a class="menu-item" href="/tags.html" title="所有标签">Tags</a><a class="menu-item" href="/categories.html" title="所有分类">Categories</a><a class="menu-item" href="/about.html" title="关于">About</a><a class="menu-item" href="/https:/github.com/jollysone" title="GitHub"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">简化版Azuki荷兰拍卖</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a>&nbsp;<a href="/categories/solidity-%E5%BA%94%E7%94%A8.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Solidity 应用</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-09-22">2022-09-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2042 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="/posts/solidity-dutch-auction.html" class="leancloud_visitors" data-flag-title="简化版Azuki荷兰拍卖">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#荷兰拍卖">荷兰拍卖</a></li>
+        <li><a href="#dutchauction合约"><code>DutchAuction</code>合约</a>
+          <ul>
+            <li><a href="#dutchauction状态变量"><code>DutchAuction</code>状态变量</a></li>
+            <li><a href="#dutchauction函数"><code>DutchAuction</code>函数</a></li>
+          </ul>
+        </li>
+        <li><a href="#remix演示">Remix演示</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="荷兰拍卖">荷兰拍卖</h2>
+<p>荷兰拍卖（<code>Dutch Auction</code>）是一种特殊的拍卖形式。 亦称“减价拍卖”，它是指拍卖标的的竞价由高到低依次递减直到第一个竞买人应价（达到或超过底价）时击槌成交的一种拍卖。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042321781.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042321781.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042321781.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042321781.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042321781.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042321781.png" /></p>
+<p>在币圈，很多<code>NFT</code>通过荷兰拍卖发售，其中包括<code>Azuki</code>和<code>World of Women</code>，其中<code>Azuki</code>通过荷兰拍卖筹集了超过<code>8000</code>枚<code>ETH</code>。</p>
+<p>项目方非常喜欢这种拍卖形式，主要有两个原因</p>
+<ol>
+<li>
+<p>荷兰拍卖的价格由最高慢慢下降，能让项目方获得最大的收入。</p>
+</li>
+<li>
+<p>拍卖持续较长时间（通常6小时以上），可以避免<code>gas war</code>。</p>
+</li>
+</ol>
+<h2 id="dutchauction合约"><code>DutchAuction</code>合约</h2>
+<p>代码基于<code>Azuki</code>的<a href="https://etherscan.io/address/0xed5af388653567af2f388e6224dc7c4b3241c544#code" target="_blank" rel="noopener noreffer ">代码</a>简化而成。<code>DucthAuction</code>合约继承了之前介绍的<code>ERC721</code>和<code>Ownable</code>合约：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// SPDX-License-Identifier: MIT
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">pragma solidity</span> <span class="o">^</span><span class="mi">0</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;@openzeppelin/contracts/access/Ownable.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;./ERC721.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">DutchAuction</span> <span class="k">is</span> <span class="n">Ownable</span><span class="p">,</span> <span class="n">ERC721</span> <span class="p">{</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="dutchauction状态变量"><code>DutchAuction</code>状态变量</h3>
+<p>合约中一共有<code>9</code>个状态变量，其中有<code>6</code>个和拍卖相关，他们是：</p>
+<ul>
+<li><code>COLLECTOIN_SIZE</code>：NFT总量。</li>
+<li><code>AUCTION_START_PRICE</code>：荷兰拍卖起拍价，也是最高价。</li>
+<li><code>AUCTION_END_PRICE</code>：荷兰拍卖结束价，也是最低价/地板价。</li>
+<li><code>AUCTION_TIME</code>：拍卖持续时长。</li>
+<li><code>AUCTION_DROP_INTERVAL</code>：每过多久时间，价格衰减一次。</li>
+<li><code>auctionStartTime</code>：拍卖起始时间（区块链时间戳，<code>block.timestamp</code>）。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kt">uint256</span> <span class="k">public</span> <span class="k">constant</span> <span class="n">COLLECTOIN_SIZE</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span> <span class="c1">// NFT总数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint256</span> <span class="k">public</span> <span class="k">constant</span> <span class="n">AUCTION_START_PRICE</span> <span class="o">=</span> <span class="mi">1</span> <span class="kc">ether</span><span class="p">;</span> <span class="c1">// 起拍价(最高价)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint256</span> <span class="k">public</span> <span class="k">constant</span> <span class="n">AUCTION_END_PRICE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">1</span> <span class="kc">ether</span><span class="p">;</span> <span class="c1">// 结束价(最低价/地板价)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint256</span> <span class="k">public</span> <span class="k">constant</span> <span class="n">AUCTION_TIME</span> <span class="o">=</span> <span class="mi">10</span> <span class="kc">minutes</span><span class="p">;</span> <span class="c1">// 拍卖时间，为了测试方便设为10分钟
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint256</span> <span class="k">public</span> <span class="k">constant</span> <span class="n">AUCTION_DROP_INTERVAL</span> <span class="o">=</span> <span class="mi">1</span> <span class="kc">minutes</span><span class="p">;</span> <span class="c1">// 每过多久时间，价格衰减一次
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint256</span> <span class="k">public</span> <span class="k">constant</span> <span class="n">AUCTION_DROP_PER_STEP</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="n">AUCTION_START_PRICE</span> <span class="o">-</span> <span class="n">AUCTION_END_PRICE</span><span class="p">)</span> <span class="o">/</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="n">AUCTION_TIME</span> <span class="o">/</span> <span class="n">AUCTION_DROP_INTERVAL</span><span class="p">);</span> <span class="c1">// 每次价格衰减步长
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
+</span></span><span class="line"><span class="cl">    <span class="kt">uint256</span> <span class="k">public</span> <span class="n">auctionStartTime</span><span class="p">;</span> <span class="c1">// 拍卖开始时间戳
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">string</span> <span class="k">private</span> <span class="n">_baseTokenURI</span><span class="p">;</span>   <span class="c1">// metadata URI
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint256</span><span class="p">[]</span> <span class="k">private</span> <span class="n">_allTokens</span><span class="p">;</span> <span class="c1">// 记录所有存在的tokenId 
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="dutchauction函数"><code>DutchAuction</code>函数</h3>
+<p>荷兰拍卖合约中共有<code>9</code>个函数，与<code>ERC721</code>相关的函数我们这里不再重复介绍，只介绍和拍卖相关的函数。</p>
+<ul>
+<li>设定拍卖起始时间：我们在构造函数中会声明当前区块时间为起始时间，项目方也可以通过<code>setAuctionStartTime()</code>函数来调整：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">constructor</span><span class="p">()</span> <span class="n">ERC721</span><span class="p">(</span><span class="s">&#34;WTF Dutch Auctoin&#34;</span><span class="p">,</span> <span class="s">&#34;WTF Dutch Auctoin&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">auctionStartTime</span> <span class="o">=</span> <span class="nb">block</span><span class="p">.</span><span class="nb">timestamp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// auctionStartTime setter函数，onlyOwner
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">setAuctionStartTime</span><span class="p">(</span><span class="kt">uint32</span> <span class="nb">timestamp</span><span class="p">)</span> <span class="k">external</span> <span class="n">onlyOwner</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">auctionStartTime</span> <span class="o">=</span> <span class="nb">timestamp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>获取拍卖实时价格：<code>getAuctionPrice()</code>函数通过当前区块时间以及拍卖相关的状态变量来计算实时拍卖价格。</li>
+</ul>
+<p>当<code>block.timestamp</code>小于起始时间，价格为最高价<code>AUCTION_START_PRICE</code>；</p>
+<p>当<code>block.timestamp</code>大于结束时间，价格为最低价<code>AUCTION_END_PRICE</code>；</p>
+<p>当<code>block.timestamp</code>处于两者之间时，则计算出当前的衰减价格。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 获取拍卖实时价格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">getAuctionPrice</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span>
+</span></span><span class="line"><span class="cl">        <span class="k">view</span>
+</span></span><span class="line"><span class="cl">        <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nb">block</span><span class="p">.</span><span class="nb">timestamp</span> <span class="o">&lt;</span> <span class="n">auctionStartTime</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">AUCTION_START_PRICE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nb">block</span><span class="p">.</span><span class="nb">timestamp</span> <span class="o">-</span> <span class="n">auctionStartTime</span> <span class="o">&gt;=</span> <span class="n">AUCTION_TIME</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">AUCTION_END_PRICE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">uint256</span> <span class="n">steps</span> <span class="o">=</span> <span class="p">(</span><span class="nb">block</span><span class="p">.</span><span class="nb">timestamp</span> <span class="o">-</span> <span class="n">auctionStartTime</span><span class="p">)</span> <span class="o">/</span>
+</span></span><span class="line"><span class="cl">            <span class="n">AUCTION_DROP_INTERVAL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">AUCTION_START_PRICE</span> <span class="o">-</span> <span class="p">(</span><span class="n">steps</span> <span class="o">*</span> <span class="n">AUCTION_DROP_PER_STEP</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>用户拍卖并铸造<code>NFT</code>：用户通过调用<code>auctionMint()</code>函数，支付<code>ETH</code>参加荷兰拍卖并铸造<code>NFT</code>。</li>
+</ul>
+<p>该函数首先检查拍卖是否开始/铸造是否超出<code>NFT</code>总量。接着，合约通过<code>getAuctionPrice()</code>和铸造数量计算拍卖成本，并检查用户支付的<code>ETH</code>是否足够：如果足够，则将<code>NFT</code>铸造给用户，并退回超额的<code>ETH</code>；反之，则回退交易。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 拍卖mint函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">auctionMint</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">quantity</span><span class="p">)</span> <span class="k">external</span> <span class="k">payable</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">uint256</span> <span class="n">_saleStartTime</span> <span class="o">=</span> <span class="kt">uint256</span><span class="p">(</span><span class="n">auctionStartTime</span><span class="p">);</span> <span class="c1">// 建立local变量，减少gas花费
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">require</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">_saleStartTime</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nb">block</span><span class="p">.</span><span class="nb">timestamp</span> <span class="o">&gt;=</span> <span class="n">_saleStartTime</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s">&#34;sale has not started yet&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span> <span class="c1">// 检查是否设置起拍时间，拍卖是否开始
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">require</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">totalSupply</span><span class="p">()</span> <span class="o">+</span> <span class="n">quantity</span> <span class="o">&lt;=</span> <span class="n">COLLECTOIN_SIZE</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s">&#34;not enough remaining reserved for auction to support desired mint amount&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span> <span class="c1">// 检查是否超过NFT上限
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">        <span class="kt">uint256</span> <span class="n">totalCost</span> <span class="o">=</span> <span class="n">getAuctionPrice</span><span class="p">()</span> <span class="o">*</span> <span class="n">quantity</span><span class="p">;</span> <span class="c1">// 计算mint成本
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">require</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span> <span class="o">&gt;=</span> <span class="n">totalCost</span><span class="p">,</span> <span class="s">&#34;Need to send more ETH.&#34;</span><span class="p">);</span> <span class="c1">// 检查用户是否支付足够ETH
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        
+</span></span><span class="line"><span class="cl">        <span class="c1">// Mint NFT
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">quantity</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">uint256</span> <span class="n">mintIndex</span> <span class="o">=</span> <span class="n">totalSupply</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">_mint</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="n">mintIndex</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">_addTokenToAllTokensEnumeration</span><span class="p">(</span><span class="n">mintIndex</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 多余ETH退款
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span> <span class="o">&gt;</span> <span class="n">totalCost</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">payable</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">).</span><span class="nb">transfer</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span> <span class="o">-</span> <span class="n">totalCost</span><span class="p">);</span> <span class="c1">//注意一下这里是否有重入的风险
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>项目方取出筹集的<code>ETH</code>：项目方可以通过<code>withdrawMoney()</code>函数提走拍卖筹集的<code>ETH</code>。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="c1">// 提款函数，onlyOwner
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">withdrawMoney</span><span class="p">()</span> <span class="k">external</span> <span class="n">onlyOwner</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="kt">bool</span> <span class="n">success</span><span class="p">,</span> <span class="p">)</span> <span class="o">=</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">.</span><span class="nb">call</span><span class="p">{</span><span class="nb">value</span><span class="o">:</span> <span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">).</span><span class="nb">balance</span><span class="p">}(</span><span class="s">&#34;&#34;</span><span class="p">);</span> <span class="c1">// call函数的调用方式详见第22讲
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nb">require</span><span class="p">(</span><span class="n">success</span><span class="p">,</span> <span class="s">&#34;Transfer failed.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="remix演示">Remix演示</h2>
+<ol>
+<li>合约部署：首先，部署<code>DutchAuction.sol</code>合约，并通过<code>setAuctionStartTime()</code>函数设置拍卖起始时间。
+本例采用的起始时间为，2022年7月12日 1点30分，对应的utc时间为1658338200。实验时可以在工具网站（<a href="https://tool.chinaz.com/tools/unixtime.aspx" target="_blank" rel="noopener noreffer ">比如这里</a>）自行查询对应时间。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042323326.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042323326.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042323326.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042323326.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042323326.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042323326.png" /></p>
+<ol start="2">
+<li>荷兰拍卖：随后，可以通过<code>getAuctionPrice()</code>函数获取到<strong>当前</strong>的拍卖价格。可以观察到，拍卖开始前的价格为<code>起拍价 AUCTION_START_PRICE</code>随着拍卖进行，拍卖价格在逐渐降低，直到降低至<code>地板价 AUCTION_END_PRICE</code>后不再变化。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042323017.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042323017.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042323017.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042323017.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042323017.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042323017.png" /></p>
+<ol start="3">
+<li>Mint操作：通过<code>auctionMin()</code>函数，完成mint，可以看见本例中，由于时间已经超过拍卖时间，因此仅耗费了<code>地板价</code>就完成了拍卖。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042324686.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042324686.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042324686.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042324686.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042324686.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303042324686.png" /></p>
+<ol start="4">
+<li>提取<code>ETH</code>：直接通过<code>withdrawMoney()</code>函数，便能将筹集到的<code>ETH</code>通过<code>call()</code>发送到合约创建者的地址。</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-09-22</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/posts/solidity-dutch-auction.html" data-title="简化版Azuki荷兰拍卖" data-via="jollysone" data-hashtags="solidity,basic"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/posts/solidity-dutch-auction.html" data-hashtag="solidity"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="/posts/solidity-dutch-auction.html"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="/posts/solidity-dutch-auction.html" data-title="简化版Azuki荷兰拍卖" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="/posts/solidity-dutch-auction.html" data-title="简化版Azuki荷兰拍卖"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="/posts/solidity-dutch-auction.html" data-title="简化版Azuki荷兰拍卖"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/posts/solidity-dutch-auction.html" data-title="简化版Azuki荷兰拍卖"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/posts/solidity-dutch-auction.html" data-title="简化版Azuki荷兰拍卖"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Skype" data-sharer="skype" data-url="/posts/solidity-dutch-auction.html" data-title="简化版Azuki荷兰拍卖"><i class="fab fa-skype fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/basic.html">basic</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/solidity-smart-contract-security-signature-replay.html" class="prev" rel="prev" title="合约安全：签名重放"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>合约安全：签名重放</a>
+            <a href="/posts/solidity-merkle-tree.html" class="next" rel="next" title="如何利用默克尔树Merkle Tree发放NFT白名单">如何利用默克尔树Merkle Tree发放NFT白名单<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2018 - 2023</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"data":{"id-1":"5oneXj′s","id-2":"5oneXj′s"},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":88}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

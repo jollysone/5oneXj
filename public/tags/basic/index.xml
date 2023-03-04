@@ -4,7 +4,63 @@
         <link>/tags/basic.html</link>
         <description>basic - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Wed, 07 Sep 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="/tags/basic.html" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sun, 27 Nov 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="/tags/basic.html" rel="self" type="application/rss+xml" /><item>
+    <title>如何让代币在归属期内匀速释放</title>
+    <link>/posts/solidity-vesting-wallet.html</link>
+    <pubDate>Sun, 27 Nov 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-vesting-wallet.html</guid>
+    <description><![CDATA[引言 代码由OpenZeppelin的VestingWallet合约简化而来。 代币归属条款 在传统金融领域，一些公司会向员工和管理层提供股权。但]]></description>
+</item>
+<item>
+    <title>如何用合约解决现实中“分赃不均”的分账问题</title>
+    <link>/posts/solidity-prandomayment-splitter.html</link>
+    <pubDate>Tue, 15 Nov 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-prandomayment-splitter.html</guid>
+    <description><![CDATA[引言 分账合约允许将ETH按权重转给一组账户中，进行分账。代码部分由oppenzepplin库的PaymentSplitter合约简化而来。 分]]></description>
+</item>
+<item>
+    <title>什么是ETH的带包装版本WETH</title>
+    <link>/posts/solidity-weth.html</link>
+    <pubDate>Tue, 01 Nov 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-weth.html</guid>
+    <description><![CDATA[什么是WETH？ WETH (Wrapped ETH)是ETH的带包装版本。我们常见的WETH，WBTC，WBNB，都是带包装的原生代币。那么我们为什么要包装它们？ 在]]></description>
+</item>
+<item>
+    <title>如何生成区块链中的链上（链下）随机数</title>
+    <link>/posts/solidity-random.html</link>
+    <pubDate>Fri, 21 Oct 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-random.html</guid>
+    <description><![CDATA[引言 很多以太坊上的应用都需要用到随机数，例如NFT随机抽取tokenId、抽盲盒、gamefi战斗中随机分胜负等等。但是由于以太坊上所有数据]]></description>
+</item>
+<item>
+    <title>以太坊中的数字签名ECDSA</title>
+    <link>/posts/solidity-signature-ecdsa.html</link>
+    <pubDate>Sat, 08 Oct 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-signature-ecdsa.html</guid>
+    <description><![CDATA[引言 如何利用数字签名ECDSA发放NFT白名单。代码中的ECDSA库由OpenZeppelin的同名库简化而成。 数字签名 如果你用过opens]]></description>
+</item>
+<item>
+    <title>如何利用默克尔树Merkle Tree发放NFT白名单</title>
+    <link>/posts/solidity-merkle-tree.html</link>
+    <pubDate>Sun, 25 Sep 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-merkle-tree.html</guid>
+    <description><![CDATA[Merkle Tree Merkle Tree，也叫默克尔树或哈希树，是区块链的底层加密技术，被比特币和以太坊区块链广泛采用。Merkle Tree是一种自下而上构建的加密树]]></description>
+</item>
+<item>
+    <title>简化版Azuki荷兰拍卖</title>
+    <link>/posts/solidity-dutch-auction.html</link>
+    <pubDate>Thu, 22 Sep 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-dutch-auction.html</guid>
+    <description><![CDATA[荷兰拍卖 荷兰拍卖（Dutch Auction）是一种特殊的拍卖形式。 亦称“减价拍卖”，它是指拍卖标的的竞价由高到低依次递减直到第一个竞买人应价]]></description>
+</item>
+<item>
     <title>GameFi中常见的ERC1155代币标准</title>
     <link>/posts/solidity-erc1155.html</link>
     <pubDate>Wed, 07 Sep 2022 11:12:14 &#43;0800</pubDate>
@@ -27,62 +83,6 @@
     <author>5oneXj</author>
     <guid>/posts/solidity-erc721.html</guid>
     <description><![CDATA[引言 BTC和ETH这类代币都属于同质化代币，矿工挖出的第1枚BTC与第10000枚BTC并没有不同，是等价的。但世界中很多物品是不同质的，其]]></description>
-</item>
-<item>
-    <title>如何批量发送空投？增加空投效率</title>
-    <link>/posts/solidity-erc20-airdrop.html</link>
-    <pubDate>Sun, 17 Jul 2022 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-erc20-airdrop.html</guid>
-    <description><![CDATA[引言 在币圈，最开心的一件事就是领空投，空手套白狼。 空投 Airdrop 空投是币圈中一种营销策略，项目方将代币免费发放给特定用户群体。为了拿到空投资格，用户]]></description>
-</item>
-<item>
-    <title>简易实现基于ERC20的水龙头合约</title>
-    <link>/posts/solidity-erc20-faucet.html</link>
-    <pubDate>Fri, 24 Jun 2022 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-erc20-faucet.html</guid>
-    <description><![CDATA[引言 当人渴的时候，就要去水龙头接水；当人想要免费代币的时候，就要去代币水龙头领。代币水龙头就是让用户免费领代币的网站/应用。 最早的代币水龙头]]></description>
-</item>
-<item>
-    <title>以太坊ERC20代币标准</title>
-    <link>/posts/solidity-erc20.html</link>
-    <pubDate>Sun, 15 May 2022 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-erc20.html</guid>
-    <description><![CDATA[ERC20 ERC20是以太坊上的代币标准，来自2015年11月V神参与的EIP20。它实现了代币转账的基本逻辑： 账户余额 转账 授权转账 代币总供给 代币信]]></description>
-</item>
-<item>
-    <title>合约开发中的异常处理Try Catch</title>
-    <link>/posts/solidity-try-catch.html</link>
-    <pubDate>Wed, 15 Dec 2021 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-try-catch.html</guid>
-    <description><![CDATA[引言 try-catch是现代编程语言几乎都有的处理异常的一种标准方式，solidity0.6版本也添加了它。这一讲，我们将介绍如何利用try]]></description>
-</item>
-<item>
-    <title>合约中函数选择器Selector介绍</title>
-    <link>/posts/solidity-selector.html</link>
-    <pubDate>Sat, 27 Nov 2021 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-selector.html</guid>
-    <description><![CDATA[selector 当我们调用智能合约时，本质上是向目标合约发送了一段calldata，在remix中发送一次交易后，可以在详细信息中看见input即为此次交]]></description>
-</item>
-<item>
-    <title>Solidity智能合约中的Hash函数</title>
-    <link>/posts/solidity-hash.html</link>
-    <pubDate>Sun, 14 Nov 2021 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-hash.html</guid>
-    <description><![CDATA[引言 哈希函数（hash function）是一个密码学概念，它可以将任意长度的消息转换为一个固定长度的值，这个值也称作哈希（hash）。 Has]]></description>
-</item>
-<item>
-    <title>合约高级用法之ABI编码解码</title>
-    <link>/posts/solidity-abi.html</link>
-    <pubDate>Tue, 02 Nov 2021 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-abi.html</guid>
-    <description><![CDATA[引言 ABI (Application Binary Interface，应用二进制接口)是与以太坊智能合约交互的标准。数据基于他们的类型编码；并且由于编码后不包含类型信息，解码时需要]]></description>
 </item>
 </channel>
 </rss>
