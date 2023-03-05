@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>学习OpenZeppelin的代理合约 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title><meta name="Description" content="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><meta property="og:title" content="学习OpenZeppelin的代理合约" />
+<meta property="og:description" content="引言 代理合约（Proxy Contract）。教学代码由OpenZeppelin的Proxy合约简化而来。 代理模式 Solidity合约部署在链" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/solidity-proxy-contract.html" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-12T11:12:14+08:00" />
+<meta property="article:modified_time" content="2022-12-12T11:12:14+08:00" /><meta property="og:site_name" content="5oneXj′s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/logo.png"/>
+
+<meta name="twitter:title" content="学习OpenZeppelin的代理合约"/>
+<meta name="twitter:description" content="引言 代理合约（Proxy Contract）。教学代码由OpenZeppelin的Proxy合约简化而来。 代理模式 Solidity合约部署在链"/>
+<meta name="application-name" content="5oneXj′s Blog">
+<meta name="apple-mobile-web-app-title" content="5oneXj′s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="/posts/solidity-proxy-contract.html" /><link rel="prev" href="/posts/solidity-smart-contract-security-timestamp-manipulation.html" /><link rel="next" href="/posts/solidity-upgrade-proxy-contract.html" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "学习OpenZeppelin的代理合约",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "\/posts\/solidity-proxy-contract.html"
+        },"image": ["\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "solidity, basic","wordcount":  3205 ,
+        "url": "\/posts\/solidity-proxy-contract.html","datePublished": "2022-12-12T11:12:14+08:00","dateModified": "2022-12-12T11:12:14+08:00","publisher": {
+            "@type": "Organization",
+            "name": "5oneXj","logo": {
+                    "@type": "ImageObject",
+                    "url": "\/images\/avatar.png",
+                    "width":  528 ,
+                    "height":  560 
+                }},"author": {
+                "@type": "Person",
+                "name": "5oneXj"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts.html" title="所有文章"> Posts </a><a class="menu-item" href="/tags.html" title="所有标签"> Tags </a><a class="menu-item" href="/categories.html" title="所有分类"> Categories </a><a class="menu-item" href="/about.html" title="关于"> About </a><a class="menu-item" href="/https:/github.com/jollysone" title="GitHub">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="专注于区块链智能合约开发和审计 | 5oneXj′s Blog"><span class="header-title-pre"><i class='fa fa-duotone fa-code' style='color: #074f6a;margin-right:12px;'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><x style='color: #8f5656;'> Blog</x></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts.html" title="所有文章">Posts</a><a class="menu-item" href="/tags.html" title="所有标签">Tags</a><a class="menu-item" href="/categories.html" title="所有分类">Categories</a><a class="menu-item" href="/about.html" title="关于">About</a><a class="menu-item" href="/https:/github.com/jollysone" title="GitHub"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">学习OpenZeppelin的代理合约</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>5oneXj</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>基础知识</a>&nbsp;<a href="/categories/solidity-%E5%BA%94%E7%94%A8.html"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Solidity 应用</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-12-12">2022-12-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3205 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id="/posts/solidity-proxy-contract.html" class="leancloud_visitors" data-flag-title="学习OpenZeppelin的代理合约">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#代理模式">代理模式</a></li>
+        <li><a href="#代理合约">代理合约</a>
+          <ul>
+            <li><a href="#代理合约proxy">代理合约<code>Proxy</code></a></li>
+            <li><a href="#逻辑合约logic">逻辑合约<code>Logic</code></a></li>
+            <li><a href="#调用者合约caller">调用者合约<code>Caller</code></a></li>
+          </ul>
+        </li>
+        <li><a href="#remix演示"><code>Remix</code>演示</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw" aria-hidden="true"></i>引言<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">代理合约（Proxy Contract）。教学代码由OpenZeppelin的<a href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/proxy/Proxy.sol" target="_blank" rel="noopener noreffer ">Proxy合约</a>简化而来。</div>
+        </div>
+    </div>
+<h2 id="代理模式">代理模式</h2>
+<p><code>Solidity</code>合约部署在链上之后，代码是不可变的（immutable）。这样既有优点，也有缺点：</p>
+<ul>
+<li>优点：安全，用户知道会发生什么（大部分时候）。</li>
+<li>坏处：就算合约中存在bug，也不能修改或升级，只能部署新合约。但是新合约的地址与旧的不一样，且合约的数据也需要花费大量gas进行迁移。</li>
+</ul>
+<p>有没有办法在合约部署后进行修改或升级呢？答案是有的，那就是<strong>代理模式</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052309203.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052309203.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052309203.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052309203.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052309203.png"
+        title="代理模式" /></p>
+<p>代理模式将合约数据和逻辑分开，分别保存在不同合约中。我们拿上图中简单的代理合约为例，数据（状态变量）存储在代理合约中，而逻辑（函数）保存在另一个逻辑合约中。代理合约（Proxy）通过<code>delegatecall</code>，将函数调用全权委托给逻辑合约（Implementation）执行，再把最终的结果返回给调用者（Caller）。</p>
+<p>代理模式主要有两个好处：</p>
+<ol>
+<li><strong>可升级：</strong> 当我们需要升级合约的逻辑时，只需要将代理合约指向新的逻辑合约。</li>
+<li><strong>省gas：</strong> 如果多个合约复用一套逻辑，我们只需部署一个逻辑合约，然后再部署多个只保存数据的代理合约，指向逻辑合约。</li>
+</ol>
+<h2 id="代理合约">代理合约</h2>
+<p>下面我们介绍一个简单的代理合约，它由OpenZeppelin的<a href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/proxy/Proxy.sol" target="_blank" rel="noopener noreffer ">Proxy合约</a>简化而来。它有三个部分：代理合约<code>Proxy</code>，逻辑合约<code>Logic</code>，和一个调用示例<code>Caller</code>。它的逻辑并不复杂：</p>
+<ul>
+<li>首先部署逻辑合约<code>Logic</code>。</li>
+<li>创建代理合约<code>Proxy</code>，状态变量<code>implementation</code>记录<code>Logic</code>合约地址。</li>
+<li><code>Proxy</code>合约利用回调函数<code>fallback</code>，将所有调用委托给<code>Logic</code>合约</li>
+<li>最后部署调用示例<code>Caller</code>合约，调用<code>Proxy</code>合约。</li>
+<li><strong>注意</strong>：<code>Logic</code>合约和<code>Proxy</code>合约的状态变量存储结构相同，不然<code>delegatecall</code>会产生意想不到的行为，有安全隐患。</li>
+</ul>
+<h3 id="代理合约proxy">代理合约<code>Proxy</code></h3>
+<p><code>Proxy</code>合约不长，但是用到了内联汇编，因此比较难理解。它只有一个状态变量，一个构造函数，和一个回调函数。状态变量<code>implementation</code>，在构造函数中初始化，用于保存<code>Logic</code>合约地址。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Proxy</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="k">public</span> <span class="n">implementation</span><span class="p">;</span> <span class="c1">// 逻辑合约地址。implementation合约同一个位置的状态变量类型必须和Proxy合约的相同，不然会报错。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @dev 初始化逻辑合约地址
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">constructor</span><span class="p">(</span><span class="kt">address</span> <span class="n">implementation_</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">implementation</span> <span class="o">=</span> <span class="n">implementation_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Proxy</code>的回调函数将外部对本合约的调用委托给 <code>Logic</code> 合约。这个回调函数很别致，它利用内联汇编（inline assembly），让本来不能有返回值的回调函数有了返回值。其中用到的内联汇编操作码：</p>
+<ul>
+<li><code>calldatacopy(t, f, s)</code>：将calldata（输入数据）从位置<code>f</code>开始复制<code>s</code>字节到mem（内存）的位置<code>t</code>。</li>
+<li><code>delegatecall(g, a, in, insize, out, outsize)</code>：调用地址<code>a</code>的合约，输入为<code>mem[in..(in+insize))</code> ，输出为<code>mem[out..(out+outsize))</code>， 提供<code>g</code>wei的以太坊gas。这个操作码在错误时返回<code>0</code>，在成功时返回<code>1</code>。</li>
+<li><code>returndatacopy(t, f, s)</code>：将returndata（输出数据）从位置<code>f</code>开始复制<code>s</code>字节到mem（内存）的位置<code>t</code>。</li>
+<li><code>switch</code>：基础版<code>if/else</code>，不同的情况<code>case</code>返回不同值。可以有一个默认的<code>default</code>情况。</li>
+<li><code>return(p, s)</code>：终止函数执行, 返回数据<code>mem[p..(p+s))</code>。</li>
+<li><code>revert(p, s)</code>：终止函数执行, 回滚状态，返回数据<code>mem[p..(p+s))</code>。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">* @dev 回调函数，将本合约的调用委托给 `implementation` 合约
+</span></span></span><span class="line"><span class="cl"><span class="cm">* 通过assembly，让回调函数也能有返回值
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="n">fallback</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="n">_implementation</span> <span class="o">=</span> <span class="n">implementation</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assembly</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将msg.data拷贝到内存里
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// calldatacopy操作码的参数: 内存起始位置，calldata起始位置，calldata长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nf">calldatacopy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nf">calldatasize</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 利用delegatecall调用implementation合约
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// delegatecall操作码的参数：gas, 目标合约地址，input mem起始位置，input mem长度，output area mem起始位置，output area mem长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// output area起始位置和长度位置，所以设为0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// delegatecall成功返回1，失败返回0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="ow">let</span> <span class="nv">result</span> <span class="o">:=</span> <span class="nf">delegatecall</span><span class="p">(</span><span class="nf">gas</span><span class="p">(),</span> <span class="n">_implementation</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nf">calldatasize</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将return data拷贝到内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// returndata操作码的参数：内存起始位置，returndata起始位置，returndata长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nf">returndatacopy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nf">returndatasize</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nf">switch</span> <span class="n">result</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 如果delegate call失败，revert
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">case</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nf">revert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">returndatasize</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 如果delegate call成功，返回mem起始位置为0，长度为returndatasize()的数据（格式为bytes）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">default</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nf">return</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">returndatasize</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="逻辑合约logic">逻辑合约<code>Logic</code></h3>
+<p>这是一个非常简单的逻辑合约，只是为了演示代理合约。它包含<code>2</code>个变量，<code>1</code>个事件，<code>1</code>个函数：</p>
+<ul>
+<li><code>implementation</code>：占位变量，与<code>Proxy</code>合约保持一致，防止插槽冲突。</li>
+<li><code>x</code>：<code>uint</code>变量，被设置为<code>99</code>。</li>
+<li><code>CallSuccess</code>事件：在调用成功时释放。</li>
+<li><code>increment()</code>函数：会被<code>Proxy</code>合约调用，释放<code>CallSuccess</code>事件，并返回一个<code>uint</code>，它的<code>selector</code>为<code>0xd09de08a</code>。如果直接调用<code>increment()</code>回返回<code>100</code>，但是通过<code>Proxy</code>调用它会返回<code>1</code>，大家可以想想为什么？</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @dev 逻辑合约，执行被委托的调用
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Logic</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="k">public</span> <span class="n">implementation</span><span class="p">;</span> <span class="c1">// 与Proxy保持一致，防止插槽冲突
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint</span> <span class="k">public</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">99</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="kd">event</span> <span class="nc">CallSuccess</span><span class="p">();</span> <span class="c1">// 调用成功事件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 这个函数会释放CallSuccess事件并返回一个uint。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 函数selector: 0xd09de08a
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">increment</span><span class="p">()</span> <span class="k">external</span> <span class="k">returns</span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">emit</span> <span class="n">CallSuccess</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="调用者合约caller">调用者合约<code>Caller</code></h3>
+<p><code>Caller</code>合约会演示如何调用一个代理合约，它也非常简单。但是要理解它，你需要先学习<code>Call</code>和<code>ABI编码</code>。</p>
+<p>它有<code>1</code>个变量，<code>2</code>个函数：</p>
+<ul>
+<li><code>proxy</code>：状态变量，记录代理合约地址。</li>
+<li>构造函数：在部署合约时初始化<code>proxy</code>变量。</li>
+<li><code>increase()</code>：利用<code>call</code>来调用代理合约的<code>increment()</code>函数，并返回一个<code>uint</code>。在调用时，我们利用<code>abi.encodeWithSignature()</code>获取了<code>increment()</code>函数的<code>selector</code>。在返回时，利用<code>abi.decode()</code>将返回值解码为<code>uint</code>类型。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @dev Caller合约，调用代理合约，并获取执行结果
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Caller</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="k">public</span> <span class="n">proxy</span><span class="p">;</span> <span class="c1">// 代理合约地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kd">constructor</span><span class="p">(</span><span class="kt">address</span> <span class="n">proxy_</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">proxy</span> <span class="o">=</span> <span class="n">proxy_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 通过代理合约调用increment()函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">increment</span><span class="p">()</span> <span class="k">external</span> <span class="k">returns</span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span> <span class="p">,</span> <span class="kt">bytes</span> <span class="k">memory</span> <span class="nb">data</span><span class="p">)</span> <span class="o">=</span> <span class="n">proxy</span><span class="p">.</span><span class="nb">call</span><span class="p">(</span><span class="nb">abi</span><span class="p">.</span><span class="nb">encodeWithSignature</span><span class="p">(</span><span class="s">&#34;increment()&#34;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">abi</span><span class="p">.</span><span class="nb">decode</span><span class="p">(</span><span class="nb">data</span><span class="p">,(</span><span class="kt">uint</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="remix演示"><code>Remix</code>演示</h2>
+<ol>
+<li>部署<code>Logic</code>合约。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311275.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311275.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311275.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311275.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311275.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311275.png" /></p>
+<ol start="2">
+<li>调用<code>Logic</code>合约的<code>increment()</code>函数，返回<code>100</code>。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311270.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311270.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311270.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311270.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311270.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311270.png" /></p>
+<ol start="3">
+<li>部署<code>Proxy</code>合约，初始化时填入<code>Logic</code>合约地址。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311956.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311956.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311956.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311956.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311956.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052311956.png" /></p>
+<ol start="4">
+<li>
+<p>调用<code>Proxy</code>合约<code>increment()</code>函数，无返回值。</p>
+<p>调用方法：在<code>Remix</code>部署面板中点<code>Proxy</code>合约，在最下面的<code>Low level interaction</code>中填入<code>increment()</code>函数的选择器<code>0xd09de08a</code>，并点击<code>Transact</code>。</p>
+</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312588.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312588.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312588.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312588.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312588.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312588.png" /></p>
+<ol start="5">
+<li>部署<code>Caller</code>合约，初始化时填入<code>Proxy</code>合约地址。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312512.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312512.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312512.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312512.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312512.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312512.png" /></p>
+<ol start="6">
+<li>调用<code>Caller</code>合约<code>increment()</code>函数，返回<code>1</code>。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312711.png"
+        data-srcset="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312711.png, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312711.png 1.5x, https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312711.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312711.png"
+        title="https://raw.githubusercontent.com/jollysone/Picture-Library/master/blog/202303052312711.png" /></p>
+<h2 id="总结">总结</h2>
+<p>代理合约利用<code>delegatecall</code>将函数调用委托给了另一个逻辑合约，使得数据和逻辑分别由不同合约负责。并且，它利用内联汇编黑魔法，让没有返回值的回调函数也可以返回数据。前面留给大家的问题是：为什么通过Proxy调用<code>increment()</code>会返回1呢？</p>
+<p>当Caller合约通过Proxy合约来<code>delegatecall</code> Logic合约的时候，如果Logic合约函数改变或读取一些状态变量的时候都会在Proxy的对应变量上操作，而这里Proxy合约的<code>x</code>变量的值是0（因为从来没有设置过<code>x</code>这个变量，即Proxy合约的storage区域所对应位置值为0），所以通过Proxy调用<code>increment()</code>会返回1。</p>
+<p>代理合约虽然很强大，但是它非常容易出<code>bug</code>，用的时候最好直接复制<a href="https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/proxy" target="_blank" rel="noopener noreffer ">OpenZeppelin</a>的模版合约。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-12-12</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="/posts/solidity-proxy-contract.html" data-title="学习OpenZeppelin的代理合约" data-via="jollysone" data-hashtags="solidity,basic"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="/posts/solidity-proxy-contract.html" data-hashtag="solidity"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="/posts/solidity-proxy-contract.html"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="/posts/solidity-proxy-contract.html" data-title="学习OpenZeppelin的代理合约" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="/posts/solidity-proxy-contract.html" data-title="学习OpenZeppelin的代理合约"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="/posts/solidity-proxy-contract.html" data-title="学习OpenZeppelin的代理合约"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="/posts/solidity-proxy-contract.html" data-title="学习OpenZeppelin的代理合约"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="/posts/solidity-proxy-contract.html" data-title="学习OpenZeppelin的代理合约"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Skype" data-sharer="skype" data-url="/posts/solidity-proxy-contract.html" data-title="学习OpenZeppelin的代理合约"><i class="fab fa-skype fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/solidity.html">solidity</a>,&nbsp;<a href="/tags/basic.html">basic</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/solidity-smart-contract-security-timestamp-manipulation.html" class="prev" rel="prev" title="合约安全：操纵区块时间"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>合约安全：操纵区块时间</a>
+            <a href="/posts/solidity-upgrade-proxy-contract.html" class="next" rel="next" title="基于代理合约的可升级合约">基于代理合约的可升级合约<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2018 - 2023</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"data":{"id-1":"5oneXj′s","id-2":"5oneXj′s"},"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":88}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

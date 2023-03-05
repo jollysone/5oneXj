@@ -29,6 +29,22 @@
     <description><![CDATA[Metamask项目方给Solidity程序员的16个安全建议 引言 原文：Solidity Best Practices for Smart Contract Security 原文作者：Consensys（metam]]></description>
 </item>
 <item>
+    <title>多签钱包要比硬件钱包更加安全</title>
+    <link>/posts/solidity-multisig-wallet.html</link>
+    <pubDate>Fri, 30 Dec 2022 00:00:00 &#43;0000</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-multisig-wallet.html</guid>
+    <description><![CDATA[引言 V神曾说过，多签钱包要比硬件钱包更加安全（推文）。极简版多签钱包合约教学代码（150行代码）由Gnosis Safe合约（几千行代码）简化]]></description>
+</item>
+<item>
+    <title>DAO工具之Gnosis Safe多签钱包</title>
+    <link>/posts/solidity-multisig-wallet-gnosis-safe.html</link>
+    <pubDate>Sun, 25 Dec 2022 00:00:00 &#43;0000</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-multisig-wallet-gnosis-safe.html</guid>
+    <description><![CDATA[什么是Gnosis Safe多签钱包? 自 2017 年以来，Gnosis一直在开发基于区块链的资金管理解决方案。 Gnosis Safe 是 Gnosis 开发的多重签名钱包。它是在以太坊]]></description>
+</item>
+<item>
     <title>区块链技术面试题</title>
     <link>/posts/blockchain-technology-interview-question-and-answer.html</link>
     <pubDate>Tue, 20 Dec 2022 15:25:14 &#43;0800</pubDate>
@@ -37,52 +53,36 @@
     <description><![CDATA[1 以太坊常见问题 在以太坊中，Wei和Ether(以太币)有什么区别？ 答： Wei是以太币的最小面值，就好比说人民币的最小面值是分，英镑的最小面]]></description>
 </item>
 <item>
-    <title>如何让代币在归属期内匀速释放</title>
-    <link>/posts/solidity-vesting-wallet.html</link>
-    <pubDate>Sun, 27 Nov 2022 11:12:14 &#43;0800</pubDate>
+    <title>通用可升级代理UUPS</title>
+    <link>/posts/solidity-upgradeable-proxy-uups.html</link>
+    <pubDate>Sun, 18 Dec 2022 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>/posts/solidity-vesting-wallet.html</guid>
-    <description><![CDATA[引言 代码由OpenZeppelin的VestingWallet合约简化而来。 代币归属条款 在传统金融领域，一些公司会向员工和管理层提供股权。但]]></description>
+    <guid>/posts/solidity-upgradeable-proxy-uups.html</guid>
+    <description><![CDATA[引言 代理合约中选择器冲突（Selector Clash）的另一个解决办法：通用可升级代理（UUPS，universal upgradeable proxy standard）。]]></description>
 </item>
 <item>
-    <title>如何用合约解决现实中“分赃不均”的分账问题</title>
-    <link>/posts/solidity-prandomayment-splitter.html</link>
-    <pubDate>Tue, 15 Nov 2022 11:12:14 &#43;0800</pubDate>
+    <title>学习OpenZeppelin的TransparentUpgradeableProxy透明代理</title>
+    <link>/posts/solidity-transparent-upgradeable-proxy.html</link>
+    <pubDate>Fri, 16 Dec 2022 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>/posts/solidity-prandomayment-splitter.html</guid>
-    <description><![CDATA[引言 分账合约允许将ETH按权重转给一组账户中，进行分账。代码部分由oppenzepplin库的PaymentSplitter合约简化而来。 分]]></description>
+    <guid>/posts/solidity-transparent-upgradeable-proxy.html</guid>
+    <description><![CDATA[引言 介绍代理合约的选择器冲突（Selector Clash）问题，以及这一问题的解决方案：透明代理（Transparent Proxy）。学习代]]></description>
 </item>
 <item>
-    <title>什么是ETH的带包装版本WETH</title>
-    <link>/posts/solidity-weth.html</link>
-    <pubDate>Tue, 01 Nov 2022 11:12:14 &#43;0800</pubDate>
+    <title>基于代理合约的可升级合约</title>
+    <link>/posts/solidity-upgrade-proxy-contract.html</link>
+    <pubDate>Mon, 12 Dec 2022 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>/posts/solidity-weth.html</guid>
-    <description><![CDATA[什么是WETH？ WETH (Wrapped ETH)是ETH的带包装版本。我们常见的WETH，WBTC，WBNB，都是带包装的原生代币。那么我们为什么要包装它们？ 在]]></description>
+    <guid>/posts/solidity-upgrade-proxy-contract.html</guid>
+    <description><![CDATA[引言 可升级合约（Upgradeable Contract）。教学用的合约由OpenZeppelin中的合约简化而来，可能有安全问题，不要用于生]]></description>
 </item>
 <item>
-    <title>如何生成区块链中的链上（链下）随机数</title>
-    <link>/posts/solidity-random.html</link>
-    <pubDate>Fri, 21 Oct 2022 11:12:14 &#43;0800</pubDate>
+    <title>学习OpenZeppelin的代理合约</title>
+    <link>/posts/solidity-proxy-contract.html</link>
+    <pubDate>Mon, 12 Dec 2022 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
-    <guid>/posts/solidity-random.html</guid>
-    <description><![CDATA[引言 很多以太坊上的应用都需要用到随机数，例如NFT随机抽取tokenId、抽盲盒、gamefi战斗中随机分胜负等等。但是由于以太坊上所有数据]]></description>
-</item>
-<item>
-    <title>以太坊中的数字签名ECDSA</title>
-    <link>/posts/solidity-signature-ecdsa.html</link>
-    <pubDate>Sat, 08 Oct 2022 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-signature-ecdsa.html</guid>
-    <description><![CDATA[引言 如何利用数字签名ECDSA发放NFT白名单。代码中的ECDSA库由OpenZeppelin的同名库简化而成。 数字签名 如果你用过opens]]></description>
-</item>
-<item>
-    <title>如何利用默克尔树Merkle Tree发放NFT白名单</title>
-    <link>/posts/solidity-merkle-tree.html</link>
-    <pubDate>Sun, 25 Sep 2022 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-merkle-tree.html</guid>
-    <description><![CDATA[Merkle Tree Merkle Tree，也叫默克尔树或哈希树，是区块链的底层加密技术，被比特币和以太坊区块链广泛采用。Merkle Tree是一种自下而上构建的加密树]]></description>
+    <guid>/posts/solidity-proxy-contract.html</guid>
+    <description><![CDATA[引言 代理合约（Proxy Contract）。教学代码由OpenZeppelin的Proxy合约简化而来。 代理模式 Solidity合约部署在链]]></description>
 </item>
 </channel>
 </rss>

@@ -13,12 +13,60 @@
     <description><![CDATA[Metamask项目方给Solidity程序员的16个安全建议 引言 原文：Solidity Best Practices for Smart Contract Security 原文作者：Consensys（metam]]></description>
 </item>
 <item>
+    <title>多签钱包要比硬件钱包更加安全</title>
+    <link>/posts/solidity-multisig-wallet.html</link>
+    <pubDate>Fri, 30 Dec 2022 00:00:00 &#43;0000</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-multisig-wallet.html</guid>
+    <description><![CDATA[引言 V神曾说过，多签钱包要比硬件钱包更加安全（推文）。极简版多签钱包合约教学代码（150行代码）由Gnosis Safe合约（几千行代码）简化]]></description>
+</item>
+<item>
+    <title>DAO工具之Gnosis Safe多签钱包</title>
+    <link>/posts/solidity-multisig-wallet-gnosis-safe.html</link>
+    <pubDate>Sun, 25 Dec 2022 00:00:00 &#43;0000</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-multisig-wallet-gnosis-safe.html</guid>
+    <description><![CDATA[什么是Gnosis Safe多签钱包? 自 2017 年以来，Gnosis一直在开发基于区块链的资金管理解决方案。 Gnosis Safe 是 Gnosis 开发的多重签名钱包。它是在以太坊]]></description>
+</item>
+<item>
     <title>合约安全：操纵预言机</title>
     <link>/posts/solidity-smart-contract-security-oracle-manipulation.html</link>
     <pubDate>Thu, 22 Dec 2022 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
     <guid>/posts/solidity-smart-contract-security-oracle-manipulation.html</guid>
     <description><![CDATA[引言 操纵预言机攻击，并复现了一个攻击示例：用1 ETH兑换17万亿枚稳定币。仅2022年一年，操纵预言机攻击造成用户资产损失超过 2 亿美元。 1 价]]></description>
+</item>
+<item>
+    <title>通用可升级代理UUPS</title>
+    <link>/posts/solidity-upgradeable-proxy-uups.html</link>
+    <pubDate>Sun, 18 Dec 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-upgradeable-proxy-uups.html</guid>
+    <description><![CDATA[引言 代理合约中选择器冲突（Selector Clash）的另一个解决办法：通用可升级代理（UUPS，universal upgradeable proxy standard）。]]></description>
+</item>
+<item>
+    <title>学习OpenZeppelin的TransparentUpgradeableProxy透明代理</title>
+    <link>/posts/solidity-transparent-upgradeable-proxy.html</link>
+    <pubDate>Fri, 16 Dec 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-transparent-upgradeable-proxy.html</guid>
+    <description><![CDATA[引言 介绍代理合约的选择器冲突（Selector Clash）问题，以及这一问题的解决方案：透明代理（Transparent Proxy）。学习代]]></description>
+</item>
+<item>
+    <title>基于代理合约的可升级合约</title>
+    <link>/posts/solidity-upgrade-proxy-contract.html</link>
+    <pubDate>Mon, 12 Dec 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-upgrade-proxy-contract.html</guid>
+    <description><![CDATA[引言 可升级合约（Upgradeable Contract）。教学用的合约由OpenZeppelin中的合约简化而来，可能有安全问题，不要用于生]]></description>
+</item>
+<item>
+    <title>学习OpenZeppelin的代理合约</title>
+    <link>/posts/solidity-proxy-contract.html</link>
+    <pubDate>Mon, 12 Dec 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-proxy-contract.html</guid>
+    <description><![CDATA[引言 代理合约（Proxy Contract）。教学代码由OpenZeppelin的Proxy合约简化而来。 代理模式 Solidity合约部署在链]]></description>
 </item>
 <item>
     <title>合约安全：操纵区块时间</title>
@@ -35,54 +83,6 @@
     <author>5oneXj</author>
     <guid>/posts/solidity-smart-contract-security-low-level-calls-that-are-not-checked.html</guid>
     <description><![CDATA[引言 智能合约的未检查低级调用（low-level call）的漏洞。失败的低级调用不会让交易回滚，如果合约中忘记对其返回值进行检查，往往会出现]]></description>
-</item>
-<item>
-    <title>如何让代币在归属期内匀速释放</title>
-    <link>/posts/solidity-vesting-wallet.html</link>
-    <pubDate>Sun, 27 Nov 2022 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-vesting-wallet.html</guid>
-    <description><![CDATA[引言 代码由OpenZeppelin的VestingWallet合约简化而来。 代币归属条款 在传统金融领域，一些公司会向员工和管理层提供股权。但]]></description>
-</item>
-<item>
-    <title>合约安全：抢先交易</title>
-    <link>/posts/solidity-smart-contract-security-front-running.html</link>
-    <pubDate>Tue, 22 Nov 2022 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-smart-contract-security-front-running.html</guid>
-    <description><![CDATA[引言 智能合约的抢先交易（Front-running，抢跑）。据统计，以太坊上的套利者通过三明治攻击（sandwich attack）共获利$1]]></description>
-</item>
-<item>
-    <title>如何用合约解决现实中“分赃不均”的分账问题</title>
-    <link>/posts/solidity-prandomayment-splitter.html</link>
-    <pubDate>Tue, 15 Nov 2022 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-prandomayment-splitter.html</guid>
-    <description><![CDATA[引言 分账合约允许将ETH按权重转给一组账户中，进行分账。代码部分由oppenzepplin库的PaymentSplitter合约简化而来。 分]]></description>
-</item>
-<item>
-    <title>合约安全：如何使用 tx.origin 进行钓鱼攻击</title>
-    <link>/posts/solidity-smart-contract-security-tx-origin.html</link>
-    <pubDate>Sun, 13 Nov 2022 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-smart-contract-security-tx-origin.html</guid>
-    <description><![CDATA[1 tx.origin 钓鱼攻击 笔者上初中的时候特别喜欢玩游戏，但是项目方为了防止未成年人沉迷，规定只有身份证号显示已满十八岁的玩家才不受防沉迷限制。这该怎么办]]></description>
-</item>
-<item>
-    <title>什么是ETH的带包装版本WETH</title>
-    <link>/posts/solidity-weth.html</link>
-    <pubDate>Tue, 01 Nov 2022 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-weth.html</guid>
-    <description><![CDATA[什么是WETH？ WETH (Wrapped ETH)是ETH的带包装版本。我们常见的WETH，WBTC，WBNB，都是带包装的原生代币。那么我们为什么要包装它们？ 在]]></description>
-</item>
-<item>
-    <title>合约安全：貔貅 Honeypot Scam</title>
-    <link>/posts/solidity-smart-contract-security-honeypot-token.html</link>
-    <pubDate>Sat, 29 Oct 2022 11:12:14 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/solidity-smart-contract-security-honeypot-token.html</guid>
-    <description><![CDATA[引言 将介绍貔貅合约和预防方法（英文习惯叫蜜罐代币 honeypot token）。 1 貔貅学入门 貔貅是中国的一个神兽，因为在天庭犯了戒，被玉帝揍的肛门封闭了，只]]></description>
 </item>
 </channel>
 </rss>

@@ -12,22 +12,30 @@
             <loc>/</loc><lastmod>2023-03-01T19:15:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>/posts/16-safety-recommendations.html</loc><lastmod>2023-01-19T20:13:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/solidity.html</loc><lastmod>2023-01-19T20:13:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/basic.html</loc><lastmod>2022-12-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/categories/solidity-%E5%BA%94%E7%94%A8.html</loc><lastmod>2022-12-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/solidity-multisig-wallet.html</loc><lastmod>2022-12-30T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/solidity-multisig-wallet-gnosis-safe.html</loc><lastmod>2022-12-25T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/oracle.html</loc><lastmod>2022-12-22T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/security.html</loc><lastmod>2022-12-22T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/categories/%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8.html</loc><lastmod>2022-12-22T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-smart-contract-security-oracle-manipulation.html</loc><lastmod>2022-12-22T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/%E9%9D%A2%E8%AF%95%E9%A2%98.html</loc><lastmod>2022-12-20T15:25:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/blockchain-technology-interview-question-and-answer.html</loc><lastmod>2022-12-20T15:25:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/solidity-upgradeable-proxy-uups.html</loc><lastmod>2022-12-18T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/solidity-transparent-upgradeable-proxy.html</loc><lastmod>2022-12-16T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/solidity-upgrade-proxy-contract.html</loc><lastmod>2022-12-12T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/solidity-proxy-contract.html</loc><lastmod>2022-12-12T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/timestamp.html</loc><lastmod>2022-12-09T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-smart-contract-security-timestamp-manipulation.html</loc><lastmod>2022-12-09T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-smart-contract-security-low-level-calls-that-are-not-checked.html</loc><lastmod>2022-12-02T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/tags/basic.html</loc><lastmod>2022-11-27T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>/categories/solidity-%E5%BA%94%E7%94%A8.html</loc><lastmod>2022-11-27T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-vesting-wallet.html</loc><lastmod>2022-11-27T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/erc721.html</loc><lastmod>2022-11-22T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-smart-contract-security-front-running.html</loc><lastmod>2022-11-22T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-prandomayment-splitter.html</loc><lastmod>2022-11-15T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-smart-contract-security-tx-origin.html</loc><lastmod>2022-11-13T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/solidity-time-locker.html</loc><lastmod>2022-11-08T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/solidity-token-locker.html</loc><lastmod>2022-11-05T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-weth.html</loc><lastmod>2022-11-01T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/erc20.html</loc><lastmod>2022-10-29T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/swap.html</loc><lastmod>2022-10-29T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
