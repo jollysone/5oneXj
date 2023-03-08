@@ -70,6 +70,9 @@
             <loc>/posts/solidity-erc721.html</loc><lastmod>2022-08-21T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-smart-contract-security-re-entrancy.html</loc><lastmod>2022-08-20T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-erc20-airdrop.html</loc><lastmod>2022-07-17T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/ens.html</loc><lastmod>2022-06-27T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/polygon.html</loc><lastmod>2022-06-27T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/solidity-polygon-dns-ens.html</loc><lastmod>2022-06-27T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-erc20-faucet.html</loc><lastmod>2022-06-24T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/tools-foundry-introduce.html</loc><lastmod>2022-06-19T20:13:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/tags/tools.html</loc><lastmod>2022-06-19T20:13:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
@@ -115,6 +118,12 @@
             <loc>/posts/what-is-the-cross-chain-of-blockchain.html</loc><lastmod>2021-02-26T11:05:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-init-value.html</loc><lastmod>2021-02-16T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-storage-memory-calldata.html</loc><lastmod>2021-02-11T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/tags/ethers.js.html</loc><lastmod>2021-02-05T20:15:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/categories/ethers.js.html</loc><lastmod>2021-02-05T20:15:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/web3-ethers-deploy-contract.html</loc><lastmod>2021-02-05T20:15:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/web3-ethers-read-contract.html</loc><lastmod>2021-02-03T20:15:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/web3-ethers-send-eth.html</loc><lastmod>2021-02-02T20:15:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>/posts/web3-ethers-provider.html</loc><lastmod>2021-02-01T19:15:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/solidity-basic.html</loc><lastmod>2021-01-22T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/posts/zero-value-transfer.html</loc><lastmod>2020-03-22T11:12:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>/about.html</loc><lastmod>2023-03-01T20:36:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>

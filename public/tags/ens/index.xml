@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>ENS - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
+        <link>/tags/ens.html</link>
+        <description>ENS - 标签 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Mon, 27 Jun 2022 11:12:14 &#43;0800</lastBuildDate><atom:link href="/tags/ens.html" rel="self" type="application/rss+xml" /><item>
+    <title>在Polygon上部署一个像ENS一样的DNS</title>
+    <link>/posts/solidity-polygon-dns-ens.html</link>
+    <pubDate>Mon, 27 Jun 2022 11:12:14 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/solidity-polygon-dns-ens.html</guid>
+    <description><![CDATA[设置本地工具 一个名为 Hardhat 的工具，它可以让我们快速编译智能合约并在本地进行测试。 1 2 3 4 mkdir cool-domains cd cool-domains npm init -y npm install --save-dev hardhat@latest 示例项目 选择“Create a JavaScript pr]]></description>
+</item>
+</channel>
+</rss>

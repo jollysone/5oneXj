@@ -1,0 +1,40 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Ethers.js - 分类 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</title>
+        <link>/categories/ethers.js.html</link>
+        <description>Ethers.js - 分类 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Fri, 05 Feb 2021 20:15:10 &#43;0800</lastBuildDate><atom:link href="/categories/ethers.js.html" rel="self" type="application/rss+xml" /><item>
+    <title>Ethers部署智能合约并转账测试</title>
+    <link>/posts/web3-ethers-deploy-contract.html</link>
+    <pubDate>Fri, 05 Feb 2021 20:15:10 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/web3-ethers-deploy-contract.html</guid>
+    <description><![CDATA[部署智能合约 在以太坊上，智能合约的部署是一种特殊的交易：将编译智能合约得到的字节码发送到0地址。如果这个合约的构造函数有参数的话，需要利用a]]></description>
+</item>
+<item>
+    <title>使用Ethers读取合约信息并进行交互</title>
+    <link>/posts/web3-ethers-read-contract.html</link>
+    <pubDate>Wed, 03 Feb 2021 20:15:10 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/web3-ethers-read-contract.html</guid>
+    <description><![CDATA[Contract类 在ethers中，Contract类是部署在以太坊网络上的合约（EVM字节码）的抽象。通过它，开发者可以非常容易的对合约进]]></description>
+</item>
+<item>
+    <title>如何使用Ethers钱包发送ETH</title>
+    <link>/posts/web3-ethers-send-eth.html</link>
+    <pubDate>Tue, 02 Feb 2021 20:15:10 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/web3-ethers-send-eth.html</guid>
+    <description><![CDATA[Signer签名者类 Web3.js认为用户会在本地部署以太坊节点，私钥和网络连接状态由这个节点管理（实际并不是这样）；而在ethers.js]]></description>
+</item>
+<item>
+    <title>Ethers中的Provider提供器</title>
+    <link>/posts/web3-ethers-provider.html</link>
+    <pubDate>Mon, 01 Feb 2021 19:15:10 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/web3-ethers-provider.html</guid>
+    <description><![CDATA[引言 可以使用ethers.js的Provider类，然后利用它连接上Infura节点，读取链上的信息。 Provider类 Provider类是]]></description>
+</item>
+</channel>
+</rss>
