@@ -4,7 +4,31 @@
         <link>/categories/ethers.js.html</link>
         <description>Ethers.js - 分类 - 专注于区块链智能合约开发和审计 | 5oneXj′s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jollysone@gmail.com (5oneXj)</managingEditor>
-            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Fri, 05 Feb 2021 20:15:10 &#43;0800</lastBuildDate><atom:link href="/categories/ethers.js.html" rel="self" type="application/rss+xml" /><item>
+            <webMaster>jollysone@gmail.com (5oneXj)</webMaster><lastBuildDate>Sun, 07 Feb 2021 10:15:10 &#43;0800</lastBuildDate><atom:link href="/categories/ethers.js.html" rel="self" type="application/rss+xml" /><item>
+    <title>Ethers中的BigNumber和单位转换</title>
+    <link>/posts/web3-ethers-units.html</link>
+    <pubDate>Sun, 07 Feb 2021 10:15:10 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/web3-ethers-units.html</guid>
+    <description><![CDATA[BigNumber 以太坊中，许多计算都对超出JavaScript整数的安全值（js中最大安全整数为9007199254740991）。因此，ethers.j]]></description>
+</item>
+<item>
+    <title>在监听的过程中增加过滤器并监听指定地址</title>
+    <link>/posts/web3-ethers-listener-event-filter.html</link>
+    <pubDate>Sat, 06 Feb 2021 22:15:10 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/web3-ethers-listener-event-filter.html</guid>
+    <description><![CDATA[过滤器 当合约创建日志（释放事件）时，它最多可以包含[4]条数据作为索引（indexed）。索引数据经过哈希处理并包含在布隆过滤器中，这是一种]]></description>
+</item>
+<item>
+    <title>Ethers检索合约事件与监听事件</title>
+    <link>/posts/web3-ethers-listener-event.html</link>
+    <pubDate>Sat, 06 Feb 2021 20:15:10 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/web3-ethers-listener-event.html</guid>
+    <description><![CDATA[事件 Event 智能合约释放出的事件存储于以太坊虚拟机的日志中。日志分为两个主题topics和数据data部分，其中事件哈希和indexed变量存储在]]></description>
+</item>
+<item>
     <title>Ethers部署智能合约并转账测试</title>
     <link>/posts/web3-ethers-deploy-contract.html</link>
     <pubDate>Fri, 05 Feb 2021 20:15:10 &#43;0800</pubDate>

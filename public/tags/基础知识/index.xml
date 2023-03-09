@@ -45,6 +45,30 @@
     <description><![CDATA[1 跨链概念 跨链是通过连接相对独立的区块链系统，实现资产、数据等的跨链互操作，跨链的主要实现形式包括跨链资产互换和跨链资产转移。 跨链技术 201]]></description>
 </item>
 <item>
+    <title>Ethers中的BigNumber和单位转换</title>
+    <link>/posts/web3-ethers-units.html</link>
+    <pubDate>Sun, 07 Feb 2021 10:15:10 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/web3-ethers-units.html</guid>
+    <description><![CDATA[BigNumber 以太坊中，许多计算都对超出JavaScript整数的安全值（js中最大安全整数为9007199254740991）。因此，ethers.j]]></description>
+</item>
+<item>
+    <title>在监听的过程中增加过滤器并监听指定地址</title>
+    <link>/posts/web3-ethers-listener-event-filter.html</link>
+    <pubDate>Sat, 06 Feb 2021 22:15:10 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/web3-ethers-listener-event-filter.html</guid>
+    <description><![CDATA[过滤器 当合约创建日志（释放事件）时，它最多可以包含[4]条数据作为索引（indexed）。索引数据经过哈希处理并包含在布隆过滤器中，这是一种]]></description>
+</item>
+<item>
+    <title>Ethers检索合约事件与监听事件</title>
+    <link>/posts/web3-ethers-listener-event.html</link>
+    <pubDate>Sat, 06 Feb 2021 20:15:10 &#43;0800</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/web3-ethers-listener-event.html</guid>
+    <description><![CDATA[事件 Event 智能合约释放出的事件存储于以太坊虚拟机的日志中。日志分为两个主题topics和数据data部分，其中事件哈希和indexed变量存储在]]></description>
+</item>
+<item>
     <title>Ethers部署智能合约并转账测试</title>
     <link>/posts/web3-ethers-deploy-contract.html</link>
     <pubDate>Fri, 05 Feb 2021 20:15:10 &#43;0800</pubDate>
@@ -59,30 +83,6 @@
     <author>5oneXj</author>
     <guid>/posts/web3-ethers-read-contract.html</guid>
     <description><![CDATA[Contract类 在ethers中，Contract类是部署在以太坊网络上的合约（EVM字节码）的抽象。通过它，开发者可以非常容易的对合约进]]></description>
-</item>
-<item>
-    <title>如何使用Ethers钱包发送ETH</title>
-    <link>/posts/web3-ethers-send-eth.html</link>
-    <pubDate>Tue, 02 Feb 2021 20:15:10 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/web3-ethers-send-eth.html</guid>
-    <description><![CDATA[Signer签名者类 Web3.js认为用户会在本地部署以太坊节点，私钥和网络连接状态由这个节点管理（实际并不是这样）；而在ethers.js]]></description>
-</item>
-<item>
-    <title>Ethers中的Provider提供器</title>
-    <link>/posts/web3-ethers-provider.html</link>
-    <pubDate>Mon, 01 Feb 2021 19:15:10 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/web3-ethers-provider.html</guid>
-    <description><![CDATA[引言 可以使用ethers.js的Provider类，然后利用它连接上Infura节点，读取链上的信息。 Provider类 Provider类是]]></description>
-</item>
-<item>
-    <title>区块链开发中必学的 Node.js 技术</title>
-    <link>/posts/node.js-technology-is-a-must-for-learning-blockchain.html</link>
-    <pubDate>Sun, 31 Mar 2019 14:06:11 &#43;0800</pubDate>
-    <author>5oneXj</author>
-    <guid>/posts/node.js-technology-is-a-must-for-learning-blockchain.html</guid>
-    <description><![CDATA[1 基础语法 1.1 定义变量 var 允许对同一个变量重新定义，覆盖原有值。 1 2 var a = 1; var a = 2; let 允许修改，但不允许重新定义 1 2 let b = 1; b = 2; const 初始化后不允]]></description>
 </item>
 </channel>
 </rss>
