@@ -13,6 +13,14 @@
     <description><![CDATA[1 跨链概念 跨链是通过连接相对独立的区块链系统，实现资产、数据等的跨链互操作，跨链的主要实现形式包括跨链资产互换和跨链资产转移。 跨链技术 201]]></description>
 </item>
 <item>
+    <title>挖矿必知：空块、孤块、叔块究竟是什么？</title>
+    <link>/posts/what-is-blockchain-empty-solitary-uncle-block.html</link>
+    <pubDate>Thu, 05 Apr 2018 00:00:00 &#43;0000</pubDate>
+    <author>5oneXj</author>
+    <guid>/posts/what-is-blockchain-empty-solitary-uncle-block.html</guid>
+    <description><![CDATA[引言 在加密货币挖矿中，我们会在矿池的统计中经常看到孤块率这一词。空块、孤块、叔块的存在，而这些不同于常规区块的爆块也将一定程度上影响到矿工的]]></description>
+</item>
+<item>
     <title>什么是区块链(Blockchain)?</title>
     <link>/posts/what-is-blockchain.html</link>
     <pubDate>Fri, 02 Mar 2018 15:25:14 &#43;0800</pubDate>

@@ -10,7 +10,7 @@
     <pubDate>Mon, 27 Jun 2022 11:12:14 &#43;0800</pubDate>
     <author>5oneXj</author>
     <guid>/posts/solidity-polygon-dns-ens.html</guid>
-    <description><![CDATA[设置本地工具 一个名为 Hardhat 的工具，它可以让我们快速编译智能合约并在本地进行测试。 1 2 3 4 mkdir cool-domains cd cool-domains npm init -y npm install --save-dev hardhat@latest 示例项目 选择“Create a JavaScript pr]]></description>
+    <description><![CDATA[初始化项目 一个名为 Hardhat 的工具，它可以让我们快速编译智能合约并在本地进行测试。 1 2 3 4 mkdir cool-domains cd cool-domains npm init -y 安装hardhat 使用hardhat创建例子]]></description>
 </item>
 </channel>
 </rss>
